@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6209E5D5-656A-441C-BAE4-28B2FC89085B}</ProjectGuid>
+    <ProjectGuid>{E23A76FD-33D4-4CCD-A825-23E98284B9F0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LearningNote003</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>LearningNote005(Light_PongLightModel)</ProjectName>
+    <ProjectName>LearningNote006(Light_Material+LightingMap)</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -164,10 +164,10 @@
     <ClInclude Include="GraphicsCommon.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ShaderSources\LN005\CubeFragShader.glsl" />
-    <None Include="..\ShaderSources\LN005\CubeVertShader.glsl" />
-    <None Include="..\ShaderSources\LN005\LightFragShader.glsl" />
-    <None Include="..\ShaderSources\LN005\LightVertShader.glsl" />
+    <None Include="..\ShaderSources\LN006\CubeFragShader.glsl" />
+    <None Include="..\ShaderSources\LN006\CubeVertShader.glsl" />
+    <None Include="..\ShaderSources\LN006\LightFragShader.glsl" />
+    <None Include="..\ShaderSources\LN006\LightVertShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
