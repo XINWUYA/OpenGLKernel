@@ -20,6 +20,7 @@ public:
 
 	glm::mat4 getViewMatrix() const;
 	float	  getCameraZoom() const;
+	glm::vec3 getCameraPosition() const;
 
 	void processKeyBoard(ECameraMovement vMovementDirection, GLfloat vDeltaTime);
 	void processMouseMovement(GLfloat vXOffset, GLfloat vYOffset, GLboolean vConstrainPicth = true);

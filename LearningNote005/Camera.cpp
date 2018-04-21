@@ -40,6 +40,13 @@ float CCamera::getCameraZoom() const
 
 //**********************************************************************************
 //FUNCTION:
+glm::vec3 CCamera::getCameraPosition() const
+{
+	return m_CameraPosition;
+}
+
+//**********************************************************************************
+//FUNCTION:
 void CCamera::processKeyBoard(ECameraMovement vMovementDirection, GLfloat vDeltaTime)
 {
 	if (0.0f == vDeltaTime) vDeltaTime = 0.05f;

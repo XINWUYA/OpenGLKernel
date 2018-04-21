@@ -16,6 +16,6 @@ void main()
 {
 	gl_Position = uProjection * uView * uModel * vec4(Pos, 1.0f);
 	oTexCoord   = Tex;
-	oNormal		= vec3(uModel * vec4(Normal, 0.0f));
+	oNormal		= mat3(transpose(inverse(uModel))) * Normal;
 	oFragPos	= vec3(uModel * vec4(Pos, 1.0f));
 }

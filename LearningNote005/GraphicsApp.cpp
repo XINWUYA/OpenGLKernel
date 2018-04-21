@@ -65,6 +65,7 @@ void CGraphicsApp::run()
 		m_pShader->setVec3("uObjectColor", 0.0f, 1.0f, 0.31f);
 		m_pShader->setVec3("uLightColor", 1.0f, 1.0f, 1.0f);
 		m_pShader->setVec3("uLightPos", glm::vec3(0.2f, 1.0f, -2.0f));
+		m_pShader->setVec3("uCameraPos", CCamera::get_mutable_instance().getCameraPosition());
 		glm::mat4 Projection = glm::perspective(glm::radians(CCamera::get_mutable_instance().getCameraZoom()), (float)m_WindowWidth / (float)m_WindowHeight, 0.1f, 100.0f);
 		m_pShader->setMat4("uProjection", Projection);
 		glm::mat4 View = CCamera::get_mutable_instance().getViewMatrix();
