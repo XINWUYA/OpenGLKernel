@@ -23,8 +23,8 @@ int main()
 	glewInit();
 
 	CShader Shader;
-	Shader.addShader("../ShaderSources/LN003/vertShader.glsl", VertexShader);
-	Shader.addShader("../ShaderSources/LN003/fragShader.glsl", FragmentShader);
+	Shader.addShader("../ShaderSources/LN003/vertShader.glsl", VERTEX_SHADER);
+	Shader.addShader("../ShaderSources/LN003/fragShader.glsl", FRAGMENT_SHADER);
 	Shader.createShaderProgram();
 
 	float vertices[] = {

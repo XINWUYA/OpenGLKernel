@@ -24,15 +24,20 @@ void CShader::createShaderProgram()
 		glAttachShader(m_ShaderProgram, m_ShaderVector[i]);
 	glLinkProgram(m_ShaderProgram);
 
-	GLint LogLength;
-	GLchar* pInfoLog = nullptr;
-	glGetProgramiv(m_ShaderProgram, GL_LINK_STATUS, &LogLength);
-	if (!LogLength)
+	GLint LinkSuccess;
+	glGetProgramiv(m_ShaderProgram, GL_LINK_STATUS, &LinkSuccess);
+	if (!LinkSuccess)
 	{
-		pInfoLog = new GLchar[LogLength];
-		glGetProgramInfoLog(m_ShaderProgram, LogLength, &LogLength, pInfoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << pInfoLog << std::endl;
+		GLint LogLength;
+		glGetProgramiv(m_ShaderProgram, GL_INFO_LOG_LENGTH, &LogLength);
+		if (LogLength > 0)
+		{
+			GLchar* pInfoLog = new GLchar[LogLength];
+			glGetProgramInfoLog(m_ShaderProgram, LogLength, &LogLength, pInfoLog);
+			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << pInfoLog << std::endl;
+		}
 	}
+	
 }
 
 //****************************************************************************************
@@ -159,11 +164,11 @@ void CShader::__createShader(const std::string & vShaderCode, const EShaderType 
 	GLuint ShaderID = 0;
 	switch (vShaderType)
 	{
-	case VERTEX_SHADER: ShaderID = glCreateShader(GL_VERTEX_SHADER		  ); break;
-	case FRAGMENT_SHADER: ShaderID = glCreateShader(GL_FRAGMENT_SHADER		  ); break;
-	case TESSELLATION_CONTROL_SHADER: ShaderID = glCreateShader(GL_TESS_CONTROL_SHADER	  ); break;
+	case VERTEX_SHADER:					 ShaderID = glCreateShader(GL_VERTEX_SHADER); break;
+	case FRAGMENT_SHADER:				 ShaderID = glCreateShader(GL_FRAGMENT_SHADER); break;
+	case TESSELLATION_CONTROL_SHADER:	 ShaderID = glCreateShader(GL_TESS_CONTROL_SHADER); break;
 	case TESSELLATION_EVALUATION_SHADER: ShaderID = glCreateShader(GL_TESS_EVALUATION_SHADER); break;
-	case GEOMETRY_SHADER: ShaderID = glCreateShader(GL_GEOMETRY_SHADER		  ); break;
+	case GEOMETRY_SHADER:				 ShaderID = glCreateShader(GL_GEOMETRY_SHADER); break;
 	default: break;
 	}
 	m_ShaderVector.push_back(ShaderID);
@@ -171,13 +176,17 @@ void CShader::__createShader(const std::string & vShaderCode, const EShaderType 
 	glShaderSource(ShaderID, 1, &ShaderSource, NULL);
 	glCompileShader(ShaderID);
 
-	GLint LogLength;
-	GLchar* pInfoLog = nullptr;
-	glGetShaderiv(ShaderID, GL_COMPILE_STATUS, &LogLength);
-	if (!LogLength)
+	GLint CompileSuccess;
+	glGetShaderiv(ShaderID, GL_COMPILE_STATUS, &CompileSuccess);
+	if (!CompileSuccess)
 	{
-		pInfoLog = new GLchar[LogLength];
-		glGetShaderInfoLog(ShaderID, LogLength, &LogLength, pInfoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << pInfoLog << std::endl;
+		GLint LogLength;
+		glGetShaderiv(ShaderID, GL_INFO_LOG_LENGTH, &LogLength);
+		if (!LogLength)
+		{
+			GLchar* pInfoLog = new GLchar[LogLength];
+			glGetShaderInfoLog(ShaderID, LogLength, &LogLength, pInfoLog);
+			std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << pInfoLog << std::endl;
+		}
 	}
 }

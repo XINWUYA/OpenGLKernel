@@ -17,7 +17,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote005(Light_PongL
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote006(Light_Material+LightingMap)", "LearningNote006\LearningNote006.vcxproj", "{E23A76FD-33D4-4CCD-A825-23E98284B9F0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote007(Light_LightCasters)", "LearningNote007\LearningNote007.vcxproj", "{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote007(Light_LightAttenuation)", "LearningNote007\LearningNote007.vcxproj", "{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote008(Light_SpotLight)", "LearningNote008\LearningNote008.vcxproj", "{F8902DAB-41CF-45F4-93FF-11278F324F4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,14 @@ Global
 		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Release|x64.Build.0 = Release|x64
 		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Release|x86.ActiveCfg = Release|Win32
 		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Release|x86.Build.0 = Release|Win32
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Debug|x64.ActiveCfg = Debug|x64
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Debug|x64.Build.0 = Debug|x64
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Debug|x86.Build.0 = Debug|Win32
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Release|x64.ActiveCfg = Release|x64
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Release|x64.Build.0 = Release|x64
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Release|x86.ActiveCfg = Release|Win32
+		{F8902DAB-41CF-45F4-93FF-11278F324F4B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
