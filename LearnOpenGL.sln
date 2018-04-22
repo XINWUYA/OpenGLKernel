@@ -13,9 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote003(Texture)", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote004(Camera)", "LearningNote004\LearningNote004.vcxproj", "{10265E73-3942-470D-9F08-61D7113723FD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote005(Light_Pong's)", "LearningNote005\LearningNote005.vcxproj", "{6209E5D5-656A-441C-BAE4-28B2FC89085B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote005(Light_PongLightModel)", "LearningNote005\LearningNote005.vcxproj", "{6209E5D5-656A-441C-BAE4-28B2FC89085B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote006(Light_Material)", "LearningNote006\LearningNote006.vcxproj", "{E23A76FD-33D4-4CCD-A825-23E98284B9F0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote006(Light_Material+LightingMap)", "LearningNote006\LearningNote006.vcxproj", "{E23A76FD-33D4-4CCD-A825-23E98284B9F0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote007(Light_LightCasters)", "LearningNote007\LearningNote007.vcxproj", "{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,14 @@ Global
 		{E23A76FD-33D4-4CCD-A825-23E98284B9F0}.Release|x64.Build.0 = Release|x64
 		{E23A76FD-33D4-4CCD-A825-23E98284B9F0}.Release|x86.ActiveCfg = Release|Win32
 		{E23A76FD-33D4-4CCD-A825-23E98284B9F0}.Release|x86.Build.0 = Release|Win32
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Debug|x64.ActiveCfg = Debug|x64
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Debug|x64.Build.0 = Debug|x64
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Debug|x86.ActiveCfg = Debug|Win32
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Debug|x86.Build.0 = Debug|Win32
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Release|x64.ActiveCfg = Release|x64
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Release|x64.Build.0 = Release|x64
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Release|x86.ActiveCfg = Release|Win32
+		{66BF4C13-4AE1-4CB2-9921-02C92D1F1D79}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

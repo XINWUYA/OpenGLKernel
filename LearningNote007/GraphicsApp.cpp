@@ -74,6 +74,9 @@ void CGraphicsApp::run()
 		m_pShader->setVec3("Light.m_Ambient", Ambient);
 		m_pShader->setVec3("Light.m_Diffuse", Diffuse);
 		m_pShader->setVec3("Light.m_Specular", 1.0f, 1.0f, 1.0f);
+		m_pShader->setFloat("Light.m_Constant", 1.0f);
+		m_pShader->setFloat("Light.m_Liner", 0.09f);
+		m_pShader->setFloat("Light.m_Quadratic", 0.032f);
 		glm::mat4 Projection = glm::perspective(glm::radians(CCamera::get_mutable_instance().getCameraZoom()), (float)m_WindowWidth / (float)m_WindowHeight, 0.1f, 100.0f);
 		m_pShader->setMat4("uProjection", Projection);
 		glm::mat4 View = CCamera::get_mutable_instance().getViewMatrix();
@@ -143,13 +146,13 @@ bool CGraphicsApp::__initGLFWWindow(int vWindowWidth, int vWindowHeight, std::st
 void CGraphicsApp::__initShader()
 {
 	m_pShader = new CShader();
-	m_pShader->addShader("../ShaderSources/LN006/CubeVertShader.glsl", VERTEX_SHADER);
-	m_pShader->addShader("../ShaderSources/LN006/CubeFragShader.glsl", FRAGMENT_SHADER);
+	m_pShader->addShader("../ShaderSources/LN007/CubeVertShader.glsl", VERTEX_SHADER);
+	m_pShader->addShader("../ShaderSources/LN007/CubeFragShader.glsl", FRAGMENT_SHADER);
 	m_pShader->createShaderProgram();
 
 	m_pLightShader = new CShader();
-	m_pLightShader->addShader("../ShaderSources/LN006/LightVertShader.glsl", VERTEX_SHADER);
-	m_pLightShader->addShader("../ShaderSources/LN006/LightFragShader.glsl", FRAGMENT_SHADER);
+	m_pLightShader->addShader("../ShaderSources/LN007/LightVertShader.glsl", VERTEX_SHADER);
+	m_pLightShader->addShader("../ShaderSources/LN007/LightFragShader.glsl", FRAGMENT_SHADER);
 	m_pLightShader->createShaderProgram();
 }
 
