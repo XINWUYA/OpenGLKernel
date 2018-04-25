@@ -67,6 +67,7 @@ void CGraphicsApp::run()
 		m_pShader->setInt  ("Material.m_Specular", 1);
 		m_pShader->setFloat("Material.m_Shininess", 32.0f);
 		glm::vec3 LightColor(sin(CurrentFrame * 2.0f), sin(CurrentFrame * 0.7f), sin(CurrentFrame * 1.3f));
+		//glm::vec3 LightColor(1.0f, 1.0f, 1.0f);
 		glm::vec3 Diffuse = LightColor * glm::vec3(0.5f);
 		glm::vec3 Ambient = Diffuse * glm::vec3(0.2f);
 		//DirectLight
