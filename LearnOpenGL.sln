@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote009(Light_Multi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote010(Model)", "LearningNote010\LearningNote010.vcxproj", "{DA54859B-5401-45B7-A31A-7FE2DF1E890B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote011(SuperOpenGL_DepthTest)", "LearningNote011\LearningNote011.vcxproj", "{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -121,6 +123,14 @@ Global
 		{DA54859B-5401-45B7-A31A-7FE2DF1E890B}.Release|x64.Build.0 = Release|x64
 		{DA54859B-5401-45B7-A31A-7FE2DF1E890B}.Release|x86.ActiveCfg = Release|Win32
 		{DA54859B-5401-45B7-A31A-7FE2DF1E890B}.Release|x86.Build.0 = Release|Win32
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Debug|x64.ActiveCfg = Debug|x64
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Debug|x64.Build.0 = Debug|x64
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Debug|x86.ActiveCfg = Debug|Win32
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Debug|x86.Build.0 = Debug|Win32
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Release|x64.ActiveCfg = Release|x64
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Release|x64.Build.0 = Release|x64
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Release|x86.ActiveCfg = Release|Win32
+		{4DBAE745-130B-4EC1-B25B-D4ED62F9D70B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
