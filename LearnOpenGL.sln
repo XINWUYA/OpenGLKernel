@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote012(AdvancedOpe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote013(AdvancedOpenGL_FBO)", "LearningNote013\LearningNote013.vcxproj", "{51A41874-85F2-4C08-A6A7-B24120B5830E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote014(AdvancedOpenGL_CubeMap)", "LearningNote014\LearningNote014.vcxproj", "{968AC52B-7F15-44F2-8842-BE087E306C08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -151,6 +153,14 @@ Global
 		{51A41874-85F2-4C08-A6A7-B24120B5830E}.Release|x64.Build.0 = Release|x64
 		{51A41874-85F2-4C08-A6A7-B24120B5830E}.Release|x86.ActiveCfg = Release|Win32
 		{51A41874-85F2-4C08-A6A7-B24120B5830E}.Release|x86.Build.0 = Release|Win32
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Debug|x64.ActiveCfg = Debug|x64
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Debug|x64.Build.0 = Debug|x64
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Debug|x86.ActiveCfg = Debug|Win32
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Debug|x86.Build.0 = Debug|Win32
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Release|x64.ActiveCfg = Release|x64
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Release|x64.Build.0 = Release|x64
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Release|x86.ActiveCfg = Release|Win32
+		{968AC52B-7F15-44F2-8842-BE087E306C08}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
