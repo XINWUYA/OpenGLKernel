@@ -31,7 +31,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ShaderSources\LN001\fragShader.glsl" />
-    <None Include="..\ShaderSources\LN001\vertShader.glsl" />
+    <None Include="..\ShaderSources\LN002\fragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN002\vertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -158,8 +158,8 @@
     <ClInclude Include="CShader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ShaderSources\LN001\fragShader.glsl" />
-    <None Include="..\ShaderSources\LN001\vertShader.glsl" />
+    <None Include="..\ShaderSources\LN002\fragShader.glsl" />
+    <None Include="..\ShaderSources\LN002\vertShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

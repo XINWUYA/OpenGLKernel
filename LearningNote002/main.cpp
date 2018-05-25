@@ -45,6 +45,7 @@ int main()
 
 	glBindVertexArray(0);
 
+	//glEnable(GL_PROGRAM_POINT_SIZE);
 	while (!glfwWindowShouldClose(pWindow) && !glfwGetKey(pWindow, GLFW_KEY_ESCAPE))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -53,6 +54,7 @@ int main()
 		Shader.useShaderProgram();
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//glDrawArrays(GL_POINTS, 0, 3);
 
 		glfwPollEvents();
 		glfwSwapBuffers(pWindow);
