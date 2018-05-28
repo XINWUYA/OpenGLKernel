@@ -182,7 +182,7 @@ void CShader::__createShader(const std::string & vShaderCode, const EShaderType 
 	{
 		GLint LogLength;
 		glGetShaderiv(ShaderID, GL_INFO_LOG_LENGTH, &LogLength);
-		if (!LogLength)
+		if (LogLength > 0)
 		{
 			GLchar* pInfoLog = new GLchar[LogLength];
 			glGetShaderInfoLog(ShaderID, LogLength, &LogLength, pInfoLog);

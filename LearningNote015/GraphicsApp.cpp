@@ -56,12 +56,7 @@ void CGraphicsApp::run()
 	glUniformBlockBinding(m_pShaderG->getShaderProgram(), UniformBlockIndexG, 0);
 	glUniformBlockBinding(m_pShaderB->getShaderProgram(), UniformBlockIndexB, 0);
 	glUniformBlockBinding(m_pShaderY->getShaderProgram(), UniformBlockIndexY, 0);
-
-	glGenBuffers(1, &m_UBO);
-	glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
-	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-	glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_UBO, 0, 2 * sizeof(glm::mat4));
+	
 	glm::mat4 Projection = glm::perspective(glm::radians(CCamera::get_mutable_instance().getCameraZoom()), (float)m_WindowWidth / (float)m_WindowHeight, 0.1f, 100.0f);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(Projection));
@@ -123,7 +118,6 @@ void CGraphicsApp::run()
 		Model = glm::rotate(Model, glm::radians(Angle), glm::vec3(1.0f, 0.3f, 0.5f));
 		m_pShaderY->setMat4("uModel", Model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_pGLFWWindow);
@@ -254,6 +248,12 @@ void CGraphicsApp::__initVAO()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	glGenBuffers(1, &m_UBO);
+	glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
+	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_UBO, 0, 2 * sizeof(glm::mat4));
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	glBindVertexArray(0);
 }
