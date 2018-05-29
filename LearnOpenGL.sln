@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote015(AdvancedOpe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote016(AdvancedOpenGL_GeometryShader)", "LearningNote016\LearningNote016.vcxproj", "{234013F0-10DC-4AAA-A177-D797895CA239}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote017(AdvancedOpenGL_Instancing)", "LearningNote017\LearningNote017.vcxproj", "{3A92E0E4-4389-440F-A0F8-49295F995274}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -181,6 +183,14 @@ Global
 		{234013F0-10DC-4AAA-A177-D797895CA239}.Release|x64.Build.0 = Release|x64
 		{234013F0-10DC-4AAA-A177-D797895CA239}.Release|x86.ActiveCfg = Release|Win32
 		{234013F0-10DC-4AAA-A177-D797895CA239}.Release|x86.Build.0 = Release|Win32
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Debug|x64.ActiveCfg = Debug|x64
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Debug|x64.Build.0 = Debug|x64
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Debug|x86.Build.0 = Debug|Win32
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Release|x64.ActiveCfg = Release|x64
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Release|x64.Build.0 = Release|x64
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Release|x86.ActiveCfg = Release|Win32
+		{3A92E0E4-4389-440F-A0F8-49295F995274}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

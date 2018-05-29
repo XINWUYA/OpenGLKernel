@@ -18,7 +18,7 @@ uniform float uTime;
 vec4 explode(vec4 vPosition, vec3 vNormal)
 {
 	float Magnitude = 2.0f;
-	vec3 Direction = vNormal * Magnitude * ((sin(-90) + 1.0f) / 2.0);
+	vec3 Direction = vNormal * Magnitude * ((sin(uTime) + 1.0f) / 2.0);
 	return vPosition + vec4(Direction, 0.0);
 }
 
