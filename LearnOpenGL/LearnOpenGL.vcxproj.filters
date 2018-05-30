@@ -21,5 +21,41 @@
     <ClCompile Include="glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stb_image.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="5.1.framebuffers.vs">
+      <Filter>资源文件</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="5.1.framebuffers.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="5.1.framebuffers_screen.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="5.1.framebuffers_screen.fs">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,9 +1,11 @@
 #include "GraphicsApp.h"
 
-CGraphicsApp::CGraphicsApp(int vWindowWidth, int vWindowHeight, std::string& vWindowName) : m_pGLFWWindow(nullptr), m_pShader(nullptr), m_pLightShader(nullptr), m_pQuadShader(nullptr), m_pTexture(nullptr), m_pTexture1(nullptr)
+CGraphicsApp::CGraphicsApp(int vWindowWidth, int vWindowHeight, std::string& vWindowName) : m_pGLFWWindow(nullptr), m_pShader(nullptr), m_pQuadShader(nullptr), m_pTexture(nullptr)
 {
 	__initGLFWWindow(vWindowWidth, vWindowHeight, vWindowName);
-
+	_ASSERTE(glGetError() == GL_NO_ERROR);
+	
+	
 	m_WindowWidth = vWindowWidth;
 	m_WindowHeight = vWindowHeight;
 }
@@ -11,9 +13,7 @@ CGraphicsApp::CGraphicsApp(int vWindowWidth, int vWindowHeight, std::string& vWi
 CGraphicsApp::~CGraphicsApp()
 {
 	glDeleteVertexArrays(1, &m_VAO);
-	glDeleteVertexArrays(1, &m_LightVAO);
-	glDeleteVertexArrays(1, &m_QuadVAO);
-	glDeleteFramebuffers(1, &m_FBO);
+	glDeleteBuffers(1, &m_VBO);
 	glfwTerminate();
 }
 
@@ -28,8 +28,6 @@ void CGraphicsApp::init()
 	__initFBO();
 }
 
-//**********************************************************************************
-//FUNCTION:
 void CGraphicsApp::setCursorStatus(const ECursorMode& vCursorMode)
 {
 	switch (vCursorMode)
@@ -41,8 +39,6 @@ void CGraphicsApp::setCursorStatus(const ECursorMode& vCursorMode)
 	}
 }
 
-//**********************************************************************************
-//FUNCTION:
 void CGraphicsApp::openDepthTest()
 {
 	glEnable(GL_DEPTH_TEST);
@@ -50,45 +46,30 @@ void CGraphicsApp::openDepthTest()
 
 //**********************************************************************************
 //FUNCTION:
-void CGraphicsApp::openBlending()
-{
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
-//**********************************************************************************
-//FUNCTION:
 void CGraphicsApp::run()
 {
 	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_FRONT);
-	//glFrontFace(GL_CW);
+	//glEnable(GL_MULTISAMPLE);
 	while (!glfwWindowShouldClose(m_pGLFWWindow) && !glfwGetKey(m_pGLFWWindow, GLFW_KEY_ESCAPE))
 	{
 		float CurrentFrame = glfwGetTime();
 		DeltaTime = CurrentFrame - LastFrame;
 		LastFrame = CurrentFrame;
 
-		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
-		glEnable(GL_DEPTH_TEST);
-
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+
 		processInput(m_pGLFWWindow);
-		if (Polygon) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		m_pTexture->bindImageTexture(GL_TEXTURE0);
-		m_pTexture1->bindImageTexture(GL_TEXTURE1);
 
 		m_pShader->useShaderProgram();
 		m_pShader->setInt("uTexture", 0);
-		m_pShader->setInt("uTexture1", 1);
-		/*m_pShader->setVec3("uObjectColor", 0.0f, 1.0f, 0.31f);
-		m_pShader->setVec3("uLightColor", 1.0f, 1.0f, 1.0f);
-		m_pShader->setVec3("uLightPos", glm::vec3(0.2f, 1.0f, -2.0f));
-		m_pShader->setVec3("uCameraPos", CCamera::get_mutable_instance().getCameraPosition());*/
 		glm::mat4 Projection = glm::perspective(glm::radians(CCamera::get_mutable_instance().getCameraZoom()), (float)m_WindowWidth / (float)m_WindowHeight, 0.1f, 100.0f);
 		m_pShader->setMat4("uProjection", Projection);
 		glm::mat4 View = CCamera::get_mutable_instance().getViewMatrix();
@@ -110,18 +91,23 @@ void CGraphicsApp::run()
 			m_pShader->setMat4("uModel", Model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
-
 		glBindVertexArray(0);
+
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBO);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_IntermediateFBO);
+		glBlitFramebuffer(0, 0, m_WindowWidth, m_WindowHeight, 0, 0, m_WindowWidth, m_WindowHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
 
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		
 		m_pQuadShader->useShaderProgram();
 		glActiveTexture(GL_TEXTURE0);
 		m_pQuadShader->setInt("uTexture", 0);
 		glBindVertexArray(m_QuadVAO);
-		glBindTexture(GL_TEXTURE_2D, m_TextureColorBuffer);
+		glBindTexture(GL_TEXTURE_2D, m_ScreenTexture);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		glfwPollEvents();
@@ -140,7 +126,7 @@ bool CGraphicsApp::__initGLFWWindow(int vWindowWidth, int vWindowHeight, std::st
 		std::cout << "Error: GLFW init failed." << std::endl;
 		return false;
 	}
-
+	//glfwWindowHint(GLFW_SAMPLES, 4);
 	m_pGLFWWindow = glfwCreateWindow(vWindowWidth, vWindowHeight, vWindowName.c_str(), nullptr, nullptr);
 	if (m_pGLFWWindow == NULL)
 	{
@@ -166,13 +152,13 @@ bool CGraphicsApp::__initGLFWWindow(int vWindowWidth, int vWindowHeight, std::st
 void CGraphicsApp::__initShader()
 {
 	m_pShader = new CShader();
-	m_pShader->addShader("../ShaderSources/LN013/CubeVertShader.glsl", VERTEX_SHADER);
-	m_pShader->addShader("../ShaderSources/LN013/CubeFragShader.glsl", FRAGMENT_SHADER);
+	m_pShader->addShader("../ShaderSources/LN018/CubeVertShader.glsl", VERTEX_SHADER);
+	m_pShader->addShader("../ShaderSources/LN018/CubeFragShader.glsl", FRAGMENT_SHADER);
 	m_pShader->createShaderProgram();
 
 	m_pQuadShader = new CShader();
-	m_pQuadShader->addShader("../ShaderSources/LN013/QuadVertShader.glsl", VERTEX_SHADER);
-	m_pQuadShader->addShader("../ShaderSources/LN013/QuadFragShader.glsl", FRAGMENT_SHADER);
+	m_pQuadShader->addShader("../ShaderSources/LN018/QuadVertShader.glsl", VERTEX_SHADER);
+	m_pQuadShader->addShader("../ShaderSources/LN018/QuadFragShader.glsl", FRAGMENT_SHADER);
 	m_pQuadShader->createShaderProgram();
 }
 
@@ -181,7 +167,6 @@ void CGraphicsApp::__initShader()
 void CGraphicsApp::__initTexture()
 {
 	m_pTexture = new CTexture(GL_TEXTURE_2D, "../TextureSources/container.jpg");
-	m_pTexture1 = new CTexture(GL_TEXTURE_2D, "../TextureSources/wall.jpg");
 }
 
 //**********************************************************************************
@@ -261,12 +246,6 @@ void CGraphicsApp::__initVAO()
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	glGenVertexArrays(1, &m_LightVAO);
-	glBindVertexArray(m_LightVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
 	unsigned int QuadVBO;
 	glGenVertexArrays(1, &m_QuadVAO);
 	glGenBuffers(1, &QuadVBO);
@@ -277,9 +256,9 @@ void CGraphicsApp::__initVAO()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
 	glBindVertexArray(0);
 }
-
 
 //**********************************************************************************
 //FUNCTION:
@@ -288,22 +267,35 @@ void CGraphicsApp::__initFBO()
 	glGenFramebuffers(1, &m_FBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
-	glGenTextures(1, &m_TextureColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, m_TextureColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_WindowWidth, m_WindowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TextureColorBuffer, 0);
+	glGenTextures(1, &m_TextureColorBufferMultiSampled);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_TextureColorBufferMultiSampled);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, m_WindowWidth, m_WindowHeight, GL_TRUE);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, m_TextureColorBufferMultiSampled, 0);
 
 	unsigned int RBO;
 	glGenRenderbuffers(1, &RBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_WindowWidth, m_WindowHeight);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, m_WindowWidth, m_WindowHeight);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
-	
+
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cout << "Error: Framebuffer is not complete!" << std::endl;
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	glGenFramebuffers(1, &m_IntermediateFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_IntermediateFBO);
+
+	glGenTextures(1, &m_ScreenTexture);
+	glBindTexture(GL_TEXTURE_2D, m_ScreenTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_WindowWidth, m_WindowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ScreenTexture, 0);
+	
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cout << "Error: Intermediate Framebuffer is not complete!" << std::endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
