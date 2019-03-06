@@ -52,8 +52,10 @@ void CGraphicsApp::openDepthTest()
 void CGraphicsApp::run()
 {
 	glm::mat4 ModelMatrix;
-	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(70.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, -2.0f, 0.0f));
 	glm::mat4 ProjectionMatrix = glm::perspective(45.0f, 1.0f, 0.1f, 100.0f);
+	ModelMatrix = glm::scale(ModelMatrix, glm::vec3(10.0f));
 	while (!glfwWindowShouldClose(m_pGLFWWindow) && !glfwGetKey(m_pGLFWWindow, GLFW_KEY_ESCAPE))
 	{
 		GLfloat CurrentTime = glfwGetTime();
@@ -69,6 +71,7 @@ void CGraphicsApp::run()
 		m_pQuadShader->setMat4("uModel", ModelMatrix);
 		m_pQuadShader->setMat4("uProjection", ProjectionMatrix);
 		m_pQuadShader->setMat4("uView", CCamera::get_mutable_instance().getViewMatrix());
+		m_pQuadShader->setVec3("uCameraPos", CCamera::get_mutable_instance().getCameraPosition());
 
 		glBindVertexArray(m_QuadVAO);
 		m_pTexture->bindImageTexture(0);
