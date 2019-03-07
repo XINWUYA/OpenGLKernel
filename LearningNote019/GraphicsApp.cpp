@@ -52,10 +52,10 @@ void CGraphicsApp::openDepthTest()
 void CGraphicsApp::run()
 {
 	glm::mat4 ModelMatrix;
-	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, -2.0f, 0.0f));
-	glm::mat4 ProjectionMatrix = glm::perspective(45.0f, 1.0f, 0.1f, 100.0f);
-	ModelMatrix = glm::scale(ModelMatrix, glm::vec3(10.0f));
+	/*ModelMatrix = glm::rotate(ModelMatrix, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, -2.0f, 0.0f));*/
+	glm::mat4 ProjectionMatrix = glm::perspective(glm::radians(CCamera::get_mutable_instance().getCameraZoom()), (float)m_WindowWidth / (float)m_WindowHeight, 0.1f, 100.0f);
+	//ModelMatrix = glm::scale(ModelMatrix, glm::vec3(10.0f));
 	while (!glfwWindowShouldClose(m_pGLFWWindow) && !glfwGetKey(m_pGLFWWindow, GLFW_KEY_ESCAPE))
 	{
 		GLfloat CurrentTime = glfwGetTime();
@@ -72,7 +72,7 @@ void CGraphicsApp::run()
 		m_pQuadShader->setMat4("uProjection", ProjectionMatrix);
 		m_pQuadShader->setMat4("uView", CCamera::get_mutable_instance().getViewMatrix());
 		m_pQuadShader->setVec3("uCameraPos", CCamera::get_mutable_instance().getCameraPosition());
-
+		m_pQuadShader->setBool("uIsUseBlinn", false);
 		glBindVertexArray(m_QuadVAO);
 		m_pTexture->bindImageTexture(0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -145,17 +145,28 @@ void CGraphicsApp::__initVAO()
 		 1.0f, -1.0f,  1.0f,  0.0f,
 		 1.0f,  1.0f,  1.0f,  1.0f
 	};
+	float PlaneVertices[] = {
+		// positions            // normals         // texcoords
+		 10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,  10.0f,  0.0f,
+		-10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+		-10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f,   0.0f, 10.0f,
 
+		 10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,  10.0f,  0.0f,
+		-10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f,   0.0f, 10.0f,
+		 10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f,  10.0f, 10.0f
+	};
 	unsigned int QuadVBO;
 	glGenVertexArrays(1, &m_QuadVAO);
 	glGenBuffers(1, &QuadVBO);
 	glBindVertexArray(m_QuadVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, QuadVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), &QuadVertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(PlaneVertices), &PlaneVertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
 	glBindVertexArray(0);
 }
