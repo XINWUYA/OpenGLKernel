@@ -1,13 +1,19 @@
 #include "GraphicsApp.h"
+#include <functional>
+#include <map>
+
+std::map<GLFWwindow*, CGraphicsApp*> g_Screen;
 
 CGraphicsApp::CGraphicsApp(int vWindowWidth, int vWindowHeight, std::string& vWindowName) : m_pGLFWWindow(nullptr), m_pShader(nullptr), m_pRockShader(nullptr), m_pTexture(nullptr), m_pTexture1(nullptr), m_pPlanetModel(nullptr), m_pRockModel(nullptr)
 {
 	__initGLFWWindow(vWindowWidth, vWindowHeight, vWindowName);
 	_ASSERTE(glGetError() == GL_NO_ERROR);
-	
+	g_Screen[m_pGLFWWindow] = this;
 	
 	m_WindowWidth = vWindowWidth;
 	m_WindowHeight = vWindowHeight;
+	float m_LastX = vWindowWidth / 2.0f;
+	float m_LastY = vWindowHeight / 2.0f;
 }
 
 CGraphicsApp::~CGraphicsApp()
@@ -56,14 +62,14 @@ void CGraphicsApp::run()
 	while (!glfwWindowShouldClose(m_pGLFWWindow) && !glfwGetKey(m_pGLFWWindow, GLFW_KEY_ESCAPE))
 	{
 		float CurrentFrame = glfwGetTime();
-		DeltaTime = CurrentFrame - LastFrame;
-		LastFrame = CurrentFrame;
+		m_DeltaTime = CurrentFrame - m_LastFrame;
+		m_LastFrame = CurrentFrame;
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		processInput(m_pGLFWWindow);
-		if (Polygon) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		__processInput(m_pGLFWWindow);
+		if (m_Polygon) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		m_pShader->useShaderProgram();
@@ -199,6 +205,25 @@ void CGraphicsApp::run()
 
 //**********************************************************************************
 //FUNCTION:
+void CGraphicsApp::mouse_callback(GLFWwindow* vWindow, double vXPos, double vYPos)
+{
+	if (m_FirstMouse)
+	{
+		m_LastX = vXPos;
+		m_LastY = vYPos;
+		m_FirstMouse = false;
+	}
+
+	float XOffset = vXPos - m_LastX;
+	float YOffset = m_LastY - vYPos;
+
+	m_LastX = vXPos;
+	m_LastY = vYPos;
+	CCamera::get_mutable_instance().processMouseMovement(XOffset, YOffset);
+}
+
+//**********************************************************************************
+//FUNCTION:
 bool CGraphicsApp::__initGLFWWindow(int vWindowWidth, int vWindowHeight, std::string & vWindowName)
 {
 	_ASSERT(vWindowWidth && vWindowHeight);
@@ -292,8 +317,40 @@ void CGraphicsApp::__initVAO()
 //FUNCTION:
 void CGraphicsApp::__initCallback()
 {
-	glfwSetCursorPosCallback(m_pGLFWWindow, mouse_callback);
-	glfwSetScrollCallback(m_pGLFWWindow, scroll_callback);
+	glfwSetCursorPosCallback(m_pGLFWWindow,	
+		[](GLFWwindow * vWindow, double vXPos, double vYPos) 
+		{
+			auto it = g_Screen.find(vWindow);
+			if (it == g_Screen.end()) return;
+			CGraphicsApp* g = it->second;
+			g->mouse_callback(vWindow, vXPos, vYPos);
+		}
+	);
+	glfwSetScrollCallback(m_pGLFWWindow, 
+		[](GLFWwindow * vWindow, double vXOffset, double vYOffset) 
+		{
+			CCamera::get_mutable_instance().processMouseScroll(vYOffset);
+		}
+	);
+}
+
+//***********************************************************
+//FUNCTION:
+void CGraphicsApp::__processInput(GLFWwindow* vWindow)
+{
+	if (glfwGetKey(vWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(vWindow, true);
+	if (glfwGetKey(vWindow, GLFW_KEY_P) == GLFW_PRESS)
+		m_Polygon = !m_Polygon;
+
+	if (glfwGetKey(vWindow, GLFW_KEY_W) == GLFW_PRESS)
+		CCamera::get_mutable_instance().processKeyBoard(FORWARD, m_DeltaTime);
+	if (glfwGetKey(vWindow, GLFW_KEY_S) == GLFW_PRESS)
+		CCamera::get_mutable_instance().processKeyBoard(BACKWARD, m_DeltaTime);
+	if (glfwGetKey(vWindow, GLFW_KEY_A) == GLFW_PRESS)
+		CCamera::get_mutable_instance().processKeyBoard(LEFT, m_DeltaTime);
+	if (glfwGetKey(vWindow, GLFW_KEY_D) == GLFW_PRESS)
+		CCamera::get_mutable_instance().processKeyBoard(RIGHT, m_DeltaTime);
 }
 
 //***********************************************************

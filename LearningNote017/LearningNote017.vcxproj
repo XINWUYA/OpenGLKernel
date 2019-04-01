@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GraphicsApp.cpp" />
-    <ClCompile Include="GraphicsCommon.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -165,7 +164,6 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="GraphicsCommon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ShaderSources\LN017\PlanetFragShader.glsl" />

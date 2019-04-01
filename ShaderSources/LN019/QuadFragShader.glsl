@@ -1,6 +1,6 @@
 #version 430 core
 
-out vec4 gl_FragColor;
+out vec4 FragColor;
 
 in vec2 v2f_TexCoord;
 in vec3 v2f_FragPos;
@@ -34,5 +34,5 @@ void main()
 
 	vec3 ResultColor = (Ambient + Diffuse + Specular) * TextureColor;
 
-	gl_FragColor = vec4(ResultColor, 1.0);
+	FragColor = vec4(ResultColor, 1.0);
 }

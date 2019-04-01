@@ -42,9 +42,6 @@
     <ClCompile Include="GraphicsApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsCommon.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsApp.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsCommon.h">
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">

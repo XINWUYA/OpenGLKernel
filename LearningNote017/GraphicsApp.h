@@ -12,9 +12,15 @@
 #include "Texture.h"
 #include "Camera.h"
 #include "Model.h"
-#include "GraphicsCommon.h"
 
 #define ROCK_AMOUNT 10000
+
+enum ECursorMode
+{
+	NORMAL,
+	HIDDEN,
+	DISABLE
+};
 
 class CGraphicsApp
 {
@@ -27,6 +33,8 @@ public:
 	void openDepthTest();
 	void run();
 
+	void mouse_callback(GLFWwindow* vWindow, double vXPos, double vYPos);
+
 private:
 	bool __initGLFWWindow(int vWindowWidth, int vWindowHeight, std::string& vWindowName);
 	void __initShader();
@@ -34,6 +42,7 @@ private:
 	void __importModel();
 	void __initVAO();
 	void __initCallback();
+	void __processInput(GLFWwindow* vWindow);
 	void __generateRockMatrices();
 
 	GLFWwindow* m_pGLFWWindow;
@@ -46,6 +55,12 @@ private:
 	int m_WindowWidth, m_WindowHeight;
 	unsigned int m_VAO;
 	unsigned int m_LightVAO;
+	float m_LastX = 0.0;
+	float m_LastY = 0.0;
+	bool m_FirstMouse = true;
+	float m_DeltaTime = 0.0f;
+	float m_LastFrame = 0.0f;
+	bool m_Polygon = false;
 	glm::mat4 m_RockMatrices[ROCK_AMOUNT];
 	glm::vec3 m_CubePosition[10] = {
 		glm::vec3( 0.0f,  0.0f,  0.0f),
