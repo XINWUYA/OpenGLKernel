@@ -18,6 +18,7 @@ CGraphicsApp::CGraphicsApp(int vWindowWidth, int vWindowHeight, std::string& vWi
 
 CGraphicsApp::~CGraphicsApp()
 {
+	g_Screen.erase(m_pGLFWWindow);
 	glDeleteVertexArrays(1, &m_VAO);
 	glDeleteVertexArrays(1, &m_LightVAO);
 	glfwTerminate();
@@ -240,7 +241,7 @@ bool CGraphicsApp::__initGLFWWindow(int vWindowWidth, int vWindowHeight, std::st
 		std::cout << "Error: GLFW init failed." << std::endl;
 		return false;
 	}
-
+	//glfwWindowHint(GLFW_DECORATED, GL_FALSE);//没有边框和标题栏
 	m_pGLFWWindow = glfwCreateWindow(vWindowWidth, vWindowHeight, vWindowName.c_str(), nullptr, nullptr);
 	if (m_pGLFWWindow == NULL)
 	{
@@ -248,6 +249,7 @@ bool CGraphicsApp::__initGLFWWindow(int vWindowWidth, int vWindowHeight, std::st
 		glfwTerminate();
 		return false;
 	}
+	//glfwShowWindow(m_pGLFWWindow);//可有可无？
 	glfwMakeContextCurrent(m_pGLFWWindow);
 
 	glewExperimental = GL_TRUE;
