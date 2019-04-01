@@ -224,6 +224,13 @@ void CGraphicsApp::mouse_callback(GLFWwindow* vWindow, double vXPos, double vYPo
 
 //**********************************************************************************
 //FUNCTION:
+void CGraphicsApp::scroll_callback(GLFWwindow* vWindow, double vXOffset, double vYOffset)
+{
+	CCamera::get_mutable_instance().processMouseScroll(vYOffset);
+}
+
+//**********************************************************************************
+//FUNCTION:
 bool CGraphicsApp::__initGLFWWindow(int vWindowWidth, int vWindowHeight, std::string & vWindowName)
 {
 	_ASSERT(vWindowWidth && vWindowHeight);
@@ -329,7 +336,10 @@ void CGraphicsApp::__initCallback()
 	glfwSetScrollCallback(m_pGLFWWindow, 
 		[](GLFWwindow * vWindow, double vXOffset, double vYOffset) 
 		{
-			CCamera::get_mutable_instance().processMouseScroll(vYOffset);
+			auto it = g_Screen.find(vWindow);
+			if (it == g_Screen.end()) return;
+			CGraphicsApp * g = it->second;
+			g->scroll_callback(vWindow, vXOffset, vYOffset);
 		}
 	);
 }

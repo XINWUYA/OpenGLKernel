@@ -34,6 +34,7 @@ public:
 	void run();
 
 	void mouse_callback(GLFWwindow* vWindow, double vXPos, double vYPos);
+	void scroll_callback(GLFWwindow* vWindow, double vXOffset, double vYOffset);
 
 private:
 	bool __initGLFWWindow(int vWindowWidth, int vWindowHeight, std::string& vWindowName);
