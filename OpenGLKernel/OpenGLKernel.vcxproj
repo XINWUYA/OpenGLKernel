@@ -77,12 +77,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>OPENGL_KERNEL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(OPENGL)/include;$(GLM);$(STB_IMAGE)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OPENGL)/include;$(GLM);$(STB_IMAGE)/include;$(BOOST);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(OPENGL)/lib/$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OPENGL)/lib/$(PlatformTarget);$(BOOST)/$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3-vc140.lib;glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -132,12 +132,14 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="GLScreen.h" />
     <ClInclude Include="GLShader.h" />
+    <ClInclude Include="GLUtils.h" />
     <ClInclude Include="OPENGL_KERNEL_EXPORT.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLScreen.cpp" />
     <ClCompile Include="GLShader.cpp" />
+    <ClCompile Include="GLUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

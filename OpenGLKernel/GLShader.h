@@ -56,6 +56,7 @@ public:
 	/// Draw a sequence of primitives using a previously uploaded index buffer
 	void drawIndexed(int vType, uint32_t vOffset, uint32_t vCount);
 
+	bool setIntUniform(const std::string& vUniformSig, int v0);
 	bool setIntUniform(const std::string& vUniformSig, int v0, int v1, int v2, int v3) const;
 	bool setFloatUniform(const std::string& vUniformSig, float v0, float v1, float v2, float v3) const;
 	bool setMat4Uniform(const std::string& vUniformSig, const float vMat[16]) const;

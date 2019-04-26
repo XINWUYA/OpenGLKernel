@@ -109,6 +109,17 @@ void CGLShader::drawIndexed(int vType, uint32_t vOffset, uint32_t vCount)
 
 //***********************************************************************************************
 //Function:
+bool CGLShader::setIntUniform(const std::string& vUniformSig, int v0)
+{
+	GLint Location = __getUniformLocation(vUniformSig);
+	if (Location < 0) return false;
+	_ASSERT(Location >= 0);
+	glUniform1i(Location, v0);
+	return true;
+}
+
+//***********************************************************************************************
+//Function:
 bool CGLShader::setIntUniform(const std::string& vUniformSig, int v0, int v1, int v2, int v3) const
 {
 	GLint Location = __getUniformLocation(vUniformSig);
