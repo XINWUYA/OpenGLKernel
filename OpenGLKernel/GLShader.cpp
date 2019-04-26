@@ -253,7 +253,7 @@ bool CGLShader::__linkProgram()
 void CGLShader::__uploadAttrib(const std::string& vAttribName, size_t vSize, int vDim, uint32_t vCompSize, GLuint vGLType, bool vIsIntegral, const void* vData, int vVersion)
 {
 	int AttribId = 0;
-	if (vAttribName != "indices")
+	if (vAttribName != "Indices")
 	{
 		AttribId = __getAttribLocation(vAttribName);
 		if (AttribId < 0) return;
@@ -283,7 +283,7 @@ void CGLShader::__uploadAttrib(const std::string& vAttribName, size_t vSize, int
 	}
 
 	size_t TotalSize = vSize * (size_t)vCompSize;
-	if (vAttribName == "indices")
+	if (vAttribName == "Indices")
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, TotalSize, vData, GL_DYNAMIC_DRAW);

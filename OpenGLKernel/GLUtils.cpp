@@ -7,8 +7,8 @@ NAMESPACE_BEGIN(gl_utils)
 
 CGLTexture::CGLTexture(const std::string& vTextureFileName)
 {
-	STexture Texture;
-	CGLTexture(vTextureFileName, Texture);
+	//CGLTexture(vTextureFileName, m_Texture);
+	__loadTeture(vTextureFileName);
 }
 
 CGLTexture::CGLTexture(const std::string& vTextureFileName, STexture& vTexture) : m_Texture(vTexture)
@@ -116,20 +116,20 @@ void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
 //Function:
 void CGLTexture::__generateTexture()
 {
-	GLuint TextureID = 0;
-	glGenTextures(1, &TextureID);
+	//GLuint TextureID = 0;
+	glGenTextures(1, &(GLuint&)m_Texture.m_ID);
 
 	GLuint TextureType = 0;
 	switch (m_Texture.m_TextureType)
 	{
 	case STexture::ETextureType::TEXTURE_2D:
 		TextureType = GL_TEXTURE_2D;
-		glBindTexture(TextureType, TextureID);
+		glBindTexture(TextureType, m_Texture.m_ID);
 		glTexImage2D(TextureType, 0, m_Texture.m_InternelFormat, m_Texture.m_Width, m_Texture.m_Height, 0, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet.empty() ? nullptr : m_Texture.m_pDataSet[0]);
 		break;
 	case STexture::ETextureType::TEXTURE_2D_ARRAY:
 		TextureType = GL_TEXTURE_2D_ARRAY;
-		glBindTexture(TextureType, TextureID);
+		glBindTexture(TextureType, m_Texture.m_ID);
 		glTexImage3D(TextureType, 0, m_Texture.m_InternelFormat, m_Texture.m_Width, m_Texture.m_Height, m_Texture.m_Depth, 0, m_Texture.m_ExternalFormat, m_Texture.m_DataType, nullptr);
 		for (size_t i = 0; i < m_Texture.m_pDataSet.size(); ++i)
 			glTexSubImage3D(TextureType, 0, 0, 0, i, m_Texture.m_Width, m_Texture.m_Height, 1, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet[i]);
@@ -147,15 +147,14 @@ void CGLTexture::__generateTexture()
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_T, m_Texture.m_Type4WrapT);
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_R, m_Texture.m_Type4WrapR);
 
+	if (m_Texture.m_IsUseMipMap && m_Texture.m_Type4MinFilter == GL_LINEAR)
+		m_Texture.m_Type4MagFilter = GL_LINEAR_MIPMAP_LINEAR;
+	glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, m_Texture.m_Type4MinFilter);
+	glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, m_Texture.m_Type4MagFilter);
 	if (m_Texture.m_IsUseMipMap)
-	{
-		if (m_Texture.m_Type4MinFilter == GL_LINEAR)
-			m_Texture.m_Type4MagFilter = GL_LINEAR_MIPMAP_LINEAR;
-		glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, m_Texture.m_Type4MinFilter);
-		glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, m_Texture.m_Type4MagFilter);
 		glGenerateMipmap(TextureType);
-	}
-	m_Texture.m_ID = TextureID;
+
+	//m_Texture.m_ID = TextureID;
 }
 
 NAMESPACE_END(gl_utils)

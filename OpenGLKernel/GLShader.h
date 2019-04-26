@@ -11,18 +11,21 @@
 NAMESPACE_BEGIN(gl_kernel)
 
 template <typename T> struct STypeTraits;
-template <> struct STypeTraits<uint32_t> { enum { type = GL_UNSIGNED_INT, integral = 1 }; };
-template <> struct STypeTraits<int32_t>  { enum { type = GL_INT, integral = 1 }; };
-template <> struct STypeTraits<uint16_t> { enum { type = GL_UNSIGNED_SHORT, integral = 1 }; };
-template <> struct STypeTraits<int16_t>  { enum { type = GL_SHORT, integral = 1 }; };
-template <> struct STypeTraits<uint8_t>  { enum { type = GL_UNSIGNED_BYTE, integral = 1 }; };
-template <> struct STypeTraits<int8_t>	 { enum { type = GL_BYTE, integral = 1 }; };
-template <> struct STypeTraits<double>	 { enum { type = GL_DOUBLE, integral = 0 }; };
-template <> struct STypeTraits<float>	 { enum { type = GL_FLOAT, integral = 0 }; };
-template <> struct STypeTraits<glm::vec4>{ enum { type = GL_FLOAT, integral = 0 }; }; 
-template <> struct STypeTraits<glm::vec3>{ enum { type = GL_FLOAT, integral = 0 }; };
-template <> struct STypeTraits<glm::vec2>{ enum { type = GL_FLOAT, integral = 0 }; };
-template <> struct STypeTraits<glm::mat4>{ enum { type = GL_FLOAT, integral = 0 }; };
+template <> struct STypeTraits<uint32_t>	{ enum { type = GL_UNSIGNED_INT, integral = 1 }; };
+template <> struct STypeTraits<uint16_t>	{ enum { type = GL_UNSIGNED_SHORT, integral = 1 }; };
+template <> struct STypeTraits<uint8_t>		{ enum { type = GL_UNSIGNED_BYTE, integral = 1 }; };
+template <> struct STypeTraits<int32_t>		{ enum { type = GL_INT, integral = 1 }; };
+template <> struct STypeTraits<int16_t>		{ enum { type = GL_SHORT, integral = 1 }; };
+template <> struct STypeTraits<int8_t>		{ enum { type = GL_BYTE, integral = 1 }; };
+template <> struct STypeTraits<double>		{ enum { type = GL_DOUBLE, integral = 0 }; };
+template <> struct STypeTraits<float>		{ enum { type = GL_FLOAT, integral = 0 }; };
+template <> struct STypeTraits<glm::vec4>	{ enum { type = GL_FLOAT, integral = 0 }; }; 
+template <> struct STypeTraits<glm::vec3>	{ enum { type = GL_FLOAT, integral = 0 }; };
+template <> struct STypeTraits<glm::vec2>	{ enum { type = GL_FLOAT, integral = 0 }; };
+template <> struct STypeTraits<glm::mat4>	{ enum { type = GL_FLOAT, integral = 0 }; };
+template <> struct STypeTraits<glm::ivec4>	{ enum { type = GL_INT, integral = 1 }; };
+template <> struct STypeTraits<glm::ivec3>	{ enum { type = GL_INT, integral = 1 }; };
+template <> struct STypeTraits<glm::ivec2>	{ enum { type = GL_INT, integral = 1 }; };
 
 class /*OPENGL_KERNEL_EXPORT */CGLShader
 {

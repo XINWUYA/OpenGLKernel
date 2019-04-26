@@ -44,7 +44,7 @@ struct STexture
 	ETextureAttachmentType m_AttachmentType;
 
 	STexture() : m_ID(-1), m_Type4WrapS(GL_REPEAT), m_Type4WrapT(GL_REPEAT), m_Type4WrapR(GL_REPEAT), m_Type4MinFilter(GL_LINEAR), m_Type4MagFilter(GL_LINEAR),
-		m_InternelFormat(GL_RGBA), m_ExternalFormat(GL_RGBA), m_DataType(GL_UNSIGNED_BYTE), m_Width(0), m_Height(0), m_Depth(1), m_IsUseMipMap(GL_FALSE),
+		m_InternelFormat(GL_RGBA), m_ExternalFormat(GL_RGBA), m_DataType(GL_UNSIGNED_BYTE), m_Width(0), m_Height(0), m_Depth(1), m_IsUseMipMap(GL_TRUE),
 		m_IsSRGBSpace(GL_FALSE), m_BorderColor(0.0, 0.0, 0.0, 1.0), m_TextureName(""), m_pDataSet({}), m_TextureType(ETextureType::TEXTURE_2D), m_AttachmentType(ETextureAttachmentType::COLOR_TEXTURE)
 	{ }
 };
