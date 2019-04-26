@@ -1,11 +1,11 @@
 #include "Viewer.h"
 
-CViewer::CViewer() : CGLScreen("Triangle", 800, 600)
+CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHeight) : CGLScreen(WindowTitle, vWindowWidth, vWindowHeight), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight)
 {
-	m_LastMouseX = 800.0 / 2.0;
-	m_LastMouseY = 400.0 / 2.0;
-	m_pCamera = std::make_shared<CCamera>();
+	m_LastMouseX = static_cast<float>(vWindowWidth) / 2.0;
+	m_LastMouseY = static_cast<float>(vWindowHeight) / 2.0;
 
+	m_pCamera = std::make_shared<CCamera>();
 	m_pGLShader = std::make_shared<CGLShader>();
 	m_pGLShader->initFromFiles("triangle", "shaders/triangle.vert", "shaders/triangle.frag");
 	std::vector<glm::vec3> Vertices = {
@@ -33,7 +33,7 @@ void CViewer::drawContents()
 	m_LastGLFWTime = CurrentTime;
 	__processInput();
 
-	glm::mat4 Projection = m_pCamera->computeProjectionMatrix((float)800.0 / (float)600.0);
+	glm::mat4 Projection = m_pCamera->computeProjectionMatrix(static_cast<float>(m_WindowWidth) / static_cast<float>(m_WindowHeight));
 	glm::mat4 View = m_pCamera->getViewMatrix();
 	glm::mat4 Model;
 	m_pGLShader->bind();

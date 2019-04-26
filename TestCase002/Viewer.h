@@ -12,7 +12,7 @@ using gl_kernel::CCamera;
 class CViewer : public CGLScreen
 {
 public:
-	CViewer();
+	CViewer(const std::string& WindowTitle = "", int vWindowWidth = 800, int vWindowHeight = 600);
 	~CViewer();
 
 	void drawContents();
@@ -30,6 +30,7 @@ private:
 	std::shared_ptr<CCamera> m_pCamera = nullptr;
 
 	bool m_IsFirstMouse = true;
+	int m_WindowWidth = 0, m_WindowHeight = 0;
 	float m_LastMouseX = 0.0f, m_LastMouseY = 0.0f;
 	double m_LastGLFWTime = 0.0f, m_DeltaTime = 0.0f;
 };

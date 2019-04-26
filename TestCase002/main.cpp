@@ -3,7 +3,7 @@
 
 int main()
 {
-	CViewer Viewer;
+	CViewer Viewer("Camera");
 	while(!Viewer.isWindowShouldClosed())
 		Viewer.drawAll();
 
