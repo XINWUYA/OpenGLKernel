@@ -3,7 +3,7 @@
 
 int main()
 {
-	CViewer Viewer;
+	CViewer Viewer("Texture");
 	while(!Viewer.isWindowShouldClosed())
 		Viewer.drawAll();
 
