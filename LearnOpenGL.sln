@@ -68,6 +68,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase003(Texture)", "Tes
 		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase004(Texture+Camera)", "TestCase004\TestCase004.vcxproj", "{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -284,6 +286,14 @@ Global
 		{67A6BB7E-6028-4E49-8F56-B2099770E5A3}.Release|x64.Build.0 = Release|x64
 		{67A6BB7E-6028-4E49-8F56-B2099770E5A3}.Release|x86.ActiveCfg = Release|Win32
 		{67A6BB7E-6028-4E49-8F56-B2099770E5A3}.Release|x86.Build.0 = Release|Win32
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Debug|x64.ActiveCfg = Debug|x64
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Debug|x64.Build.0 = Debug|x64
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Debug|x86.ActiveCfg = Debug|Win32
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Debug|x86.Build.0 = Debug|Win32
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Release|x64.ActiveCfg = Release|x64
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Release|x64.Build.0 = Release|x64
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Release|x86.ActiveCfg = Release|Win32
+		{B5F2A79C-3641-4D3E-9400-8004A9A2D98E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
