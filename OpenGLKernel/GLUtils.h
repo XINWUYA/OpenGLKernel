@@ -4,7 +4,7 @@
 #include <vector>
 #include "Common.h"
 
-NAMESPACE_BEGIN(gl_utils)
+NAMESPACE_BEGIN(gl_kernel)
 
 struct STexture
 {
@@ -72,4 +72,4 @@ private:
 };
 
 
-NAMESPACE_END(gl_utils)
+NAMESPACE_END(gl_kernel)

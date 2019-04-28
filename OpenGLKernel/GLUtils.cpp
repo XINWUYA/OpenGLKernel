@@ -3,7 +3,7 @@
 #include <stb_image.h>
 #include <iostream>
 
-NAMESPACE_BEGIN(gl_utils)
+NAMESPACE_BEGIN(gl_kernel)
 
 CGLTexture::CGLTexture(const std::string& vTextureFileName)
 {
@@ -157,4 +157,4 @@ void CGLTexture::__generateTexture()
 	//m_Texture.m_ID = TextureID;
 }
 
-NAMESPACE_END(gl_utils)
+NAMESPACE_END(gl_kernel)
