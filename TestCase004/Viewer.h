@@ -10,7 +10,7 @@ using gl_kernel::CGLScreen;
 using gl_kernel::CGLShader;
 using gl_kernel::CCamera;
 
-using gl_utils::CGLTexture;
+using gl_kernel::CGLTexture;
 
 class CViewer : public CGLScreen
 {
