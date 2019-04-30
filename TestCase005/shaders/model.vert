@@ -1,7 +1,8 @@
 #version 400 core
 
 layout(location = 0) in vec3 Pos;
-layout(location = 1) in vec2 TextureCoord;
+layout(location = 1) in vec3 Normal;
+layout(location = 2) in vec2 TextureCoord;
 
 uniform mat4 projection;
 uniform mat4 view;

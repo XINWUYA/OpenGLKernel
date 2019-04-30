@@ -3,13 +3,14 @@
 #include "../OpenGLKernel/GLShader.h"
 #include "../OpenGLKernel/Camera.h"
 #include "../OpenGLKernel/GLUtils.h"
+#include "../OpenGLKernel/Model.h"
 #include <GLM/glm.hpp>
 #include <memory>
 
 using gl_kernel::CGLScreen;
 using gl_kernel::CGLShader;
 using gl_kernel::CCamera;
-
+using gl_kernel::CGLModel;
 using gl_kernel::CGLTexture;
 
 class CViewer : public CGLScreen
@@ -36,7 +37,7 @@ private:
 	std::shared_ptr<CGLShader> m_pGLShader = nullptr;
 	std::shared_ptr<CCamera> m_pCamera = nullptr;
 	std::shared_ptr<CGLTexture> m_pTexture = nullptr;
-
+	std::shared_ptr<CGLModel> m_pModel = nullptr;
 	bool m_IsFirstMouse = true;
 	int m_WindowWidth = 0, m_WindowHeight = 0;
 	float m_LastMouseX = 0.0f, m_LastMouseY = 0.0f;

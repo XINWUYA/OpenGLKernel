@@ -53,7 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample-Test001", "Sample-Test001\Sample-Test001.vcxproj", "{BB231D99-6EB1-4CA0-99CA-ED016F6DD969}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase001(Triangle)", "TestCase001\TestCase001.vcxproj", "{8A895C4F-A0E9-4C7B-9D78-872728BB00FD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase001(triangle)", "TestCase001\TestCase001.vcxproj", "{8A895C4F-A0E9-4C7B-9D78-872728BB00FD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
 	EndProjectSection
@@ -74,6 +74,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase004(Texture+Camera)
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase005(Model)", "TestCase005\TestCase005.vcxproj", "{983F750D-5A36-4E33-924E-2FA9399A7687}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

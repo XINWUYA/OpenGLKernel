@@ -10,11 +10,12 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	m_LastMouseY = static_cast<float>(vWindowHeight) / 2.0;
 
 	m_pCamera = std::make_shared<CCamera>();
-	m_pTexture = std::make_shared<CGLTexture>("textures/container2.png");
+	//m_pTexture = std::make_shared<CGLTexture>("textures/container2.png");
 	m_pGLShader = std::make_shared<CGLShader>();
-	m_pGLShader->initFromFiles("triangle", "shaders/triangle.vert", "shaders/triangle.frag");
-	
-	std::vector<glm::vec3> Vertices = {
+	m_pGLShader->initFromFiles("model", "shaders/model.vert", "shaders/model.frag");
+	m_pModel = std::make_shared<CGLModel>("../ModelSources/nanosuit/nanosuit.obj");
+	m_pModel->init(*m_pGLShader);
+	/*std::vector<glm::vec3> Vertices = {
 		glm::vec3(-0.5f, -0.5f, 0.0f),
 		glm::vec3( 0.5f, -0.5f, 0.0f),
 		glm::vec3(-0.5f,  0.5f, 0.0f),
@@ -40,7 +41,7 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	m_pGLShader->uploadAttrib("TextureCoord", TextureCoord, 2);
 
 	m_pTexture->bind(m_pTexture->getTextureID());
-	m_pGLShader->setIntUniform("u_Texture", m_pTexture->getTextureID());
+	m_pGLShader->setIntUniform("u_Texture", m_pTexture->getTextureID());*/
 }
 
 CViewer::~CViewer()
@@ -64,8 +65,9 @@ void CViewer::drawContents()
 	m_pGLShader->setMat4Uniform("view", &View[0][0]);
 	m_pGLShader->setMat4Uniform("model", &Model[0][0]);
 	
+	m_pModel->draw();
 	//m_pGLShader->drawArray(GL_TRIANGLES, 0, 6);
-	m_pGLShader->drawIndexed(GL_TRIANGLES, 0, 2);
+	//m_pGLShader->drawIndexed(GL_TRIANGLES, 0, 2);
 }
 
 //***********************************************************************************************

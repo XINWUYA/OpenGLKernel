@@ -33,7 +33,7 @@ public:
 	CGLMesh(const std::vector<SMeshVertex>& vMeshVerticesSet, const std::vector<GLuint> vMeshIndicesSet, const std::vector<SMeshTexture>& vMeshTextureSet);
 	~CGLMesh();
 
-	void draw(unsigned int vTextureUnit = 0);
+	void draw(unsigned int vTextureUnit = 0) const;
 
 private:
 	void __init();

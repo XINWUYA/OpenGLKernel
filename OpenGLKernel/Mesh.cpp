@@ -18,7 +18,7 @@ CGLMesh::~CGLMesh()
 
 //***********************************************************************************************
 //Function:
-void CGLMesh::draw(unsigned int vTextureUnit)
+void CGLMesh::draw(unsigned int vTextureUnit) const
 {
 	for (size_t i = 0; i < m_MeshTextureSet.size(); ++i)
 	{

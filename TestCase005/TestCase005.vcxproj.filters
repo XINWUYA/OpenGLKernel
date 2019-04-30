@@ -23,12 +23,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\triangle.frag" />
-    <None Include="shaders\triangle.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Viewer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\model.frag" />
+    <None Include="shaders\model.vert" />
   </ItemGroup>
 </Project>
