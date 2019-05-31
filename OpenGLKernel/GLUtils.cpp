@@ -7,7 +7,6 @@ NAMESPACE_BEGIN(gl_kernel)
 
 CGLTexture::CGLTexture(const std::string& vTextureFileName)
 {
-	//CGLTexture(vTextureFileName, m_Texture);
 	__loadTeture(vTextureFileName);
 }
 
@@ -66,7 +65,9 @@ void CGLTexture::__loadTeture(const std::string& vTextureFileName)
 //Function:
 void CGLTexture::__loadCommonTexture(const std::string& vTextureFileName)
 {
-	stbi_set_flip_vertically_on_load(true);
+	if(m_Texture.m_IsFLipVertically)
+		stbi_set_flip_vertically_on_load(true);
+
 	int TextureWidth = 0, TextureHeight = 0, TextureChannels = 0;
 	GLvoid* pImageData = stbi_load(vTextureFileName.c_str(), &TextureWidth, &TextureHeight, &TextureChannels, 0);
 	if (!pImageData)

@@ -18,10 +18,10 @@ void CGLModel::init(CGLShader& vShader, unsigned int vStartTextureUnit)
 {
 	m_StartTextureUnit = vStartTextureUnit;
 	vShader.bind();
-	vShader.setIntUniform("u_DiffuseTexture", vStartTextureUnit);
-	vShader.setIntUniform("u_SpecularTexture", vStartTextureUnit + 1);
-	vShader.setIntUniform("u_NormalTexture", vStartTextureUnit + 2);
-	vShader.setIntUniform("u_AmbientTexture", vStartTextureUnit + 3);
+	vShader.setIntUniform("u_ModelMaterial.Diffuse", vStartTextureUnit);
+	vShader.setIntUniform("u_ModelMaterial.Specular", vStartTextureUnit + 1);
+	vShader.setIntUniform("u_ModelMaterial.Normal", vStartTextureUnit + 2);
+	vShader.setIntUniform("u_ModelMaterial.Ambient", vStartTextureUnit + 3);
 }
 
 //***********************************************************************************************
@@ -157,7 +157,10 @@ void CGLModel::__loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType
 		if (!IsSkipFlag)
 		{
 			std::string FileName = m_Directory + '/' + TexturePath.C_Str();
-			CGLTexture TempGLTexture(FileName);
+			STexture Texture;
+			Texture.m_IsFLipVertically = false;
+			CGLTexture TempGLTexture(FileName, Texture);
+			
 			SMeshTexture MeshTexture;
 			MeshTexture.m_TextureID = TempGLTexture.getTextureID();
 			MeshTexture.m_TextureType = vTextureType;

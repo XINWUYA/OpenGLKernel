@@ -10,10 +10,6 @@ CGLMesh::CGLMesh(const std::vector<SMeshVertex>& vMeshVerticesSet, const std::ve
 
 CGLMesh::~CGLMesh()
 {
-	if (m_VertexArrayObject) {
-		glDeleteVertexArrays(1, &m_VertexArrayObject);
-		m_VertexArrayObject = 0;
-	}
 }
 
 //***********************************************************************************************
