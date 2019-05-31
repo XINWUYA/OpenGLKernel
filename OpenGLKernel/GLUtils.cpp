@@ -117,7 +117,6 @@ void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
 //Function:
 void CGLTexture::__generateTexture()
 {
-	//GLuint TextureID = 0;
 	glGenTextures(1, &(GLuint&)m_Texture.m_ID);
 
 	GLuint TextureType = 0;
@@ -148,14 +147,12 @@ void CGLTexture::__generateTexture()
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_T, m_Texture.m_Type4WrapT);
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_R, m_Texture.m_Type4WrapR);
 
-	if (m_Texture.m_IsUseMipMap && m_Texture.m_Type4MinFilter == GL_LINEAR)
-		m_Texture.m_Type4MagFilter = GL_LINEAR_MIPMAP_LINEAR;
+	if (m_Texture.m_IsUseMipMap && m_Texture.m_Type4MagFilter == GL_LINEAR)
+		m_Texture.m_Type4MinFilter = GL_LINEAR_MIPMAP_LINEAR;
 	glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, m_Texture.m_Type4MinFilter);
 	glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, m_Texture.m_Type4MagFilter);
 	if (m_Texture.m_IsUseMipMap)
 		glGenerateMipmap(TextureType);
-
-	//m_Texture.m_ID = TextureID;
 }
 
 NAMESPACE_END(gl_kernel)
