@@ -21,8 +21,6 @@ public:
 
 	void drawContents();
 
-	void loadModel(const std::string& vFileName);
-
 	virtual void processCursorPosCallbackEvent(double vX, double vY) override;
 	virtual void processMouseButtonCallbackEvent(int vButton, int vAction, int vModifiers) override;
 	virtual void processKeyCallbackEvent(int vKey, int vScancode, int vAction, int vMods) override;
@@ -31,8 +29,6 @@ public:
 
 private:
 	void __processInput();
-	void __loadObj(const std::string& vFileName);
-	void __loadPly(const std::string& vFileName);
 
 	std::shared_ptr<CGLShader> m_pGLShader = nullptr;
 	std::shared_ptr<CCamera> m_pCamera = nullptr;
