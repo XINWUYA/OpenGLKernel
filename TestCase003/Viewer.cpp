@@ -38,7 +38,7 @@ CViewer::~CViewer()
 
 //***********************************************************************************************
 //Function:
-void CViewer::drawContents()
+void CViewer::drawContentsV()
 {
 	//m_pGLShader->drawArray(GL_TRIANGLES, 0, 6);
 	m_pGLShader->drawIndexed(GL_TRIANGLES, 0, 2);

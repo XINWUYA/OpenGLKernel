@@ -19,12 +19,12 @@ public:
 	CViewer(const std::string& WindowTitle = "", int vWindowWidth = 800, int vWindowHeight = 600);
 	~CViewer();
 
-	void drawContents();
+	virtual void drawContentsV() override;
 
-	virtual void processCursorPosCallbackEvent(double vX, double vY) override;
-	virtual void processMouseButtonCallbackEvent(int vButton, int vAction, int vModifiers) override;
-	virtual void processKeyCallbackEvent(int vKey, int vScancode, int vAction, int vMods) override;
-	virtual void processScrollCallbackEvent(double vX, double vY) override;
+	virtual void processCursorPosCallbackEventV(double vX, double vY) override;
+	virtual void processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers) override;
+	virtual void processKeyCallbackEventV(int vKey, int vScancode, int vAction, int vMods) override;
+	virtual void processScrollCallbackEventV(double vX, double vY) override;
 	//virtual void processResizeCallbackEvent(int vWidth, int vHeight) override {};
 
 private:

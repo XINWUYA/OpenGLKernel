@@ -16,7 +16,7 @@ public:
 	CViewer(const std::string& WindowTitle = "", int vWindowWidth = 800, int vWindowHeight = 600);
 	~CViewer();
 
-	void drawContents();
+	virtual void drawContentsV() override;
 
 private:
 	std::shared_ptr<CGLShader> m_pGLShader = nullptr;

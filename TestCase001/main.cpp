@@ -25,7 +25,7 @@ public:
 	}
 	~CViewer() = default;
 
-	void drawContents()
+	virtual void drawContentsV() override
 	{
 		m_pGLShader->bind();
 		m_pGLShader->drawArray(GL_TRIANGLES, 0, 3);

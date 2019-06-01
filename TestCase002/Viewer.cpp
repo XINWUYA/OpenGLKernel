@@ -26,7 +26,7 @@ CViewer::~CViewer()
 
 //***********************************************************************************************
 //Function:
-void CViewer::drawContents()
+void CViewer::drawContentsV()
 {
 	double CurrentTime = glfwGetTime();
 	m_DeltaTime = CurrentTime - m_LastGLFWTime;
@@ -45,7 +45,7 @@ void CViewer::drawContents()
 
 //***********************************************************************************************
 //Function:
-void CViewer::processCursorPosCallbackEvent(double vX, double vY)
+void CViewer::processCursorPosCallbackEventV(double vX, double vY)
 {
 	if (m_IsFirstMouse)
 	{
@@ -64,7 +64,7 @@ void CViewer::processCursorPosCallbackEvent(double vX, double vY)
 
 //***********************************************************************************************
 //Function:
-void CViewer::processMouseButtonCallbackEvent(int vButton, int vAction, int vModifiers)
+void CViewer::processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers)
 {
 	if (vAction == GLFW_PRESS)
 	{
@@ -77,7 +77,7 @@ void CViewer::processMouseButtonCallbackEvent(int vButton, int vAction, int vMod
 
 //***********************************************************************************************
 //Function:
-void CViewer::processKeyCallbackEvent(int vKey, int vScancode, int vAction, int vMods)
+void CViewer::processKeyCallbackEventV(int vKey, int vScancode, int vAction, int vMods)
 {
 	
 
@@ -106,7 +106,7 @@ void CViewer::processKeyCallbackEvent(int vKey, int vScancode, int vAction, int 
 
 //***********************************************************************************************
 //Function:
-void CViewer::processScrollCallbackEvent(double vX, double vY)
+void CViewer::processScrollCallbackEventV(double vX, double vY)
 {
 	m_pCamera->processMouseScrollEvent(vY);
 }
