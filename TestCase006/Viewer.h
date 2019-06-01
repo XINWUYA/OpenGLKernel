@@ -32,6 +32,9 @@ public:
 private:
 	void __processInput();
 	void __setGUIComponents();
+	void __calculateTime();
+	double __calculateFrameRateInMilliSecond();
+	double __calcullateFPS();
 
 	std::shared_ptr<CGLShader> m_pGLShader = nullptr;
 	std::shared_ptr<CCamera> m_pCamera = nullptr;
@@ -44,4 +47,7 @@ private:
 	double m_LastGLFWTime = 0.0f, m_DeltaTime = 0.0f;
 	float m_LightPosX = 0.0f, m_LightPosY = 0.0f, m_LightPosZ = 0.0f;
 	glm::vec3 m_LightColor = glm::vec3(1.0f);
+	std::vector<float> m_FrameRateSet;
+	std::vector<std::string> m_LabelSet = { "AAAAA", "BBBBB", "CCCCC" };
+	std::string m_Selectedlabel;
 };

@@ -27,13 +27,10 @@ CViewer::~CViewer()
 //Function:
 void CViewer::drawContentsV()
 {
-	double CurrentTime = glfwGetTime();
-	m_DeltaTime = CurrentTime - m_LastGLFWTime;
-	m_LastGLFWTime = CurrentTime;
-
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	__calculateTime();
 	__processInput();
 	__setGUIComponents();
 
@@ -122,9 +119,35 @@ void CViewer::__processInput()
 void CViewer::__setGUIComponents()
 {
 	m_pAssistGUI->updateGUI();
-	m_pAssistGUI->text("HHHHHHHHHHHHHHHH");
+	m_pAssistGUI->text("Application average %.3f ms/frame (%.1f FPS)", __calculateFrameRateInMilliSecond(), __calcullateFPS());
 	m_pAssistGUI->sliderFloat("LightPosX", m_LightPosX, -10.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosY", m_LightPosY, -10.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosZ", m_LightPosZ, -10.0f, 10.0f);
 	m_pAssistGUI->colorEdit3("LightColor", &m_LightColor[0]);
+	m_FrameRateSet.push_back(__calcullateFPS());
+	m_pAssistGUI->plotLines("FrameRates", m_FrameRateSet);
+	m_pAssistGUI->combo("SelectCombo", m_LabelSet, m_Selectedlabel);
+}
+
+//***********************************************************************************************
+//Function:
+void CViewer::__calculateTime()
+{
+	double CurrentTime = glfwGetTime();
+	m_DeltaTime = CurrentTime - m_LastGLFWTime;
+	m_LastGLFWTime = CurrentTime;
+}
+
+//***********************************************************************************************
+//Function:
+double CViewer::__calculateFrameRateInMilliSecond()
+{
+	return m_DeltaTime * 1000;
+}
+
+//***********************************************************************************************
+//Function:
+double CViewer::__calcullateFPS()
+{
+	return 1.0 / m_DeltaTime;
 }
