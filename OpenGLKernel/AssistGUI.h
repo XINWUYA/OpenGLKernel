@@ -18,8 +18,13 @@ public:
 	void drawGUI();
 
 	void text(const char* vStr, ...);
-	bool sliderFloat(const std::string& vName, float& vioValue, float vMin, float vMax);
-	bool colorEdit3(const std::string& vName, float* vColor);
+	void sameLine();
+	void plotLines(const std::string& vLabelName, const std::vector<float>& vDataSet);
+	bool sliderFloat(const std::string& vLabelName, float& vioValue, float vMin, float vMax);
+	bool colorEdit3(const std::string& vLabelName, float* vColor);
+	bool checkBox(const std::string& vLabelName, bool& vioIsSelected);
+	bool button(const std::string& vLabelName);
+	bool combo(const std::string& vLabelName, const std::vector<std::string>& vLabelSet, std::string& vioSelectedLabel);
 
 	void setIsShowDefaultGUI(bool vIsShowDefaultGUI) { m_IsShowDefaultGUI = vIsShowDefaultGUI; }
 

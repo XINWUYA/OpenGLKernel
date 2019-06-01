@@ -28,7 +28,9 @@ void CAssistGUI::initGUI(GLFWwindow* vGLFWWindow)
 	ImGui::CreateContext();
 	m_pImGuiIO = &ImGui::GetIO();
 	
-	ImGui::StyleColorsDark();//Set ImGUI Style: Dark/Light/Classic
+	//ImGui::StyleColorsDark();//Set ImGUI Style: Dark/Light/Classic
+	ImGui::StyleColorsClassic();//Set ImGUI Style: Dark/Light/Classic
+	//ImGui::StyleColorsLight();//Set ImGUI Style: Dark/Light/Classic
 	
 	ImGui_ImplGlfw_InitForOpenGL(vGLFWWindow, true);
 	ImGui_ImplOpenGL3_Init("#version 400");
@@ -74,16 +76,66 @@ void CAssistGUI::text(const char* vStr, ...)
 
 //***********************************************************************************************
 //Function:
-bool CAssistGUI::sliderFloat(const std::string& vName, float& vioValue, float vMin, float vMax)
+void CAssistGUI::sameLine()
 {
-	return ImGui::SliderFloat(vName.c_str(), &vioValue, vMin, vMax);
+	ImGui::SameLine();
 }
 
 //***********************************************************************************************
 //Function:
-bool CAssistGUI::colorEdit3(const std::string& vName, float* vColor)
+void CAssistGUI::plotLines(const std::string& vLabelName, const std::vector<float>& vDataSet)
 {
-	return ImGui::ColorEdit3(vName.c_str(), vColor);
+	ImGui::PlotLines(vLabelName.c_str(), vDataSet.data(), vDataSet.size(), 0, "", FLT_MAX, FLT_MAX, ImVec2(0, 40));
+}
+
+//***********************************************************************************************
+//Function:
+bool CAssistGUI::sliderFloat(const std::string& vLabelName, float& vioValue, float vMin, float vMax)
+{
+	return ImGui::SliderFloat(vLabelName.c_str(), &vioValue, vMin, vMax);
+}
+
+//***********************************************************************************************
+//Function:
+bool CAssistGUI::colorEdit3(const std::string& vLabelName, float* vColor)
+{
+	return ImGui::ColorEdit3(vLabelName.c_str(), vColor);
+}
+
+//***********************************************************************************************
+//Function:
+bool CAssistGUI::checkBox(const std::string& vLabelName, bool& vioIsSelected)
+{
+	return ImGui::Checkbox(vLabelName.c_str(), &vioIsSelected);
+}
+
+//***********************************************************************************************
+//Function:
+bool CAssistGUI::button(const std::string& vLabelName)
+{
+	return ImGui::Button(vLabelName.c_str());
+}
+
+//***********************************************************************************************
+//Function:
+bool CAssistGUI::combo(const std::string& vLabelName, const std::vector<std::string>& vLabelSet, std::string& vioSelectedLabel)
+{
+	static ImGuiComboFlags flags = 0;
+	if(vioSelectedLabel.empty())
+		vioSelectedLabel = vLabelSet.front();
+	if (ImGui::BeginCombo(vLabelName.c_str(), vioSelectedLabel.c_str()))
+	{
+		for (auto& Label : vLabelSet)
+		{
+			bool IsSelected = (Label == vioSelectedLabel);
+			if (ImGui::Selectable(Label.c_str(), IsSelected))
+				vioSelectedLabel = Label;
+			if (IsSelected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+	return true;
 }
 
 NAMESPACE_END(gl_kernel)
