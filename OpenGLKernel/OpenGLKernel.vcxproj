@@ -77,7 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>OPENGL_KERNEL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(OPENGL)/include;$(GLM);$(STB_IMAGE)/include;$(BOOST);$(ASSIMP)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OPENGL)/include;$(GLM);$(STB_IMAGE)/include;$(BOOST);$(ASSIMP)/include;../Common/include/imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -128,12 +128,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\include\imgui\examples\imgui_impl_glfw.h" />
+    <ClInclude Include="..\Common\include\imgui\examples\imgui_impl_opengl3.h" />
     <ClInclude Include="..\Common\include\imgui\imconfig.h" />
     <ClInclude Include="..\Common\include\imgui\imgui.h" />
     <ClInclude Include="..\Common\include\imgui\imgui_internal.h" />
     <ClInclude Include="..\Common\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\Common\include\imgui\imstb_textedit.h" />
     <ClInclude Include="..\Common\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="AssistGUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="GUI.h" />
@@ -146,10 +149,13 @@
     <ClInclude Include="OPENGL_KERNEL_EXPORT.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Common\include\imgui\imgui.cpp" />
     <ClCompile Include="..\Common\include\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Common\include\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Common\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="AssistGUI.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Interface.cpp" />

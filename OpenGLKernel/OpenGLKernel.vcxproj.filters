@@ -69,6 +69,15 @@
     <ClInclude Include="GUI.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AssistGUI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\examples\imgui_impl_glfw.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\examples\imgui_impl_opengl3.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLShader.cpp">
@@ -106,6 +115,15 @@
     </ClCompile>
     <ClCompile Include="GUI.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AssistGUI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_glfw.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_opengl3.cpp">
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
