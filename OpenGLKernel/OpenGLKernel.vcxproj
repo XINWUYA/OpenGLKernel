@@ -133,9 +133,6 @@
     <ClInclude Include="..\Common\include\imgui\imconfig.h" />
     <ClInclude Include="..\Common\include\imgui\imgui.h" />
     <ClInclude Include="..\Common\include\imgui\imgui_internal.h" />
-    <ClInclude Include="..\Common\include\imgui\imstb_rectpack.h" />
-    <ClInclude Include="..\Common\include\imgui\imstb_textedit.h" />
-    <ClInclude Include="..\Common\include\imgui\imstb_truetype.h" />
     <ClInclude Include="AssistGUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
@@ -151,7 +148,6 @@
     <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_glfw.cpp" />
     <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Common\include\imgui\imgui.cpp" />
-    <ClCompile Include="..\Common\include\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Common\include\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Common\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="AssistGUI.cpp" />
