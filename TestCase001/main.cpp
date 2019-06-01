@@ -2,6 +2,7 @@
 #include <memory>
 #include "../OpenGLKernel/GLScreen.h"
 #include "../OpenGLKernel/GLShader.h"
+#include "../OpenGLKernel/Interface.h"
 #include <GLM/glm.hpp>
 
 using gl_kernel::CGLScreen;
@@ -37,9 +38,25 @@ private:
 
 int main()
 {
-	CViewer Viewer;
-	while(!Viewer.isWindowShouldClosed())
-		Viewer.drawAll();
+	try
+	{
+		gl_kernel::init();
+
+		{
+			CViewer Viewer;
+			Viewer.setVisible(true);
+
+			gl_kernel::mainloop();
+		}
+
+		gl_kernel::shutdown();
+	}
+	catch (const std::runtime_error& vErr)
+	{
+		std::string ErrorMsg = std::string("Caught a fatal error: ") + std::string(vErr.what());
+		std::cerr << ErrorMsg << std::endl;
+		return -1;
+	}
 
 	return 0;
 }
