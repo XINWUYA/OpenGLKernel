@@ -22,6 +22,7 @@ void CGLModel::init(CGLShader& vShader, unsigned int vStartTextureUnit)
 	vShader.setIntUniform("u_ModelMaterial.Specular", vStartTextureUnit + 1);
 	vShader.setIntUniform("u_ModelMaterial.Normal", vStartTextureUnit + 2);
 	vShader.setIntUniform("u_ModelMaterial.Ambient", vStartTextureUnit + 3);
+	vShader.setIntUniform("u_ModelMaterial.Roughness", vStartTextureUnit + 4);
 }
 
 //***********************************************************************************************
@@ -69,14 +70,14 @@ void CGLModel::__processNodeRecursively(const aiNode* vNode, const aiScene* vSce
 {
 	_ASSERT(vNode && vScene);
 
-	for (auto i = 0; i < vNode->mNumMeshes; ++i)
+	for (unsigned int i = 0; i < vNode->mNumMeshes; ++i)
 	{
 		aiMesh* pMesh = vScene->mMeshes[vNode->mMeshes[i]];
 		_ASSERT(pMesh);
 		m_MeshSet.push_back(__processMesh(pMesh, vScene));
 	}
 
-	for (auto i = 0; i < vNode->mNumChildren; ++i)
+	for (unsigned int i = 0; i < vNode->mNumChildren; ++i)
 		__processNodeRecursively(vNode->mChildren[i], vScene);
 }
 
@@ -86,7 +87,7 @@ void CGLModel::__processVertices(const aiMesh* vMesh, std::vector<SMeshVertex>& 
 {
 	_ASSERT(vMesh);
 
-	for (auto i = 0; i < vMesh->mNumVertices; ++i)
+	for (unsigned int i = 0; i < vMesh->mNumVertices; ++i)
 	{
 		SMeshVertex Vertex;
 		Vertex.m_Position = glm::vec3(vMesh->mVertices[i].x, vMesh->mVertices[i].y, vMesh->mVertices[i].z);
@@ -128,27 +129,43 @@ void CGLModel::__processTextures(const aiMesh* vMesh, const aiScene* vScene, std
 	aiMaterial* pMaterial = vScene->mMaterials[vMesh->mMaterialIndex];
 	_ASSERT(pMaterial);
 
-	__loadMaterialTextures(pMaterial, aiTextureType_DIFFUSE, "u_DiffuseTexture", voMeshTexturesSet);
-	__loadMaterialTextures(pMaterial, aiTextureType_SPECULAR, "u_SpecularTexture", voMeshTexturesSet);
-	__loadMaterialTextures(pMaterial, aiTextureType_NORMALS, "u_NormalTexture", voMeshTexturesSet);
-	__loadMaterialTextures(pMaterial, aiTextureType_AMBIENT, "u_AmbientTexture", voMeshTexturesSet);
+	__loadMaterialTextures(pMaterial, aiTextureType_DIFFUSE, "u_ModelMaterial.Diffuse", voMeshTexturesSet);
+	__loadMaterialTextures(pMaterial, aiTextureType_SPECULAR, "u_ModelMaterial.Specular", voMeshTexturesSet);
+	//__loadMaterialTextures(pMaterial, aiTextureType_NORMALS, "u_ModelMaterial.Normal", voMeshTexturesSet);
+	__loadMaterialTextures(pMaterial, aiTextureType_HEIGHT, "u_ModelMaterial.Normal", voMeshTexturesSet);//Normal	
+	__loadMaterialTextures(pMaterial, aiTextureType_AMBIENT, "u_ModelMaterial.Ambient", voMeshTexturesSet);//Metallic
+	__loadMaterialTextures(pMaterial, aiTextureType_SHININESS, "u_ModelMaterial.Roughness", voMeshTexturesSet);
 }
 
 //***********************************************************************************************
 //Function:
-void CGLModel::__loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType vTextureType, const std::string& vTextureUniformName, std::vector<SMeshTexture>& voMeshTexturesSet)
+void CGLModel::__loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType vTextureType, const std::string& vTextureTypeName, std::vector<SMeshTexture>& voMeshTexturesSet)
 {
-	_ASSERT(vMaterial && !vTextureUniformName.empty());
+	_ASSERT(vMaterial && !vTextureTypeName.empty());
 
-	for (auto i = 0; i < vMaterial->GetTextureCount(vTextureType); ++i)
+	unsigned int TextureCnt = vMaterial->GetTextureCount(vTextureType);
+	if (TextureCnt <= 0)
+	{
+		SMeshTexture MeshTexture;//Note: 防止由于缺失某个纹理导致纹理对应错误
+		voMeshTexturesSet.push_back(MeshTexture);
+		return;
+	}
+
+	int TextureIndex = -1;
+	for (unsigned int i = 0; i < TextureCnt; ++i)
 	{
 		aiString TexturePath;
 		vMaterial->GetTexture(vTextureType, i, &TexturePath);
+		if (TexturePath.length == 0) 
+			continue;
+		std::string FilePath = m_Directory + '/' + TexturePath.C_Str();
+
 		bool IsSkipFlag = false;
-		for (auto k = 0; k < m_LoadedMeshTextureSet.size(); ++k)
+		for (size_t k = 0; k < m_LoadedMeshTextureSet.size(); ++k)
 		{
-			if (0 == std::strcmp(m_LoadedMeshTextureSet[k].m_TexturePath.data(), TexturePath.C_Str()))
+			if (0 == std::strcmp(m_LoadedMeshTextureSet[k].m_TexturePath.data(), FilePath.c_str()))
 			{
+				m_LoadedMeshTextureSet[k].m_TextureTypeName = vTextureTypeName + std::to_string(++TextureCnt);
 				voMeshTexturesSet.push_back(m_LoadedMeshTextureSet[k]);
 				IsSkipFlag = true;
 				break;
@@ -156,15 +173,14 @@ void CGLModel::__loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType
 		}
 		if (!IsSkipFlag)
 		{
-			std::string FileName = m_Directory + '/' + TexturePath.C_Str();
 			STexture Texture;
 			Texture.m_IsFLipVertically = false;
-			CGLTexture TempGLTexture(FileName, Texture);
+			CGLTexture TempGLTexture(FilePath, Texture);
 			
 			SMeshTexture MeshTexture;
 			MeshTexture.m_TextureID = TempGLTexture.getTextureID();
-			MeshTexture.m_TextureType = vTextureType;
-			MeshTexture.m_TexturePath = TexturePath.C_Str();
+			MeshTexture.m_TextureTypeName = vTextureTypeName + std::to_string(++TextureCnt);
+			MeshTexture.m_TexturePath = FilePath;
 			voMeshTexturesSet.push_back(MeshTexture);
 			m_LoadedMeshTextureSet.push_back(MeshTexture);
 		}

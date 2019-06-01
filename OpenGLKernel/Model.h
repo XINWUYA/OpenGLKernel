@@ -27,7 +27,7 @@ private:
 	void __processVertices(const aiMesh* vMesh, std::vector<SMeshVertex>& voMeshVerticesSet);
 	void __processIndices(const aiMesh* vMesh, std::vector<GLuint>& voMeshIndicesSet);
 	void __processTextures(const aiMesh* vMesh, const aiScene* vScene, std::vector<SMeshTexture>& voMeshTexturesSet);
-	void __loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType vTextureType, const std::string& vTextureUniformName, std::vector<SMeshTexture>& voMeshTexturesSet);
+	void __loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType vTextureType, const std::string& vTextureTypeName, std::vector<SMeshTexture>& voMeshTexturesSet);
 
 	std::vector<CGLMesh> m_MeshSet;
 	std::vector<SMeshTexture> m_LoadedMeshTextureSet;

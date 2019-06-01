@@ -20,7 +20,7 @@ struct SMeshVertex
 struct SMeshTexture
 {
 	GLuint m_TextureID = (unsigned int)-1;
-	std::string m_TextureType;
+	std::string m_TextureTypeName;
 	std::string m_TexturePath;
 
 	SMeshTexture() {}
