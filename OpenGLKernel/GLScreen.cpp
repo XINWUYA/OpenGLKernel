@@ -47,6 +47,21 @@ bool CGLScreen::isWindowShouldClosed() const
 
 //***********************************************************************************************
 //Function:
+void CGLScreen::setVisible(bool vIsVisible)
+{
+	if (m_IsVisible != vIsVisible)
+	{
+		m_IsVisible = vIsVisible;
+
+		if (vIsVisible)
+			glfwShowWindow(m_pGLFWWindow);
+		else
+			glfwHideWindow(m_pGLFWWindow);
+	}
+}
+
+//***********************************************************************************************
+//Function:
 void CGLScreen::processCursorPosCallbackEvent(double vX, double vY)
 {	
 }
@@ -89,7 +104,6 @@ bool CGLScreen::__initGLFWWindow()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	glfwWindowHint(GLFW_SAMPLES, m_Samples);
-	glfwInit();
 	
 	if (m_IsFullScreen)
 	{

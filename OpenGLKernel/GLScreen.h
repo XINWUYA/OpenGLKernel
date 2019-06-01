@@ -13,10 +13,13 @@ public:
 	virtual ~CGLScreen();
 
 	virtual void drawAll();
-	virtual void drawContents() { }
+	virtual void drawContents() {  /* To be overridden */ }
 
 	GLFWwindow* fetchGLFWWindow() const { return m_pGLFWWindow; }
 	bool isWindowShouldClosed() const;
+	bool isVisible() const { return m_IsVisible; }
+
+	void setVisible(bool vIsVisible);
 
 	virtual void processCursorPosCallbackEvent(double vX, double vY);
 	virtual void processMouseButtonCallbackEvent(int vButton, int vAction, int vModifiers);
@@ -34,6 +37,7 @@ private:
 	int m_WindowHeight = 0;
 	int m_Samples = 0;
 	bool m_IsFullScreen = false;
+	bool m_IsVisible = true;
 	unsigned int m_GLMajor = 4, m_GLMinor = 0;
 };
 
