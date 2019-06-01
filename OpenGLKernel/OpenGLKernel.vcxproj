@@ -139,7 +139,6 @@
     <ClInclude Include="AssistGUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="GUI.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="GLScreen.h" />
@@ -157,7 +156,6 @@
     <ClCompile Include="..\Common\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="AssistGUI.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="GLScreen.cpp" />
