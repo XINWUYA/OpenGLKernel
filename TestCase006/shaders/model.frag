@@ -39,8 +39,8 @@ void main()
 
 	vec3 ViewDir = normalize(u_CameraPos -v2f_FragPos);
 	vec3 ReflectDir = reflect(-LightDir, Normal);
-	vec3 SpecularColor = pow(max(dot(ViewDir, ReflectDir), 0.0f), 64) * u_LightInfo.Color * OriginalColor;
+	vec3 SpecularColor = pow(max(dot(ViewDir, ReflectDir), 0.0f), 64) * OriginalColor;
 
-	vec3 ResultColor = AmbientColor + DiffuseColor + 0.9 * SpecularColor;
+	vec3 ResultColor = (AmbientColor + DiffuseColor + 0.9 * SpecularColor) * u_LightInfo.Color;
 	gl_FragColor = vec4(ResultColor, 1.0f);
 }

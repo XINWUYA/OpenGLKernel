@@ -15,7 +15,7 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	m_pModel = std::make_shared<CGLModel>("../ModelSources/sponza/sponza.obj");
 	m_pModel->init(*m_pGLShader);
 
-	m_pAssistGUI = std::make_shared<CAssistGUI>("Default");
+	m_pAssistGUI = std::make_shared<CAssistGUI>("ControlPlane");
 	m_pAssistGUI->initGUI(fetchGLFWWindow());
 }
 
@@ -34,9 +34,8 @@ void CViewer::drawContentsV()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_pAssistGUI->updateGUI();
-	
 	__processInput();
+	__setGUIComponents();
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -49,8 +48,8 @@ void CViewer::drawContentsV()
 	m_pGLShader->setMat4Uniform("view", &View[0][0]);
 	m_pGLShader->setMat4Uniform("model", &Model[0][0]);
 	m_pGLShader->setFloatUniform("u_CameraPos", m_pCamera->getCameraPos().x, m_pCamera->getCameraPos().y, m_pCamera->getCameraPos().z);
-	m_pGLShader->setFloatUniform("u_LightInfo.Position", 0.0f, 0.5f, -0.5f);
-	m_pGLShader->setFloatUniform("u_LightInfo.Color", 1.0f, 0.0f, 0.0f);
+	m_pGLShader->setFloatUniform("u_LightInfo.Position", m_LightPosX, m_LightPosY, m_LightPosZ);
+	m_pGLShader->setFloatUniform("u_LightInfo.Color", m_LightColor.r, m_LightColor.g, m_LightColor.b);
 	
 	m_pModel->draw();
 
@@ -82,13 +81,13 @@ void CViewer::processCursorPosCallbackEventV(double vX, double vY)
 //Function:
 void CViewer::processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers)
 {
-	if (vAction == GLFW_PRESS)
+	/*if (vAction == GLFW_PRESS)
 	{
 		if (vButton == GLFW_MOUSE_BUTTON_LEFT)
 			m_pCamera->setMoveState(true);
 	}
 	else
-		m_pCamera->setMoveState(false);
+		m_pCamera->setMoveState(false);*/
 }
 
 //***********************************************************************************************
@@ -116,4 +115,16 @@ void CViewer::__processInput()
 	if (glfwGetKey(fetchGLFWWindow(), GLFW_KEY_D) == GLFW_PRESS) m_pCamera->processKeyEvent(gl_kernel::ECameraMovement::CAMERA_MOVE_RIGHT, m_DeltaTime);
 	if (glfwGetKey(fetchGLFWWindow(), GLFW_KEY_Q) == GLFW_PRESS) m_pCamera->processKeyEvent(gl_kernel::ECameraMovement::CAMERA_MOVE_UP, m_DeltaTime);
 	if (glfwGetKey(fetchGLFWWindow(), GLFW_KEY_E) == GLFW_PRESS) m_pCamera->processKeyEvent(gl_kernel::ECameraMovement::CAMERA_MOVE_DOWN, m_DeltaTime);
+}
+
+//***********************************************************************************************
+//Function:
+void CViewer::__setGUIComponents()
+{
+	m_pAssistGUI->updateGUI();
+	m_pAssistGUI->text("HHHHHHHHHHHHHHHH");
+	m_pAssistGUI->sliderFloat("LightPosX", m_LightPosX, -10.0f, 10.0f);
+	m_pAssistGUI->sliderFloat("LightPosY", m_LightPosY, -10.0f, 10.0f);
+	m_pAssistGUI->sliderFloat("LightPosZ", m_LightPosZ, -10.0f, 10.0f);
+	m_pAssistGUI->colorEdit3("LightColor", &m_LightColor[0]);
 }
