@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{f53ee4be-842c-41f9-8f60-c9e368073a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\imgui">
+      <UniqueIdentifier>{5db37363-2f59-4f05-a807-fefb7c791172}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLShader.h">
@@ -42,6 +48,27 @@
     <ClInclude Include="Interface.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\imconfig.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\imgui.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\imgui_internal.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\imstb_rectpack.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\imstb_textedit.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\include\imgui\imstb_truetype.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLShader.cpp">
@@ -63,6 +90,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Interface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\include\imgui\imgui.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\include\imgui\imgui_demo.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\include\imgui\imgui_draw.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\include\imgui\imgui_widgets.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

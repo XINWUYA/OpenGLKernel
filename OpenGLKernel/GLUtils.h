@@ -56,7 +56,7 @@ class CGLTexture
 public:
 	CGLTexture(const std::string& vTextureFileName);
 	CGLTexture(const std::string& vTextureFileName, STexture& vTexture);
-	~CGLTexture();
+	~CGLTexture() = default;
 
 	void bind(int vIndex);
 

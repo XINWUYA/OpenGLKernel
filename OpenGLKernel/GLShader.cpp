@@ -131,6 +131,39 @@ bool CGLShader::setIntUniform(const std::string& vUniformSig, int v0, int v1, in
 
 //***********************************************************************************************
 //Function:
+bool CGLShader::setFloatUniform(const std::string& vUniformSig, float v0) const
+{
+	GLint Location = __getUniformLocation(vUniformSig);
+	if (Location < 0) return false;
+	_ASSERT(Location >= 0);
+	glUniform1f(Location, v0);
+	return true;
+}
+
+//***********************************************************************************************
+//Function:
+bool CGLShader::setFloatUniform(const std::string& vUniformSig, float v0, float v1) const
+{
+	GLint Location = __getUniformLocation(vUniformSig);
+	if (Location < 0) return false;
+	_ASSERT(Location >= 0);
+	glUniform2f(Location, v0, v1);
+	return true;
+}
+
+//***********************************************************************************************
+//Function:
+bool CGLShader::setFloatUniform(const std::string& vUniformSig, float v0, float v1, float v2) const
+{
+	GLint Location = __getUniformLocation(vUniformSig);
+	if (Location < 0) return false;
+	_ASSERT(Location >= 0);
+	glUniform3f(Location, v0, v1, v2);
+	return true;
+}
+
+//***********************************************************************************************
+//Function:
 bool CGLShader::setFloatUniform(const std::string& vUniformSig, float v0, float v1, float v2, float v3) const
 {
 	GLint Location = __getUniformLocation(vUniformSig);

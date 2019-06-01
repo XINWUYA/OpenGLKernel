@@ -48,7 +48,7 @@ void mainloop()
 					continue;
 				}
 
-				pScreen->drawAll();
+				pScreen->drawAllV();
 				++ScreenCnt;
 			}
 

@@ -27,12 +27,12 @@ CGLScreen::~CGLScreen()
 
 //***********************************************************************************************
 //Function:
-void CGLScreen::drawAll()
+void CGLScreen::drawAllV()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	drawContents();
+	drawContentsV();
 
 	glfwPollEvents();
 	glfwSwapBuffers(m_pGLFWWindow);
@@ -62,19 +62,19 @@ void CGLScreen::setVisible(bool vIsVisible)
 
 //***********************************************************************************************
 //Function:
-void CGLScreen::processCursorPosCallbackEvent(double vX, double vY)
+void CGLScreen::processCursorPosCallbackEventV(double vX, double vY)
 {	
 }
 
 //***********************************************************************************************
 //Function:
-void CGLScreen::processMouseButtonCallbackEvent(int vButton, int vAction, int vModifiers)
+void CGLScreen::processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers)
 {
 }
 
 //***********************************************************************************************
 //Function:
-void CGLScreen::processKeyCallbackEvent(int vKey, int vScancode, int vAction, int vMods)
+void CGLScreen::processKeyCallbackEventV(int vKey, int vScancode, int vAction, int vMods)
 {
 	if (vAction == GLFW_PRESS)
 	{
@@ -84,13 +84,13 @@ void CGLScreen::processKeyCallbackEvent(int vKey, int vScancode, int vAction, in
 
 //***********************************************************************************************
 //Function:
-void CGLScreen::processScrollCallbackEvent(double vX, double vY)
+void CGLScreen::processScrollCallbackEventV(double vX, double vY)
 {
 }
 
 //***********************************************************************************************
 //Function:
-void CGLScreen::processResizeCallbackEvent(int vWidth, int vHeight)
+void CGLScreen::processResizeCallbackEventV(int vWidth, int vHeight)
 {
 	glViewport(0, 0, vWidth, vHeight);
 }
@@ -146,7 +146,7 @@ void CGLScreen::__initCallbackFunc()
 			if (it == GL_SCREENS.end()) return;
 
 			CGLScreen* pScreen = it->second;
-			pScreen->processCursorPosCallbackEvent(vX, vY);
+			pScreen->processCursorPosCallbackEventV(vX, vY);
 		}
 	);
 
@@ -157,7 +157,7 @@ void CGLScreen::__initCallbackFunc()
 			if (it == GL_SCREENS.end()) return;
 
 			CGLScreen* pScreen = it->second;
-			pScreen->processMouseButtonCallbackEvent(vButton, vAction, vModifiers);
+			pScreen->processMouseButtonCallbackEventV(vButton, vAction, vModifiers);
 		}
 	);
 
@@ -168,7 +168,7 @@ void CGLScreen::__initCallbackFunc()
 			if (it == GL_SCREENS.end()) return;
 
 			CGLScreen * pScreen = it->second;
-			pScreen->processKeyCallbackEvent(vKey, vScancode, vAction, vMods);
+			pScreen->processKeyCallbackEventV(vKey, vScancode, vAction, vMods);
 		}
 	);
 
@@ -179,7 +179,7 @@ void CGLScreen::__initCallbackFunc()
 			if (it == GL_SCREENS.end()) return;
 
 			CGLScreen * pScreen = it->second;
-			pScreen->processScrollCallbackEvent(vX, vY);
+			pScreen->processScrollCallbackEventV(vX, vY);
 		}
 	);
 
@@ -190,7 +190,7 @@ void CGLScreen::__initCallbackFunc()
 			if (it == GL_SCREENS.end()) return;
 
 			CGLScreen * pScreen = it->second;
-			pScreen->processResizeCallbackEvent(vWidth, vHeight);
+			pScreen->processResizeCallbackEventV(vWidth, vHeight);
 		}
 	);
 }

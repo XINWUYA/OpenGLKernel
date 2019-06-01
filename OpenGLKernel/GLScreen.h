@@ -12,8 +12,8 @@ public:
 	CGLScreen(const std::string& vWindowTitle, int vWindowWidth, int vWindowHeight, bool vIsFullScreen = false, int vSamples = 0, unsigned int vGLMajor = 4, unsigned int vGLMinor = 0);
 	virtual ~CGLScreen();
 
-	virtual void drawAll();
-	virtual void drawContents() {  /* To be overridden */ }
+	virtual void drawAllV();
+	virtual void drawContentsV() {  /* To be overridden */ }
 
 	GLFWwindow* fetchGLFWWindow() const { return m_pGLFWWindow; }
 	bool isWindowShouldClosed() const;
@@ -21,11 +21,11 @@ public:
 
 	void setVisible(bool vIsVisible);
 
-	virtual void processCursorPosCallbackEvent(double vX, double vY);
-	virtual void processMouseButtonCallbackEvent(int vButton, int vAction, int vModifiers);
-	virtual void processKeyCallbackEvent(int vKey, int vScancode, int vAction, int vMods);
-	virtual void processScrollCallbackEvent(double vX, double vY);
-	virtual void processResizeCallbackEvent(int vWidth, int vHeight);
+	virtual void processCursorPosCallbackEventV(double vX, double vY);
+	virtual void processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers);
+	virtual void processKeyCallbackEventV(int vKey, int vScancode, int vAction, int vMods);
+	virtual void processScrollCallbackEventV(double vX, double vY);
+	virtual void processResizeCallbackEventV(int vWidth, int vHeight);
 
 private:
 	bool __initGLFWWindow();

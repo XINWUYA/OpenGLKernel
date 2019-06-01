@@ -15,10 +15,6 @@ CGLTexture::CGLTexture(const std::string& vTextureFileName, STexture& vTexture) 
 	__loadTeture(vTextureFileName);
 }
 
-CGLTexture::~CGLTexture()
-{
-}
-
 //***********************************************************************************************
 //Function:
 void CGLTexture::bind(int vIndex)

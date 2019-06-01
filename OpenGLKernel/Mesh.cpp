@@ -8,10 +8,6 @@ CGLMesh::CGLMesh(const std::vector<SMeshVertex>& vMeshVerticesSet, const std::ve
 	__init();
 }
 
-CGLMesh::~CGLMesh()
-{
-}
-
 //***********************************************************************************************
 //Function:
 void CGLMesh::draw(unsigned int vTextureUnit) const
