@@ -35,7 +35,7 @@ void CViewer::drawContentsV()
 
 	glm::mat4 Projection = m_pCamera->computeProjectionMatrix(static_cast<float>(m_WindowWidth) / static_cast<float>(m_WindowHeight));
 	glm::mat4 View = m_pCamera->getViewMatrix();
-	glm::mat4 Model;
+	glm::mat4 Model = glm::mat4(1.0f);
 	m_pGLShader->bind();
 	m_pGLShader->setMat4Uniform("projection", &Projection[0][0]);
 	m_pGLShader->setMat4Uniform("view", &View[0][0]);

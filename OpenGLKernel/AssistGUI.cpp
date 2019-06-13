@@ -33,7 +33,7 @@ void CAssistGUI::initGUI(GLFWwindow* vGLFWWindow)
 	//ImGui::StyleColorsLight();//Set ImGUI Style: Dark/Light/Classic
 	
 	ImGui_ImplGlfw_InitForOpenGL(vGLFWWindow, true);
-	ImGui_ImplOpenGL3_Init("#version 400");
+	ImGui_ImplOpenGL3_Init("#version 430");
 }
 
 //***********************************************************************************************
