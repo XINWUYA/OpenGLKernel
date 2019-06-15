@@ -21,7 +21,7 @@ void CGLModel::init(CGLShader& vShader, unsigned int vStartTextureUnit)
 	vShader.setIntUniform("u_ModelMaterial.Diffuse", vStartTextureUnit);
 	vShader.setIntUniform("u_ModelMaterial.Specular", vStartTextureUnit + 1);
 	vShader.setIntUniform("u_ModelMaterial.Normal", vStartTextureUnit + 2);
-	vShader.setIntUniform("u_ModelMaterial.Ambient", vStartTextureUnit + 3);
+	vShader.setIntUniform("u_ModelMaterial.Metallic", vStartTextureUnit + 3);
 	vShader.setIntUniform("u_ModelMaterial.Roughness", vStartTextureUnit + 4);
 }
 
@@ -38,7 +38,7 @@ void CGLModel::draw() const
 void CGLModel::__loadModel(const std::string& vModelName)
 {
 	Assimp::Importer Importer;
-	const aiScene* pAiScene = Importer.ReadFile(vModelName, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* pAiScene = Importer.ReadFile(vModelName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if (!pAiScene || pAiScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !pAiScene->mRootNode)
 	{
 		std::cout << "Error: Assimp: " << Importer.GetErrorString() << std::endl;
@@ -133,7 +133,7 @@ void CGLModel::__processTextures(const aiMesh* vMesh, const aiScene* vScene, std
 	__loadMaterialTextures(pMaterial, aiTextureType_SPECULAR, "u_ModelMaterial.Specular", voMeshTexturesSet);
 	//__loadMaterialTextures(pMaterial, aiTextureType_NORMALS, "u_ModelMaterial.Normal", voMeshTexturesSet);
 	__loadMaterialTextures(pMaterial, aiTextureType_HEIGHT, "u_ModelMaterial.Normal", voMeshTexturesSet);//Normal	
-	__loadMaterialTextures(pMaterial, aiTextureType_AMBIENT, "u_ModelMaterial.Ambient", voMeshTexturesSet);//Metallic
+	__loadMaterialTextures(pMaterial, aiTextureType_AMBIENT, "u_ModelMaterial.Metallic", voMeshTexturesSet);//Metallic
 	__loadMaterialTextures(pMaterial, aiTextureType_SHININESS, "u_ModelMaterial.Roughness", voMeshTexturesSet);
 }
 
