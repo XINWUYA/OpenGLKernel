@@ -124,7 +124,14 @@ void CViewer::__setGUIComponents()
 	m_pAssistGUI->sliderFloat("LightPosY", m_LightPosY, -10.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosZ", m_LightPosZ, -10.0f, 10.0f);
 	m_pAssistGUI->colorEdit3("LightColor", &m_LightColor[0]);
-	m_FrameRateSet.push_back(__calcullateFPS());
+
+	if (m_FrameDeque.size() >= 60)
+		m_FrameDeque.pop_front();
+	m_FrameDeque.push_back(__calcullateFPS());
+	m_FrameRateSet.clear();
+	for (auto Iter = m_FrameDeque.begin(); Iter != m_FrameDeque.end(); ++Iter)
+		m_FrameRateSet.push_back(*Iter);
+
 	m_pAssistGUI->plotLines("FrameRates", m_FrameRateSet);
 	m_pAssistGUI->combo("SelectCombo", m_LabelSet, m_Selectedlabel);
 }

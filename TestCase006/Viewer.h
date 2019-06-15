@@ -7,6 +7,7 @@
 #include "../OpenGLKernel/AssistGUI.h"
 #include <GLM/glm.hpp>
 #include <memory>
+#include <deque>
 
 using gl_kernel::CGLScreen;
 using gl_kernel::CGLShader;
@@ -47,6 +48,7 @@ private:
 	double m_LastGLFWTime = 0.0f, m_DeltaTime = 0.0f;
 	float m_LightPosX = 0.0f, m_LightPosY = 0.0f, m_LightPosZ = 0.0f;
 	glm::vec3 m_LightColor = glm::vec3(1.0f);
+	std::deque<float> m_FrameDeque;
 	std::vector<float> m_FrameRateSet;
 	std::vector<std::string> m_LabelSet = { "AAAAA", "BBBBB", "CCCCC" };
 	std::string m_Selectedlabel;
