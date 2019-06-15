@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include <sstream>
+#include <random>
 
 #ifndef NAMESPACE_BEGIN
 #define NAMESPACE_BEGIN(vName) namespace vName {
@@ -75,6 +76,15 @@ inline std::vector<std::string> tokenizeStr(const std::string& vStr, char vDelim
 	std::vector<std::string> ElemSet;
 	tokenizeStr(vStr, vDelim, ElemSet, vIsIncludeEmpty);
 	return ElemSet;
+}
+
+//***********************************************************************************************
+//Function:
+template<typename T = float>
+T generateRandomValue(std::default_random_engine& vioRangdomEngine, T vMin, T vMax)
+{
+	std::uniform_real_distribution<T> RandomValue(vMin, vMax);
+	return RandomValue(vioRangdomEngine);
 }
 
 NAMESPACE_END(gl_kernel)
