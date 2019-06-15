@@ -50,8 +50,8 @@ private:
 	float m_Pitch = 0.0f;
 	float m_Yaw = 0.0f;
 	float m_Fov = 45.0f;
-	float m_MoveSpeed = 5.0f;
-	float m_MouseSensitivity = 0.1f;
+	float m_MoveSpeed = 2.5f;
+	float m_MouseSensitivity = 0.03f;
 	float m_Near = 0.1f;
 	float m_Far = 100.0f;
 
