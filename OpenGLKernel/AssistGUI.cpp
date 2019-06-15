@@ -34,6 +34,10 @@ void CAssistGUI::initGUI(GLFWwindow* vGLFWWindow)
 	
 	ImGui_ImplGlfw_InitForOpenGL(vGLFWWindow, true);
 	ImGui_ImplOpenGL3_Init("#version 430");
+
+	//Load Fonts
+	//m_pImGuiIO->Fonts->AddFontDefault();
+	m_pImGuiIO->Fonts->AddFontFromFileTTF("../Common/include/imgui/misc/fonts/Karla-Regular.ttf", 16.0f, nullptr, m_pImGuiIO->Fonts->GetGlyphRangesChineseSimplifiedCommon());
 }
 
 //***********************************************************************************************
