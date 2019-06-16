@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <fstream>
 
-CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHeight) : CGLScreen(WindowTitle, vWindowWidth, vWindowHeight), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight)
+CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHeight) : CGLScreen(WindowTitle, vWindowWidth, vWindowHeight, false, 8), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight)
 {
 	m_LastMouseX = static_cast<float>(vWindowWidth) / 2.0;
 	m_LastMouseY = static_cast<float>(vWindowHeight) / 2.0;
