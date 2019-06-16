@@ -56,7 +56,7 @@ private:
 	glm::vec3 m_LightMovingDir = glm::vec3(0.0f);
 	std::deque<float> m_FrameDeque;
 	std::vector<float> m_FrameRateSet;
-	std::vector<std::string> m_LabelSet = { "PBR", "PHONG" };
+	std::vector<std::string> m_LabelSet = { "PBR", "BLINN-PHONG" };
 	std::string m_Selectedlabel;
 	std::default_random_engine m_RandomEngine;
 };

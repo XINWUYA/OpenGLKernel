@@ -147,7 +147,7 @@ void CViewer::__setGUIComponents()
 		m_FrameRateSet.push_back(*Iter);
 
 	m_pAssistGUI->plotLines("FrameRates", m_FrameRateSet);
-	m_pAssistGUI->combo("SelectCombo", m_LabelSet, m_Selectedlabel);
+	m_pAssistGUI->combo("LightModel", m_LabelSet, m_Selectedlabel);
 }
 
 //***********************************************************************************************

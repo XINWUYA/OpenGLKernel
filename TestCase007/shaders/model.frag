@@ -82,25 +82,25 @@ void main()
 	float AmbientWeight = 0.03f;
 	vec3 AmbientColor = AmbientWeight * OriginalColor;
 
+	vec3 ViewDir = normalize(u_CameraPos - v2f_FragPos);
+	vec3 LightDir = normalize(u_LightInfo.Position - v2f_FragPos);
+	float Distance = length(u_LightInfo.Position - v2f_FragPos);
+	vec3 HalfVec = normalize(ViewDir + LightDir);
+
+	//vec3 Normal = normalize(v2f_Normal);
+	vec3 BiTangent = normalize(cross(v2f_Normal, v2f_Tangent));
+	mat3 TBNMat = mat3(v2f_Tangent, BiTangent, v2f_Normal);
+	vec3 Normal = 2.0f * texture(u_ModelMaterial.Normal, v2f_TextureCoord).wyz - 1.0f;
+	Normal.z = sqrt(max(1.0 - Normal.x*Normal.x - Normal.y*Normal.y, 0.0f));
+	Normal = normalize(TBNMat * Normal);
+	Normal = CorrectNormal(Normal, ViewDir);
+
 	vec3 ResultColor;
 	if(u_IsUsePBR)
 	{
 		//PBR
 		float Roughness = texture(u_ModelMaterial.Roughness, v2f_TextureCoord).r;
 		float Metallic = texture(u_ModelMaterial.Metallic,v2f_TextureCoord).r;
-
-		vec3 ViewDir = normalize(u_CameraPos - v2f_FragPos);
-		vec3 LightDir = normalize(u_LightInfo.Position - v2f_FragPos);
-		float Distance = length(u_LightInfo.Position - v2f_FragPos);
-		vec3 HalfVec = normalize(ViewDir + LightDir);
-
-		//vec3 Normal = normalize(v2f_Normal);
-		vec3 BiTangent = normalize(cross(v2f_Normal, v2f_Tangent));
-		mat3 TBNMat = mat3(v2f_Tangent, BiTangent, v2f_Normal);
-		vec3 Normal = 2.0f * texture(u_ModelMaterial.Normal, v2f_TextureCoord).wyz - 1.0f;
-		Normal.z = sqrt(max(1.0 - Normal.x*Normal.x - Normal.y*Normal.y, 0.0f));
-		Normal = normalize(TBNMat * Normal);
-		Normal = CorrectNormal(Normal, ViewDir);
 
 		vec3 F0 = vec3(0.22f);
 		F0 = mix(F0, OriginalColor, Metallic);
@@ -119,15 +119,9 @@ void main()
 	}
 	else
 	{
-		// Phong Model
-		vec3 Normal = normalize(v2f_Normal);
-		vec3 LightDir = normalize(u_LightInfo.Position - v2f_FragPos);
-		float Distance = length(u_LightInfo.Position - v2f_FragPos);
+		// Blinn-Phong Model
 		vec3 DiffuseColor = max(dot(LightDir, Normal), 0.0f) * OriginalColor;
-
-		vec3 ViewDir = normalize(u_CameraPos -v2f_FragPos);
-		vec3 ReflectDir = reflect(-LightDir, Normal);
-		vec3 SpecularColor = pow(max(dot(ViewDir, ReflectDir), 0.0f), 64) * OriginalColor;
+		vec3 SpecularColor = pow(max(dot(Normal, HalfVec), 0.0f), 64) * OriginalColor;
 
 		ResultColor = AmbientColor + u_LightInfo.Intensity * (DiffuseColor + 0.9 * SpecularColor) * u_LightInfo.Color / (1.0 + Distance * Distance);
 	}
