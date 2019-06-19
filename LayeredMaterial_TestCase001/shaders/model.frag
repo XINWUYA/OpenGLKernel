@@ -23,6 +23,17 @@ struct SLightInfo
 	float Intensity;
 };
 
+struct SBRDFParameterInfo
+{
+	vec3 ViewDir;
+	vec3 LightDir;
+	vec3 Normal;
+	vec3 F0;
+	vec3 AlbedoColor;
+	float Roughness;
+	float Metallic;
+};
+
 uniform SModelMaterial u_ModelMaterial;
 uniform SLightInfo u_LightInfo;
 uniform vec3 u_CameraPos;
@@ -74,6 +85,23 @@ vec3 CorrectNormal(vec3 vNormal, vec3 vViewDir)
 	return vNormal;
 }
 
+vec3 CalculateBRDF(SBRDFParameterInfo vBRDFParameterInfo)
+{
+	vec3 HalfVec = normalize(vBRDFParameterInfo.ViewDir + vBRDFParameterInfo.LightDir);
+	vec3 F0 = mix(vBRDFParameterInfo.F0, vBRDFParameterInfo.AlbedoColor, vBRDFParameterInfo.Metallic);
+	vec3 F = FresnelSchlick(max(dot(HalfVec, vBRDFParameterInfo.ViewDir), 0.0f), F0);
+	float D = DistributionGGX(vBRDFParameterInfo.Normal, HalfVec, vBRDFParameterInfo.Roughness);
+	float G = GeometrySmith(vBRDFParameterInfo.Normal, vBRDFParameterInfo.ViewDir, vBRDFParameterInfo.LightDir, vBRDFParameterInfo.Roughness);
+	vec3 SpecularItem = (D * G * F) / (4.0f * max(dot(vBRDFParameterInfo.Normal, vBRDFParameterInfo.ViewDir), 0.0f) * max(dot(vBRDFParameterInfo.Normal, vBRDFParameterInfo.LightDir), 0.0f) + 0.001f);
+
+	vec3 Ks = F;
+	vec3 Kd = vec3(1.0f) - Ks;
+	Kd *= 1.0f - vBRDFParameterInfo.Metallic;
+	vec3 DiffuseItem = Kd * vBRDFParameterInfo.AlbedoColor / PI;
+
+	return (DiffuseItem + SpecularItem) * max(dot(vBRDFParameterInfo.Normal, vBRDFParameterInfo.LightDir), 0.0f);
+}
+
 void main()
 {
 	vec3 OriginalColor = texture(u_ModelMaterial.Diffuse, v2f_TextureCoord).rgb;
@@ -83,33 +111,19 @@ void main()
 	float AmbientWeight = 0.03f;
 	vec3 AmbientColor = AmbientWeight * OriginalColor;
 
-	vec3 ViewDir = normalize(u_CameraPos - v2f_FragPos);
-	vec3 LightDir = normalize(u_LightInfo.Position - v2f_FragPos);
-	float Distance = length(u_LightInfo.Position - v2f_FragPos);
-	vec3 HalfVec = normalize(ViewDir + LightDir);
 	vec3 Normal = normalize(v2f_Normal);
 
-	//PBR
-//	float Roughness = texture(u_ModelMaterial.Roughness, v2f_TextureCoord).r;
-//	float Metallic = texture(u_ModelMaterial.Metallic,v2f_TextureCoord).r;
-	float Roughness = u_Roughness;
-	float Metallic = u_Metallic;
+	SBRDFParameterInfo LayerBRDFParameterInfo;
+	LayerBRDFParameterInfo.ViewDir = normalize(u_CameraPos - v2f_FragPos);
+	LayerBRDFParameterInfo.LightDir = normalize(u_LightInfo.Position - v2f_FragPos);
+	LayerBRDFParameterInfo.Normal = CorrectNormal(Normal, LayerBRDFParameterInfo.ViewDir);
+	LayerBRDFParameterInfo.F0 = vec3(0.04f);
+	LayerBRDFParameterInfo.AlbedoColor = OriginalColor;
+	LayerBRDFParameterInfo.Roughness = u_Roughness;
+	LayerBRDFParameterInfo.Metallic = u_Metallic;
 
-	vec3 F0 = vec3(0.22f);
-	F0 = mix(F0, OriginalColor, Metallic);
-	vec3 F = FresnelSchlick(max(dot(HalfVec, ViewDir), 0.0f), F0);
-	float D = DistributionGGX(Normal, HalfVec, Roughness);
-	float G = GeometrySmith(Normal, ViewDir, LightDir, Roughness);
-	vec3 SpecularColor = (D * G * F) / (4.0f * max(dot(Normal, ViewDir), 0.0f) * max(dot(Normal, LightDir), 0.0f) + 0.001f);
-
-	vec3 Ks = F;
-	vec3 Kd = vec3(1.0f) - Ks;
-	Kd *= 1.0f - Metallic;
-
-	vec3 DiffuseColor = OriginalColor;// / PI;
-
-	vec3 ResultColor = AmbientColor + u_LightInfo.Intensity * (Kd * DiffuseColor + SpecularColor) * max(dot(Normal, LightDir), 0.0f) * u_LightInfo.Color / (1.0 + Distance * Distance);
-
+	float Distance = length(u_LightInfo.Position - v2f_FragPos);
+	vec3 ResultColor = AmbientColor + u_LightInfo.Intensity * CalculateBRDF(LayerBRDFParameterInfo) * u_LightInfo.Color / (1.0 + Distance * Distance);
 
 	//Gamma Correction
 	ResultColor = ResultColor / (ResultColor + 1.0f);
