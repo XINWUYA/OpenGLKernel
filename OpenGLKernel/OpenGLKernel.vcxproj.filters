@@ -73,6 +73,9 @@
     <ClInclude Include="GLShader.h">
       <Filter>Shader</Filter>
     </ClInclude>
+    <ClInclude Include="Shapes.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\include\imgui\imgui.cpp">
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="GLShader.cpp">
       <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
