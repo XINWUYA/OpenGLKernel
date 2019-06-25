@@ -4,7 +4,7 @@
 
 NAMESPACE_BEGIN(gl_kernel)
 
-void createACube();//´ý²¹³ä
+void createACube(std::vector<glm::vec3>& voPositionSet, std::vector<glm::vec3>& voNormalSet, std::vector<glm::vec2>& voTextureCoordsSet);
 void createASphere(std::vector<glm::vec3>& voPositionSet, std::vector<glm::vec3>& voNormalSet, std::vector<glm::vec2>& voTextureCoordsSet, std::vector<unsigned int>& voIndicesSet);
 
 NAMESPACE_END(gl_kernel)

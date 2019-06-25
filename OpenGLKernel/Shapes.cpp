@@ -6,6 +6,36 @@ NAMESPACE_BEGIN(gl_kernel)
 
 //***********************************************************************************************
 //Function:
+void createACube(std::vector<glm::vec3>& voPositionSet, std::vector<glm::vec3>& voNormalSet, std::vector<glm::vec2>& voTextureCoordsSet)
+{
+	voPositionSet = {
+		glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3( 1.0f, -1.0f, -1.0f), glm::vec3( 1.0f,  1.0f, -1.0f), glm::vec3( 1.0f,  1.0f, -1.0f), glm::vec3(-1.0f,  1.0f, -1.0f), glm::vec3(-1.0f, -1.0f, -1.0f),
+		glm::vec3(-1.0f, -1.0f,  1.0f), glm::vec3( 1.0f, -1.0f,  1.0f), glm::vec3( 1.0f,  1.0f,  1.0f), glm::vec3( 1.0f,  1.0f,  1.0f), glm::vec3(-1.0f,  1.0f,  1.0f), glm::vec3(-1.0f, -1.0f,  1.0f),
+		glm::vec3(-1.0f,  1.0f,  1.0f), glm::vec3(-1.0f,  1.0f, -1.0f), glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(-1.0f, -1.0f,  1.0f), glm::vec3(-1.0f,  1.0f,  1.0f),
+		glm::vec3( 1.0f,  1.0f,  1.0f), glm::vec3( 1.0f,  1.0f, -1.0f), glm::vec3( 1.0f, -1.0f, -1.0f), glm::vec3( 1.0f, -1.0f, -1.0f), glm::vec3( 1.0f, -1.0f,  1.0f), glm::vec3( 1.0f,  1.0f,  1.0f),
+		glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3( 1.0f, -1.0f, -1.0f), glm::vec3( 1.0f, -1.0f,  1.0f), glm::vec3( 1.0f, -1.0f,  1.0f), glm::vec3(-1.0f, -1.0f,  1.0f), glm::vec3(-1.0f, -1.0f, -1.0f),	
+		glm::vec3(-1.0f,  1.0f, -1.0f), glm::vec3( 1.0f,  1.0f, -1.0f), glm::vec3( 1.0f,  1.0f,  1.0f), glm::vec3( 1.0f,  1.0f,  1.0f), glm::vec3(-1.0f,  1.0f,  1.0f), glm::vec3(-1.0f,  1.0f, -1.0f)
+	};
+	voNormalSet = {
+		glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3( 0.0f,  0.0f, -1.0f),
+		glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3( 0.0f,  0.0f,  1.0f),
+		glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(-1.0f,  0.0f,  0.0f),
+		glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3( 1.0f,  0.0f,  0.0f),
+		glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3( 0.0f, -1.0f,  0.0f),		
+		glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f),
+	};
+	voTextureCoordsSet = {
+		glm::vec2(0.0f,  0.0f), glm::vec2(1.0f,  0.0f), glm::vec2(1.0f,  1.0f), glm::vec2(1.0f,  1.0f), glm::vec2(0.0f,  1.0f), glm::vec2(0.0f,  0.0f),
+		glm::vec2(0.0f,  0.0f), glm::vec2(1.0f,  0.0f), glm::vec2(1.0f,  1.0f), glm::vec2(1.0f,  1.0f), glm::vec2(0.0f,  1.0f), glm::vec2(0.0f,  0.0f),
+		glm::vec2(1.0f,  0.0f), glm::vec2(1.0f,  1.0f), glm::vec2(0.0f,  1.0f), glm::vec2(0.0f,  1.0f), glm::vec2(0.0f,  0.0f), glm::vec2(1.0f,  0.0f),
+		glm::vec2(1.0f,  0.0f), glm::vec2(1.0f,  1.0f), glm::vec2(0.0f,  1.0f), glm::vec2(0.0f,  1.0f), glm::vec2(0.0f,  0.0f), glm::vec2(1.0f,  0.0f),
+		glm::vec2(0.0f,  1.0f), glm::vec2(1.0f,  1.0f), glm::vec2(1.0f,  0.0f), glm::vec2(1.0f,  0.0f), glm::vec2(0.0f,  0.0f), glm::vec2(0.0f,  1.0f),
+		glm::vec2(0.0f,  1.0f), glm::vec2(1.0f,  1.0f), glm::vec2(1.0f,  0.0f), glm::vec2(1.0f,  0.0f), glm::vec2(0.0f,  0.0f), glm::vec2(0.0f,  1.0f)
+	};
+}
+
+//***********************************************************************************************
+//Function:
 void createASphere(std::vector<glm::vec3>& voPositionSet, std::vector<glm::vec3>& voNormalSet, std::vector<glm::vec2>& voTextureCoordsSet, std::vector<unsigned int>& voIndicesSet)
 {
 	unsigned int XSegments = 128, YSegments = 128;
