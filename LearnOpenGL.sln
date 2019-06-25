@@ -91,7 +91,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projections", "Projections"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase001(SingleMaterial)", "LayeredMaterial_TestCase001\LayeredMaterial_TestCase001.vcxproj", "{EE19162C-2C81-4507-AA0A-2468B6F98C0B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase002(ControllableDoubleLayerMaterial)", "LayeredMaterial_TestCase002\LayeredMaterial_TestCase002.vcxproj", "{B8865B42-7CB0-448A-BDE5-0FAC4BDC0419}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase002(DoubleLayerBRDF)", "LayeredMaterial_TestCase002\LayeredMaterial_TestCase002.vcxproj", "{B8865B42-7CB0-448A-BDE5-0FAC4BDC0419}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase003(Belcour_Reflection)", "LayeredMaterial_TestCase003\LayeredMaterial_TestCase003.vcxproj", "{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase008(CubeMap)", "TestCase008\TestCase008.vcxproj", "{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -357,6 +364,22 @@ Global
 		{B8865B42-7CB0-448A-BDE5-0FAC4BDC0419}.Release|x64.Build.0 = Release|x64
 		{B8865B42-7CB0-448A-BDE5-0FAC4BDC0419}.Release|x86.ActiveCfg = Release|Win32
 		{B8865B42-7CB0-448A-BDE5-0FAC4BDC0419}.Release|x86.Build.0 = Release|Win32
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Debug|x64.ActiveCfg = Debug|x64
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Debug|x64.Build.0 = Debug|x64
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Debug|x86.ActiveCfg = Debug|Win32
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Debug|x86.Build.0 = Debug|Win32
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Release|x64.ActiveCfg = Release|x64
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Release|x64.Build.0 = Release|x64
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Release|x86.ActiveCfg = Release|Win32
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC}.Release|x86.Build.0 = Release|Win32
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Debug|x64.ActiveCfg = Debug|x64
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Debug|x64.Build.0 = Debug|x64
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Debug|x86.ActiveCfg = Debug|Win32
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Debug|x86.Build.0 = Debug|Win32
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Release|x64.ActiveCfg = Release|x64
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Release|x64.Build.0 = Release|x64
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Release|x86.ActiveCfg = Release|Win32
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -392,6 +415,8 @@ Global
 		{258C3DA3-A47E-4FCC-B593-AA34060DD58E} = {774BAEAF-14F2-4D11-A824-AAF6A62DEF94}
 		{EE19162C-2C81-4507-AA0A-2468B6F98C0B} = {006BC538-1869-40A3-8FD3-A84CFFC06ACB}
 		{B8865B42-7CB0-448A-BDE5-0FAC4BDC0419} = {006BC538-1869-40A3-8FD3-A84CFFC06ACB}
+		{588AAA9F-0851-4B7D-A55E-CD22FFEB49EC} = {006BC538-1869-40A3-8FD3-A84CFFC06ACB}
+		{5086B7CB-FF8F-4179-88F3-DA0BD9C79F39} = {774BAEAF-14F2-4D11-A824-AAF6A62DEF94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63E4C666-BF03-46F4-A99C-C298853EC8CD}
