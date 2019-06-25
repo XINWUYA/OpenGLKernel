@@ -5,6 +5,11 @@
 
 NAMESPACE_BEGIN(gl_kernel)
 
+CGLTexture::CGLTexture(const STexture& vTexture) : m_Texture(vTexture)
+{
+	__generateTexture();
+}
+
 CGLTexture::CGLTexture(const std::string& vTextureFileName)
 {
 	__loadTeture(vTextureFileName);
@@ -106,7 +111,45 @@ void CGLTexture::__loadCommonTexture(const std::string& vTextureFileName)
 //***********************************************************************************************
 //Function:
 void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
-{//未完成
+{
+	if (m_Texture.m_IsFLipVertically)
+		stbi_set_flip_vertically_on_load(true);
+
+	int TextureWidth = 0, TextureHeight = 0, TextureChannels = 0;
+	GLvoid* pImageData = stbi_loadf(vTextureFileName.c_str(), &TextureWidth, &TextureHeight, &TextureChannels, 0);
+	if (!pImageData)
+	{
+		std::cerr << "Error: Texture Load Failed." << std::endl;
+		return;
+	}
+	else
+	{
+		switch (TextureChannels)
+		{
+		case 1:
+			m_Texture.m_InternelFormat = GL_R16F;
+			m_Texture.m_ExternalFormat = GL_RED;
+			break;
+		case 2:
+			m_Texture.m_InternelFormat = GL_RG16F;
+			m_Texture.m_ExternalFormat = GL_RG;
+			break;
+		case 3:
+			m_Texture.m_InternelFormat = GL_RGB16F;
+			m_Texture.m_ExternalFormat = GL_RGB;
+		case 4:
+			m_Texture.m_InternelFormat = GL_RGBA16F;
+			m_Texture.m_ExternalFormat = GL_RGBA;
+		}
+		m_Texture.m_DataType = GL_FLOAT;
+		m_Texture.m_Width = TextureWidth;
+		m_Texture.m_Height = TextureHeight;
+		m_Texture.m_pDataSet.push_back(pImageData);
+
+		__generateTexture();
+
+		stbi_image_free(pImageData);
+	}
 }
 
 //***********************************************************************************************
@@ -132,8 +175,14 @@ void CGLTexture::__generateTexture()
 		break;
 	case STexture::ETextureType::TEXTURE_3D://未完成
 		TextureType = GL_TEXTURE_3D;
+		glBindTexture(TextureType, m_Texture.m_ID);
+		glTexImage3D(TextureType, 0, m_Texture.m_InternelFormat, m_Texture.m_Width, m_Texture.m_Height, m_Texture.m_Depth, 0, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet.empty() ? nullptr : m_Texture.m_pDataSet.data());
 		break;
-	case STexture::ETextureType::TEXTURE_CUBE_MAP://未完成
+	case STexture::ETextureType::TEXTURE_CUBE_MAP:
+		TextureType = GL_TEXTURE_CUBE_MAP;
+		glBindTexture(TextureType, m_Texture.m_ID);
+		for (size_t i = 0; i < 6; ++i)
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, m_Texture.m_InternelFormat, m_Texture.m_Width, m_Texture.m_Height, 0, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet.size() > i ? m_Texture.m_pDataSet[i] : nullptr);
 		break;
 	default:
 		break;
@@ -149,6 +198,129 @@ void CGLTexture::__generateTexture()
 	glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, m_Texture.m_Type4MagFilter);
 	if (m_Texture.m_IsUseMipMap)
 		glGenerateMipmap(TextureType);
+}
+
+//***********************************************************************************************
+//CGLFrameBuffer
+//***********************************************************************************************
+
+//***********************************************************************************************
+//Function:
+void CGLFrameBuffer::init(const std::initializer_list<CGLTexture*>& vTextureAttacments, int vSamples)
+{
+	m_Samples = vSamples;
+	
+	glGenFramebuffers(1, &m_FrameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
+	
+	m_FrameSize = glm::ivec2((*vTextureAttacments.begin())->getTextureWidth(), (*vTextureAttacments.begin())->getTextureHeight());
+
+	GLint i = -1;
+	std::vector<GLenum> TextureAttachmentSet;
+	TextureAttachmentSet.reserve(vTextureAttacments.size());
+	for (const CGLTexture* pTempTexture : vTextureAttacments)
+	{
+		_ASSERT(pTempTexture->getTextureID() >= 0);
+
+		switch (pTempTexture->getTextureAttachmentType())
+		{
+		case STexture::ETextureAttachmentType::DEPTH_TEXTURE:
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, pTempTexture->getTextureID(), 0);
+			break;
+		case STexture::ETextureAttachmentType::STENCIL_TEXTURE:
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_TEXTURE_2D, pTempTexture->getTextureID(), 0);
+			break;
+		case STexture::ETextureAttachmentType::DEPTH_AND_STENCIL_TEXTURE:
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, pTempTexture->getTextureID(), 0);
+			break;
+		default:
+			switch (pTempTexture->getTextureType())
+			{
+			case STexture::ETextureType::TEXTURE_2D:
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + (++i), GL_TEXTURE_2D, pTempTexture->getTextureID(), 0);
+				TextureAttachmentSet.push_back(GL_COLOR_ATTACHMENT0 + i);
+				break;
+			case STexture::ETextureType::TEXTURE_2D_ARRAY:
+				for (int k = 0; k < pTempTexture->getTextureDepth(); ++k)
+				{
+					glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + (++i), pTempTexture->getTextureID(), 0, k);
+					TextureAttachmentSet.push_back(GL_COLOR_ATTACHMENT0 + i);
+				}
+				break;
+			case STexture::ETextureType::TEXTURE_CUBE_MAP:
+				glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + (++i), pTempTexture->getTextureID(), 0);
+				TextureAttachmentSet.push_back(GL_COLOR_ATTACHMENT0 + i);
+				break;
+			default:
+				break;
+			}
+			break;
+		}
+	}
+	if (TextureAttachmentSet.size())
+		glDrawBuffers(TextureAttachmentSet.size(), &TextureAttachmentSet[0]);
+
+	auto genRenderBuffer = [](GLuint vBufferID, GLenum vInternelFormat, GLenum vAttachmentType, int vSamples, glm::ivec2& vSize)
+	{
+		glGenRenderbuffers(1, &vBufferID);
+		glBindRenderbuffer(GL_RENDERBUFFER, vBufferID);
+		if (vSamples <= 1)
+			glRenderbufferStorage(GL_RENDERBUFFER, vInternelFormat, vSize.x, vSize.y);
+		else
+			glRenderbufferStorageMultisample(GL_RENDERBUFFER, vSamples, vInternelFormat, vSize.x, vSize.y);
+
+		glFramebufferRenderbuffer(GL_RENDERBUFFER, vAttachmentType, GL_RENDERBUFFER, vBufferID);
+	};
+
+	genRenderBuffer(m_ColorBuffer, GL_RGBA8, GL_COLOR_ATTACHMENT0, m_Samples, m_FrameSize);
+	genRenderBuffer(m_DepthBuffer, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, m_Samples, m_FrameSize);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cerr << "Error: CGLFrameBuffer: Framebuffer is not completed." << std::endl;
+
+	release();
+}
+
+//***********************************************************************************************
+//Function:
+void CGLFrameBuffer::bind()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
+	
+	if (m_Samples > 1)
+		glEnable(GL_MULTISAMPLE);
+}
+
+//***********************************************************************************************
+//Function:
+void CGLFrameBuffer::free()
+{
+	glDeleteRenderbuffers(1, &m_ColorBuffer);
+	glDeleteRenderbuffers(1, &m_DepthBuffer);
+	m_ColorBuffer = m_DepthBuffer = 0;
+}
+
+//***********************************************************************************************
+//Function:
+void CGLFrameBuffer::release()
+{
+	if (m_Samples > 1)
+		glDisable(GL_MULTISAMPLE);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+//***********************************************************************************************
+//Function:
+void CGLFrameBuffer::blit()
+{
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FrameBuffer);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glDrawBuffer(GL_BACK);
+
+	glBlitFramebuffer(0, 0, m_FrameSize.x, m_FrameSize.y, 0, 0, m_FrameSize.x, m_FrameSize.y, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 NAMESPACE_END(gl_kernel)

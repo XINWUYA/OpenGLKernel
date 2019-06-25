@@ -54,6 +54,7 @@ struct STexture
 class CGLTexture
 {
 public:
+	CGLTexture(const STexture& vTexture);
 	CGLTexture(const std::string& vTextureFileName);
 	CGLTexture(const std::string& vTextureFileName, STexture& vTexture);
 	~CGLTexture() = default;
@@ -63,6 +64,11 @@ public:
 	GLuint getTextureID() const { return m_Texture.m_ID; }
 	int getTextureWidth() const { return m_Texture.m_Width; }
 	int getTextureHeight() const { return m_Texture.m_Height; }
+	int getTextureDepth() const { return m_Texture.m_Depth; }
+	STexture::ETextureType getTextureType() const { return m_Texture.m_TextureType; }
+	STexture::ETextureAttachmentType getTextureAttachmentType() const { return m_Texture.m_AttachmentType; }
+
+	//const STexture getTextureStruct() const { return m_Texture; }
 
 private:
 	void __loadTeture(const std::string& vTextureFileName);
@@ -73,5 +79,26 @@ private:
 	STexture m_Texture = {};
 };
 
+class CGLFrameBuffer
+{
+public:
+	CGLFrameBuffer() = default;
+	~CGLFrameBuffer() = default;
+
+	void init(const std::initializer_list<CGLTexture*>& vTextureAttacments, int vSamples = 0);
+	void bind();
+	void free();
+	void release();
+	void blit();
+	bool isReady() { return m_FrameBuffer != 0; }
+	int getSamples() const { return m_Samples; }
+
+private:
+	GLuint m_FrameBuffer = 0;
+	GLuint m_DepthBuffer = 0;
+	GLuint m_ColorBuffer = 0;
+	glm::ivec2 m_FrameSize{};
+	int m_Samples = 0;
+};
 
 NAMESPACE_END(gl_kernel)
