@@ -1,7 +1,7 @@
 #include "GLScreen.h"
 #include <iostream>
 #include <map>
-#include "Camera.h"
+#include <stb_image.h>
 
 NAMESPACE_BEGIN(gl_kernel)
 
@@ -58,6 +58,16 @@ void CGLScreen::setVisible(bool vIsVisible)
 		else
 			glfwHideWindow(m_pGLFWWindow);
 	}
+}
+
+//***********************************************************************************************
+//Function:
+void CGLScreen::setWindowIcon(const std::string& vPicPath)
+{
+	GLFWimage IconImage;
+	IconImage.pixels = stbi_load(vPicPath.c_str(), &IconImage.width, &IconImage.height, 0, 4);
+	glfwSetWindowIcon(m_pGLFWWindow, 1, &IconImage);
+	stbi_image_free(IconImage.pixels);
 }
 
 //***********************************************************************************************

@@ -20,6 +20,7 @@ public:
 	bool isVisible() const { return m_IsVisible; }
 
 	void setVisible(bool vIsVisible);
+	void setWindowIcon(const std::string& vPicPath);
 
 	virtual void processCursorPosCallbackEventV(double vX, double vY);
 	virtual void processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers);
