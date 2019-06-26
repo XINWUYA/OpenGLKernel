@@ -56,7 +56,7 @@ void CGLTexture::__loadTeture(const std::string& vTextureFileName)
 	if (vTextureFileName.size() > 4)
 		FileExtension = convertStr2Lower(vTextureFileName.substr(vTextureFileName.size() - 4));
 
-	if (FileExtension == "hdr")
+	if (FileExtension == ".hdr")
 		__loadHDRTexture(vTextureFileName);
 	else/* if(FileExtension == "png" || FileExtension == "jpg" || FileExtension == "bmp")*///Î´Íê³É
 		__loadCommonTexture(vTextureFileName);
@@ -137,13 +137,19 @@ void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
 		case 3:
 			m_Texture.m_InternelFormat = GL_RGB16F;
 			m_Texture.m_ExternalFormat = GL_RGB;
+			break;
 		case 4:
 			m_Texture.m_InternelFormat = GL_RGBA16F;
 			m_Texture.m_ExternalFormat = GL_RGBA;
+			break;
+		default:
+			break;
 		}
 		m_Texture.m_DataType = GL_FLOAT;
 		m_Texture.m_Width = TextureWidth;
 		m_Texture.m_Height = TextureHeight;
+		m_Texture.m_Type4WrapS = m_Texture.m_Type4WrapT = m_Texture.m_Type4WrapR = GL_CLAMP_TO_EDGE;
+		m_Texture.m_IsUseMipMap = GL_FALSE;
 		m_Texture.m_pDataSet.push_back(pImageData);
 
 		__generateTexture();
@@ -204,13 +210,17 @@ void CGLTexture::__generateTexture()
 //CGLFrameBuffer
 //***********************************************************************************************
 
+CGLFrameBuffer::CGLFrameBuffer()
+{
+	glGenFramebuffers(1, &m_FrameBuffer);
+}
+
 //***********************************************************************************************
 //Function:
 void CGLFrameBuffer::init(const std::initializer_list<CGLTexture*>& vTextureAttacments, int vSamples)
 {
 	m_Samples = vSamples;
 	
-	glGenFramebuffers(1, &m_FrameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
 	
 	m_FrameSize = glm::ivec2((*vTextureAttacments.begin())->getTextureWidth(), (*vTextureAttacments.begin())->getTextureHeight());

@@ -82,7 +82,7 @@ private:
 class CGLFrameBuffer
 {
 public:
-	CGLFrameBuffer() = default;
+	CGLFrameBuffer();
 	~CGLFrameBuffer() = default;
 
 	void init(const std::initializer_list<CGLTexture*>& vTextureAttacments, int vSamples = 0);
