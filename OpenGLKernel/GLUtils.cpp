@@ -1,4 +1,4 @@
-#include "GLUtils.h"
+Ôªø#include "GLUtils.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 #include <iostream>
@@ -58,7 +58,7 @@ void CGLTexture::__loadTeture(const std::string& vTextureFileName)
 
 	if (FileExtension == ".hdr")
 		__loadHDRTexture(vTextureFileName);
-	else/* if(FileExtension == "png" || FileExtension == "jpg" || FileExtension == "bmp")*///Œ¥ÕÍ≥…
+	else/* if(FileExtension == "png" || FileExtension == "jpg" || FileExtension == "bmp")*///Êú™ÂÆåÊàê
 		__loadCommonTexture(vTextureFileName);
 }
 
@@ -100,6 +100,7 @@ void CGLTexture::__loadCommonTexture(const std::string& vTextureFileName)
 		m_Texture.m_DataType = GL_UNSIGNED_BYTE;
 		m_Texture.m_Width = TextureWidth;
 		m_Texture.m_Height = TextureHeight;
+		m_Texture.m_Channels = TextureChannels;
 		m_Texture.m_pDataSet.push_back(pImageData);
 
 		__generateTexture();
@@ -148,6 +149,7 @@ void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
 		m_Texture.m_DataType = GL_FLOAT;
 		m_Texture.m_Width = TextureWidth;
 		m_Texture.m_Height = TextureHeight;
+		m_Texture.m_Channels = TextureChannels;
 		m_Texture.m_Type4WrapS = m_Texture.m_Type4WrapT = m_Texture.m_Type4WrapR = GL_CLAMP_TO_EDGE;
 		m_Texture.m_IsUseMipMap = GL_FALSE;
 		m_Texture.m_pDataSet.push_back(pImageData);
@@ -179,7 +181,7 @@ void CGLTexture::__generateTexture()
 		for (size_t i = 0; i < m_Texture.m_pDataSet.size(); ++i)
 			glTexSubImage3D(TextureType, 0, 0, 0, i, m_Texture.m_Width, m_Texture.m_Height, 1, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet[i]);
 		break;
-	case STexture::ETextureType::TEXTURE_3D://Œ¥ÕÍ≥…
+	case STexture::ETextureType::TEXTURE_3D://Êú™ÂÆåÊàê
 		TextureType = GL_TEXTURE_3D;
 		glBindTexture(TextureType, m_Texture.m_ID);
 		glTexImage3D(TextureType, 0, m_Texture.m_InternelFormat, m_Texture.m_Width, m_Texture.m_Height, m_Texture.m_Depth, 0, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet.empty() ? nullptr : m_Texture.m_pDataSet.data());
@@ -196,7 +198,8 @@ void CGLTexture::__generateTexture()
 	//glTexParameterfv(TextureType, GL_TEXTURE_BORDER_COLOR, m_Texture.m_BorderColor.data());
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_S, m_Texture.m_Type4WrapS);
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_T, m_Texture.m_Type4WrapT);
-	glTexParameteri(TextureType, GL_TEXTURE_WRAP_R, m_Texture.m_Type4WrapR);
+	if(m_Texture.m_Channels >= 3)
+		glTexParameteri(TextureType, GL_TEXTURE_WRAP_R, m_Texture.m_Type4WrapR);
 
 	if (m_Texture.m_IsUseMipMap && m_Texture.m_Type4MagFilter == GL_LINEAR)
 		m_Texture.m_Type4MinFilter = GL_LINEAR_MIPMAP_LINEAR;

@@ -35,6 +35,7 @@ struct STexture
 	GLsizei m_Width;
 	GLsizei m_Height;
 	GLsizei m_Depth;
+	GLsizei m_Channels;
 	GLboolean m_IsUseMipMap;
 	GLboolean m_IsSRGBSpace;
 	GLboolean m_IsFLipVertically;
@@ -45,7 +46,7 @@ struct STexture
 	ETextureAttachmentType m_AttachmentType;
 
 	STexture() : m_ID(-1), m_Type4WrapS(GL_REPEAT), m_Type4WrapT(GL_REPEAT), m_Type4WrapR(GL_REPEAT), m_Type4MinFilter(GL_LINEAR), m_Type4MagFilter(GL_LINEAR),
-		m_InternelFormat(GL_RGBA), m_ExternalFormat(GL_RGBA), m_DataType(GL_UNSIGNED_BYTE), m_Width(0), m_Height(0), m_Depth(1), m_IsUseMipMap(GL_TRUE),
+		m_InternelFormat(GL_RGBA), m_ExternalFormat(GL_RGBA), m_DataType(GL_UNSIGNED_BYTE), m_Width(0), m_Height(0), m_Depth(1), m_Channels(0), m_IsUseMipMap(GL_TRUE),
 		m_IsSRGBSpace(GL_FALSE), m_IsFLipVertically(GL_TRUE), m_BorderColor(0.0, 0.0, 0.0, 1.0), m_TextureName(""), m_pDataSet({}), 
 		m_TextureType(ETextureType::TEXTURE_2D), m_AttachmentType(ETextureAttachmentType::COLOR_TEXTURE)
 	{ }
@@ -68,7 +69,7 @@ public:
 	STexture::ETextureType getTextureType() const { return m_Texture.m_TextureType; }
 	STexture::ETextureAttachmentType getTextureAttachmentType() const { return m_Texture.m_AttachmentType; }
 
-	//const STexture getTextureStruct() const { return m_Texture; }
+	//const STexture& getTextureStruct() const { return m_Texture; }
 
 private:
 	void __loadTeture(const std::string& vTextureFileName);
