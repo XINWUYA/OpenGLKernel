@@ -6,6 +6,50 @@ NAMESPACE_BEGIN(gl_kernel)
 
 //***********************************************************************************************
 //Function:
+void createAQuad(std::vector<glm::vec3>& voPositionSet, std::vector<glm::vec3>& voTextureCoordsSet)
+{
+	voPositionSet = {
+		glm::vec3(-1.0f, -1.0f, 0.0f), 
+		glm::vec3( 1.0f, -1.0f, 0.0f), 
+		glm::vec3(-1.0f,  1.0f, 0.0f), 
+		glm::vec3( 1.0f, -1.0f, 0.0f), 
+		glm::vec3(-1.0f,  1.0f, 0.0f),
+		glm::vec3( 1.0f,  1.0f, 0.0f)
+	};
+	voTextureCoordsSet = {
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(1.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f),
+		glm::vec3(1.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f),
+		glm::vec3(1.0f, 1.0f, 0.0f)
+	};
+}
+
+//***********************************************************************************************
+//Function:
+void createAQuad(std::vector<glm::vec3>& voPositionSet, std::vector<glm::vec3>& voTextureCoordsSet, std::vector<glm::ivec3>& voIndicesSet)
+{
+	voPositionSet = { 
+		glm::vec3(-1.0f, -1.0f, 0.0f), 
+		glm::vec3( 1.0f, -1.0f, 0.0f), 
+		glm::vec3(-1.0f,  1.0f, 0.0f), 
+		glm::vec3( 1.0f,  1.0f, 0.0f) 
+	};
+	voTextureCoordsSet = { 
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(1.0f, 0.0f, 0.0f), 
+		glm::vec3(0.0f, 1.0f, 0.0f), 
+		glm::vec3(1.0f, 1.0f, 0.0f) 
+	};
+	voIndicesSet = { 
+		glm::ivec3(0, 1, 2), 
+		glm::ivec3(1, 2, 3) 
+	};
+}
+
+//***********************************************************************************************
+//Function:
 void createACube(std::vector<glm::vec3>& voPositionSet, std::vector<glm::vec3>& voNormalSet, std::vector<glm::vec2>& voTextureCoordsSet)
 {
 	voPositionSet = {
