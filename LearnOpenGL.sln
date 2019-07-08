@@ -114,6 +114,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase005
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase006(IBL+Model+ThinFilmLayer)", "LayeredMaterial_TestCase006\LayeredMaterial_TestCase006.vcxproj", "{08EE2775-6668-4BDF-A3CA-511D65FBA696}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase007(Unity_DirectionalLight)", "LayeredMaterial_TestCase007\LayeredMaterial_TestCase007.vcxproj", "{DB9B06C6-B68E-49FD-800A-99755347F357}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -450,6 +452,14 @@ Global
 		{08EE2775-6668-4BDF-A3CA-511D65FBA696}.Release|x64.Build.0 = Release|x64
 		{08EE2775-6668-4BDF-A3CA-511D65FBA696}.Release|x86.ActiveCfg = Release|Win32
 		{08EE2775-6668-4BDF-A3CA-511D65FBA696}.Release|x86.Build.0 = Release|Win32
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Debug|x64.ActiveCfg = Debug|x64
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Debug|x64.Build.0 = Debug|x64
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Debug|x86.ActiveCfg = Debug|Win32
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Debug|x86.Build.0 = Debug|Win32
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Release|x64.ActiveCfg = Release|x64
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Release|x64.Build.0 = Release|x64
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Release|x86.ActiveCfg = Release|Win32
+		{DB9B06C6-B68E-49FD-800A-99755347F357}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -495,6 +505,7 @@ Global
 		{3DF5A878-4282-4FF1-8978-083680BEDF72} = {006BC538-1869-40A3-8FD3-A84CFFC06ACB}
 		{59C6400F-CFA3-41FD-9CFB-EB71B978C607} = {006BC538-1869-40A3-8FD3-A84CFFC06ACB}
 		{08EE2775-6668-4BDF-A3CA-511D65FBA696} = {006BC538-1869-40A3-8FD3-A84CFFC06ACB}
+		{DB9B06C6-B68E-49FD-800A-99755347F357} = {006BC538-1869-40A3-8FD3-A84CFFC06ACB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63E4C666-BF03-46F4-A99C-C298853EC8CD}
