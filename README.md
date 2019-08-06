@@ -128,4 +128,10 @@ git clone https://github.com/ocornut/imgui.git
 
   ![](Results/sponza_pbr.png)
 
-  
++ TestCase009_D(IBL)
+
+  ![1565082448401](C:\Users\qiuyukai\AppData\Roaming\Typora\typora-user-images\1565082448401.png)
+
++ TestCase011_A(AreaLight_UnirformColor)
+
+  ![1565082249586](C:\Users\qiuyukai\AppData\Roaming\Typora\typora-user-images\1565082249586.png)
