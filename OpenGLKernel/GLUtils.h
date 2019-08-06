@@ -75,6 +75,7 @@ private:
 	void __loadTeture(const std::string& vTextureFileName);
 	void __loadCommonTexture(const std::string& vTextureFileName);
 	void __loadHDRTexture(const std::string& vTextureFileName);
+	void __loadDDSTexture(const std::string& vTextureFileName);
 	void __generateTexture();
 
 	STexture m_Texture = {};

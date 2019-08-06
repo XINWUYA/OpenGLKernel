@@ -1,6 +1,7 @@
 ﻿#include "GLUtils.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include <gli/gli.hpp>
 #include <iostream>
 
 NAMESPACE_BEGIN(gl_kernel)
@@ -58,7 +59,9 @@ void CGLTexture::__loadTeture(const std::string& vTextureFileName)
 
 	if (FileExtension == ".hdr")
 		__loadHDRTexture(vTextureFileName);
-	else/* if(FileExtension == "png" || FileExtension == "jpg" || FileExtension == "bmp")*///未完成
+	else if (FileExtension == ".dds")
+		__loadDDSTexture(vTextureFileName);
+	else/* if(FileExtension == "png" || FileExtension == "jpg" || FileExtension == "bmp")*/
 		__loadCommonTexture(vTextureFileName);
 }
 
@@ -73,7 +76,7 @@ void CGLTexture::__loadCommonTexture(const std::string& vTextureFileName)
 	GLvoid* pImageData = stbi_load(vTextureFileName.c_str(), &TextureWidth, &TextureHeight, &TextureChannels, 0);
 	if (!pImageData)
 	{
-		std::cerr << "Error: Texture Load Failed." << std::endl;
+		std::cerr << "Error: Common Texture Load Failed." << std::endl;
 		return;
 	}
 	else
@@ -120,7 +123,7 @@ void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
 	GLvoid* pImageData = stbi_loadf(vTextureFileName.c_str(), &TextureWidth, &TextureHeight, &TextureChannels, 0);
 	if (!pImageData)
 	{
-		std::cerr << "Error: Texture Load Failed." << std::endl;
+		std::cerr << "Error: HDR Texture Load Failed." << std::endl;
 		return;
 	}
 	else
@@ -157,6 +160,31 @@ void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
 		__generateTexture();
 
 		stbi_image_free(pImageData);
+	}
+}
+
+//***********************************************************************************************
+//Function:
+void CGLTexture::__loadDDSTexture(const std::string& vTextureFileName)
+{
+	gli::texture GLITexture = gli::load(vTextureFileName);
+	if (GLITexture.empty())
+	{
+		std::cerr << "Error: DDS Texture Load Failed." << std::endl;
+		return;
+	}
+	else
+	{
+		gli::gl GL(gli::gl::PROFILE_GL33);
+		gli::gl::format const GLIFormat = GL.translate(GLITexture.format(), GLITexture.swizzles());
+		m_Texture.m_InternelFormat = GLIFormat.Internal;
+		m_Texture.m_ExternalFormat = GLIFormat.External;
+		m_Texture.m_DataType = GLIFormat.Type;
+		m_Texture.m_Width = GLITexture.extent().x;
+		m_Texture.m_Height = GLITexture.extent().y;
+		m_Texture.m_pDataSet.push_back(GLITexture.data());
+		
+		__generateTexture();
 	}
 }
 
