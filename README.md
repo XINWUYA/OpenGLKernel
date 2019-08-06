@@ -130,8 +130,8 @@ git clone https://github.com/ocornut/imgui.git
 
 + TestCase009_D(IBL)
 
-  ![1565082448401](C:\Users\qiuyukai\AppData\Roaming\Typora\typora-user-images\1565082448401.png)
+  ![ibl](Results/ibl.png)
 
 + TestCase011_A(AreaLight_UnirformColor)
 
-  ![1565082249586](C:\Users\qiuyukai\AppData\Roaming\Typora\typora-user-images\1565082249586.png)
+  ![area_light_uniform_color](Results/area_light_uniform_color.png)
