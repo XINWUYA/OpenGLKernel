@@ -66,40 +66,45 @@ float GeometrySmith(vec3 vN, vec3 vV, vec3 vL, float vRoughness)
 
 vec2 IntegrateBRDF(float vNormalDotViewDir, float vRoughness)
 {
-	vec3 V;
-	V.x = sqrt(1.0f - vNormalDotViewDir * vNormalDotViewDir);
-	V.y = 0.0f;
-	V.z = vNormalDotViewDir;
+//	vec3 V;
+//	V.x = sqrt(1.0f - vNormalDotViewDir * vNormalDotViewDir);
+//	V.y = 0.0f;
+//	V.z = vNormalDotViewDir;
+//
+//	float A = 0.0f;
+//	float B = 0.0f;
+//	vec3 N = vec3(0.0f, 0.0f, 1.0f);
+//	const uint SAMPLE_COUNT = 1024u;
+//	for (uint i = 0u; i < SAMPLE_COUNT; ++i)
+//	{
+//		vec2 Xi = Hammersley(i, SAMPLE_COUNT);
+//		vec3 H = ImportanceSampleGGX(Xi, N, vRoughness);
+//		vec3 L = normalize(2.0f * dot(V, H) * H - V);
+//
+//		float NdotL = max(L.z, 0.0f);
+//		float NdotH = max(H.z, 0.0f);
+//		float VdotH = max(dot(V, H), 0.0f);
+//
+//		if (NdotL > 0.0f)
+//		{
+//			float G = GeometrySmith(N, V, L, vRoughness);
+//			float G_Vis = (G * VdotH) / (NdotH * vNormalDotViewDir);
+//			float Fc = pow(1.0f - VdotH, 5.0f);
+//
+//			A += (1.0f - Fc) * G_Vis;
+//			B += Fc * G_Vis;
+//		}
+//	}
+//
+//	A /= float(SAMPLE_COUNT);
+//	B /= float(SAMPLE_COUNT);
+	const vec4 c0 = { -1, -0.0275, -0.572, 0.022 };
+	const vec4 c1 = { 1, 0.0425, 1.04, -0.04 };
+	vec4 r = vRoughness * c0 + c1;
+	float a004 = min( r.x * r.x, exp2( -9.28 * vNormalDotViewDir ) ) * r.x + r.y;
+	vec2 AB = vec2( -1.04, 1.04 ) * a004 + r.zw;
 
-	float A = 0.0f;
-	float B = 0.0f;
-	vec3 N = vec3(0.0f, 0.0f, 1.0f);
-	const uint SAMPLE_COUNT = 1024u;
-	for (uint i = 0u; i < SAMPLE_COUNT; ++i)
-	{
-		vec2 Xi = Hammersley(i, SAMPLE_COUNT);
-		vec3 H = ImportanceSampleGGX(Xi, N, vRoughness);
-		vec3 L = normalize(2.0f * dot(V, H) * H - V);
-
-		float NdotL = max(L.z, 0.0f);
-		float NdotH = max(H.z, 0.0f);
-		float VdotH = max(dot(V, H), 0.0f);
-
-		if (NdotL > 0.0f)
-		{
-			float G = GeometrySmith(N, V, L, vRoughness);
-			float G_Vis = (G * VdotH) / (NdotH * vNormalDotViewDir);
-			float Fc = pow(1.0f - VdotH, 5.0f);
-
-			A += (1.0f - Fc) * G_Vis;
-			B += Fc * G_Vis;
-		}
-	}
-
-	A /= float(SAMPLE_COUNT);
-	B /= float(SAMPLE_COUNT);
-
-	return vec2(A, B);
+	return vec2(AB.x, AB.y);
 }
 
 void main()
