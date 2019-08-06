@@ -30,10 +30,14 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	gl_kernel::STexture Texture;
 	Texture.m_IsFLipVertically = GL_FALSE;
 	Texture.m_Type4WrapS = Texture.m_Type4WrapT = GL_REPEAT;
-	m_pDiffuseTexture = std::make_shared<CGLTexture>("../TextureSources/metalgrid4-ogl/metalgrid4_basecolor.png", Texture);
-	m_pNormalTexture = std::make_shared<CGLTexture>("../TextureSources/metalgrid4-ogl/metalgrid4_normal-ogl.png", Texture);
-	m_pMetallicTexture = std::make_shared<CGLTexture>("../TextureSources/metalgrid4-ogl/metalgrid4_metallic.psd", Texture);
-	m_pAOTexture = std::make_shared<CGLTexture>("../TextureSources/metalgrid4-ogl/metalgrid4_AO.png", Texture);
+	/*m_pDiffuseTexture = std::make_shared<CGLTexture>("../TextureSources/corkboard3b-Unity/corkboard3b-albedo.png", Texture);
+	m_pNormalTexture = std::make_shared<CGLTexture>("../TextureSources/corkboard3b-Unity/corkboard3b-normal.png", Texture);
+	m_pMetallicTexture = std::make_shared<CGLTexture>("../TextureSources/corkboard3b-Unity/corkboard3b-metalness.psd", Texture);
+	m_pAOTexture = std::make_shared<CGLTexture>("../TextureSources/corkboard3b-Unity/corkboard3b-ao.png", Texture);*/
+	m_pDiffuseTexture = std::make_shared<CGLTexture>("../TextureSources/bamboo-wood-semigloss-Unity/bamboo-wood-semigloss-albedo.png", Texture);
+	m_pNormalTexture = std::make_shared<CGLTexture>("../TextureSources/bamboo-wood-semigloss-Unity/bamboo-wood-semigloss-normal.png", Texture);
+	m_pMetallicTexture = std::make_shared<CGLTexture>("../TextureSources/bamboo-wood-semigloss-Unity/bamboo-wood-semigloss-metal.psd", Texture);
+	m_pAOTexture = std::make_shared<CGLTexture>("../TextureSources/bamboo-wood-semigloss-Unity/bamboo-wood-semigloss-ao.png", Texture);
 
 	m_pGLShader->bind();
 	m_pGLShader->uploadAttrib("Pos", SpherePosSet, 3);

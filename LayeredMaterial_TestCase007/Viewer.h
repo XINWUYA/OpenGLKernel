@@ -60,7 +60,7 @@ private:
 	float m_ClearCoatIOR = 1.5f;
 	float m_LightIntensity = 1.0f;
 	glm::vec3 m_LightColor = glm::vec3(1.0f);
-	glm::vec3 m_ClearCoatTint = glm::vec3(1.0f);
+	glm::vec3 m_ClearCoatTint = glm::vec3(0.0f);
 	glm::vec3 m_LightDir = glm::vec3(-1.0f, 1.0f, 0.4f);
 	std::deque<float> m_FrameDeque;
 	std::vector<float> m_FrameRateSet;

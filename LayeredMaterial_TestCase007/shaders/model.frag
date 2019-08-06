@@ -6,16 +6,6 @@ in vec2 v2f_TextureCoord;
 in vec3 v2f_Normal;
 in vec3 v2f_FragPos;
 
-struct SModelMaterial
-{
-	sampler2D Diffuse;
-	sampler2D Specular;
-	sampler2D Normal;
-	sampler2D Metallic;
-	sampler2D Roughness;
-	float Shininess;
-};
-
 struct SLightInfo
 {
 	vec3 Direction;
@@ -45,7 +35,6 @@ struct SBSDFData
 	vec3  CoatNormal;
 };
 
-uniform SModelMaterial u_ModelMaterial;
 uniform SLightInfo u_LightInfo;
 uniform sampler2D u_DiffuseTexture;
 uniform sampler2D u_NormalTexture;
@@ -66,55 +55,13 @@ const float INV_PI = 0.31830988618379067154f;
 const float FLT_MIN = 1.175494351e-38f; // Minimum normalized positive floating-point number
 const float FLT_MAX = 3.402823466e+38; // Maximum representable floating-point number
 
+#define VLAYERED_DIFFUSE_ENERGY_HACKED_TERM
+
 //***********************************************************************************************
 //Function: 
 vec3 ConvertSRGBtoLinear(vec3 vColor)
 {
         return pow(vColor, vec3(2.2f));
-}
-
-//***********************************************************************************************
-//Function: 
-vec3 FresnelSchlick(float vCosTheta, vec3 vF0)
-{
-	return vF0 + (1.0 - vF0) * pow(1.0 - vCosTheta, 5.0f);
-}
-
-//***********************************************************************************************
-//Function: 
-float DistributionGGX(vec3 vNormal, vec3 vHalfVec, float vRoughness)
-{
-	float a = vRoughness * vRoughness;
-	float a2 = a * a;
-	float NormalDotHalfVec = max(dot(vNormal, vHalfVec), 0.0f);
-	float NormalDotHalfVec2 = NormalDotHalfVec * NormalDotHalfVec;
-
-	float Nom = a2;
-	float Denom = NormalDotHalfVec2 * (a2 - 1.0f) + 1.0f;
-	Denom = PI * Denom * Denom;
-	return Nom / Denom;
-}
-
-//***********************************************************************************************
-//Function: 
-float GeometrySchlickGGX(float vNormalDotViewDir, float vRoughness)
-{
-	float r = (vRoughness + 1.0f);
-	float k = r * r / 8.0f;
-
-	float Nom = vNormalDotViewDir;
-	float Denom = vNormalDotViewDir * (1.0f - k) + k;
-	return Nom / Denom;
-}
-
-//***********************************************************************************************
-//Function: 
-float GeometrySmith(vec3 vNormal, vec3 vViewDir, vec3 vLightDir, float vRoughness)
-{
-	float NormalDotViewDir = max(dot(vNormal, vViewDir), 0.0f);
-	float NormalDotLightDir = max(dot(vNormal, vLightDir), 0.0f);
-
-	return GeometrySchlickGGX(NormalDotViewDir, vRoughness) * GeometrySchlickGGX(NormalDotLightDir, vRoughness);
 }
 
 //***********************************************************************************************
@@ -151,25 +98,6 @@ vec3 CalculateNormalFromNormalMap()
 	mat3 TBN = CalculateTBN(v2f_FragPos, v2f_TextureCoord, v2f_Normal);
 	
 	return normalize(TBN * TangentNormal);
-}
-
-//***********************************************************************************************
-//Function: 
-float CalculateBRDFSpecularTerm_GD(vec3 vNormal, vec3 vViewDir, vec3 vLightDir, float vRoughness)
-{
-	vec3 HalfVec = normalize(vViewDir + vLightDir);
-	float D = DistributionGGX(vNormal, HalfVec, vRoughness);
-	float G = GeometrySmith(vNormal, vViewDir, vLightDir, vRoughness);
-	float SpecularItem_GD = (G * D) / (4.0f * max(dot(vNormal, vViewDir), 0.0f) * max(dot(vNormal, vLightDir), 0.0f) + 0.001f);
-	return SpecularItem_GD;
-}
-
-//***********************************************************************************************
-//Function: 
-vec3 CalculateBRDFDiffuseTerm(vec3 vBaseColor, float vAO, float vTransmittance)
-{
-	vec3 DiffuseTerm = vAO * vBaseColor / PI;
-	return DiffuseTerm * (1 - vTransmittance);
 }
 
 //***********************************************************************************************
@@ -293,10 +221,13 @@ vec3 Fresnel0ToIor(vec3 fresnel0)
 {
 	return ((1.0 + sqrt(fresnel0)) / (1.0 - sqrt(fresnel0)));
 }
+
 //***********************************************************************************************
 //Function:
 float mean(vec3 a) { return (a.x+a.y+a.z)/3.0; }
 
+//***********************************************************************************************
+//Function:
 // Return the unpolarized version of the complete dielectric Fresnel equations
 // from `FresnelDielectric` without accounting for wave phase shift.
 // TODO: verify we have in BSDF lib
@@ -317,11 +248,15 @@ float FresnelUnpolarized(in float ct1, in float n1, in float n2)
     }
 }
 
+//***********************************************************************************************
+//Function:
 float ClampNdotV(float NdotV)
 {
     return max(NdotV, 0.0001); // Approximately 0.0057 degree bias
 }
 
+//***********************************************************************************************
+//Function:
 // Linearized variance from roughness to be able to express an atomic
 // adding operator on variance.
 float RoughnessToLinearVariance(float a)
@@ -331,6 +266,8 @@ float RoughnessToLinearVariance(float a)
     return a3 / (1.0f - a3);
 }
 
+//***********************************************************************************************
+//Function:
 vec3 GetDirFromAngleAndOrthoFrame(vec3 V, vec3 N, float newVdotN)
 {
     float sintheta = sqrt(1.0 - Sq(newVdotN));
@@ -338,41 +275,54 @@ vec3 GetDirFromAngleAndOrthoFrame(vec3 V, vec3 N, float newVdotN)
     return newV;
 }
 
+//***********************************************************************************************
+//Function:
 // ----------------------------------------------------------------------------
 // Helper for Disney parametrization
 // ----------------------------------------------------------------------------
-
 vec3 ComputeDiffuseColor(vec3 baseColor, float metallic)
 {
     return baseColor * (1.0 - metallic);
 }
 
+//***********************************************************************************************
+//Function:
 vec3 ComputeFresnel0(vec3 baseColor, float metallic, vec3 dielectricF0)
 {
     return mix(dielectricF0, baseColor, metallic);
 }
 
+//***********************************************************************************************
+//Function:
 vec3 ConvertF0ForAirInterfaceToF0ForNewTopIor(vec3 fresnel0, float newTopIor)
 {
     vec3 ior = Fresnel0ToIor(min(fresnel0, vec3(1,1,1)*0.999)); // guard against 1.0
     return IorToFresnel0(ior, vec3(newTopIor));
 }
 
+//***********************************************************************************************
+//Function:
 float ClampRoughnessForAnalyticalLights(float roughness)
 {
     return max(roughness, 1.0 / 1024.0);
 }
 
+//***********************************************************************************************
+//Function:
 float PerceptualRoughnessToRoughness(float perceptualRoughness)
 {
     return perceptualRoughness * perceptualRoughness;
 }
 
+//***********************************************************************************************
+//Function:
 float RoughnessToPerceptualRoughness(float roughness)
 {
     return sqrt(roughness);
 }
 
+//***********************************************************************************************
+//Function:
 float LinearVarianceToRoughness(float v)
 {
     v = max(v, 0.0);
@@ -380,11 +330,15 @@ float LinearVarianceToRoughness(float v)
     return a;
 }
 
+//***********************************************************************************************
+//Function:
 float LinearVarianceToPerceptualRoughness(float v)
 {
     return RoughnessToPerceptualRoughness(LinearVarianceToRoughness(v));
 }
 
+//***********************************************************************************************
+//Function:
 void ConvertValueAnisotropyToValueTB(float value, float anisotropy, out float valueT, out float valueB)
 {
     // Use the parametrization of Sony Imageworks.
@@ -393,11 +347,16 @@ void ConvertValueAnisotropyToValueTB(float value, float anisotropy, out float va
     valueB = value * (1 - anisotropy);
 }
 
+//***********************************************************************************************
+//Function:
 void ConvertAnisotropyToRoughness(float perceptualRoughness, float anisotropy, out float roughnessT, out float roughnessB)
 {
     float roughness = PerceptualRoughnessToRoughness(perceptualRoughness);
     ConvertValueAnisotropyToValueTB(roughness, anisotropy, roughnessT, roughnessB);
 }
+
+//***********************************************************************************************
+//Function:
 // WARNING: this has been deprecated, and should not be used!
 // Same as ConvertAnisotropyToRoughness but
 // roughnessT and roughnessB are clamped, and are meant to be used with punctual and directional lights.
@@ -409,7 +368,8 @@ void ConvertAnisotropyToClampRoughness(float perceptualRoughness, float anisotro
     roughnessB = ClampRoughnessForAnalyticalLights(roughnessB);
 }
 
-
+//***********************************************************************************************
+//Function:
 vec3 F_Schlick(vec3 f0, float f90, float u)
 {
     float x = 1.0 - u;
@@ -418,17 +378,20 @@ vec3 F_Schlick(vec3 f0, float f90, float u)
     return f0 * (1.0 - x5) + (f90 * x5);        // sub mul mul mul sub mul mad*3
 }
 
+//***********************************************************************************************
+//Function:
 vec3 F_Schlick(vec3 f0, float u)
 {
     return F_Schlick(f0, 1.0, u);               // sub mul mul mul sub mad*3
 }
+
 //***********************************************************************************************
 //Function:
 void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
                        out float ctt,
                        out vec3 R12,   out vec3 T12,   out vec3 R21,   out vec3 T21,
                        out float  s_r12, out float  s_t12, out float  j12,
-                       out float  s_r21, out float  s_t21, out float  j21)
+                       out float  s_r21, out float  s_t21, out float  j21)//#####################接口不同
 {
 
     // Case of the dielectric coating
@@ -437,10 +400,19 @@ void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
         // Update energy
         float R0, n12;
 
-        n12 = GetCoatEta(vBSDFData.CoatIOR); //n2/n1;
+        n12 = GetCoatEta(vBSDFData.CoatIOR); //n2/n1;//####################略微不同，功能一样
         R0  = FresnelUnpolarized(cti, n12, 1.0);
 
-        R12 = vec3(R0); // TODO: FGD
+		// At this point cti should be properly (coatNormalWS dot V) or NdotV or VdotH, see ComputeAdding.
+        // In the special case where we do have a coat normal, we will propagate a different angle than
+        // (coatNormalWS dot V) and vOrthoGeomN will be used.
+        // vOrthoGeomN is the orthogonal complement of V wrt geomNormalWS.
+//        if (useGeomN)//#############################没用到，已注释
+//        {
+//            cti = ClampNdotV(dot(bsdfData.geomNormalWS, V));
+//        }
+
+        R12 = vec3(R0); // TODO: FGD//#####################受编译器影响
         T12 = 1.0 - R12;
         R21 = R12;
         T21 = T12;
@@ -458,7 +430,7 @@ void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
             // Moreover, we don't consider offspecular effect as well as never outputting final downward lobes anyway, so we
             // never output the means but just track them as cosines of angles (cti) for energy transfer calculations
             // (should do with FGD but depends, see comments above).
-            const float alpha = vBSDFData.CoatRoughness;
+            const float alpha = vBSDFData.CoatRoughness;//#################################受接口影响
             const float scale = clamp((1.0-alpha)*(sqrt(1.0-alpha) + alpha), 0.0, 1.0);
             //http://www.wolframalpha.com/input/?i=f(alpha)+%3D+(1.0-alpha)*(sqrt(1.0-alpha)+%2B+alpha)+alpha+%3D+0+to+1
             stt = scale*stt + (1.0-scale)*sti;
@@ -473,12 +445,12 @@ void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
         }
 
         // Update variance
-        s_r12 = RoughnessToLinearVariance(vBSDFData.CoatRoughness);
-        s_t12 = RoughnessToLinearVariance(vBSDFData.CoatRoughness * 0.5 * abs((ctt*n12 - cti)/(ctt*n12)));
+        s_r12 = RoughnessToLinearVariance(vBSDFData.CoatRoughness);//#################################受接口影响
+        s_t12 = RoughnessToLinearVariance(vBSDFData.CoatRoughness * 0.5 * abs((ctt*n12 - cti)/(ctt*n12)));//#################################受接口影响
         j12   = (ctt/cti)*n12;
 
         s_r21 = s_r12;
-        s_t21 = RoughnessToLinearVariance(vBSDFData.CoatRoughness * 0.5 * abs((cti/n12 - ctt)/(cti/n12)));
+        s_t21 = RoughnessToLinearVariance(vBSDFData.CoatRoughness * 0.5 * abs((cti/n12 - ctt)/(cti/n12)));//#################################受接口影响
         j21   = 1.0/j12;
 
     // Case of the media layer
@@ -489,8 +461,8 @@ void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
         //float stopFactor = float(cti > 0.0);
         //T12 = stopFactor * exp(- bsdfData.coatThickness * bsdfData.coatExtinction / cti);
         // Update energy
-        R12 = vec3(0.0, 0.0, 0.0);
-        T12 = exp(- vBSDFData.CoatThickness * vBSDFData.CoatExtinctionColor / cti);
+        R12 = vec3(0.0, 0.0, 0.0);//#####################受编译器影响
+        T12 = exp(- vBSDFData.CoatThickness * vBSDFData.CoatExtinctionColor / cti);//#################################受接口影响
         R21 = R12;
         T21 = T12;
 
@@ -512,12 +484,23 @@ void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
     {
         float ctiForFGD = cti;
 
-        float bottomAngleFGD = ctiForFGD;
+		// If we use the geometric normal propagation hack, we want to calculate FGD / Fresnel with
+        // an angle at the bottom interface between the average propagated direction and the normal from
+        // the bottom normal map. For that, we will recover a direction from the angle we propagated in
+        // the "V and geomNormalWS" plane of incidence. That direction will then serve to calculate an
+        // angle with the non-coplanar bottom normal from the normal map.
+//        if (useGeomN)//#############################为用到
+//        {
+//            float3 bottomDir = GetDirFromAngleAndOrthoFrame(vOrthoGeomN, bsdfData.geomNormalWS, cti);
+//            ctiForFGD = ClampNdotV(dot(bsdfData.normalWS, bottomDir));
+//        }
+        // We will also save this average bottom angle:
+        float bottomAngleFGD = ctiForFGD;//##################不同
 
         // Update energy
-        R12 = FresnelSchlick(ctiForFGD, vBSDFData.F0);//F_Schlick(vBSDFData.F0, ctiForFGD);
+        R12 = F_Schlick(vBSDFData.F0, ctiForFGD);
 /*
-        if (HasFlag(bsdfData.materialFeatures, MATERIALFEATUREFLAGS_STACK_LIT_IRIDESCENCE))
+        if (HasFlag(bsdfData.materialFeatures, MATERIALFEATUREFLAGS_STACK_LIT_IRIDESCENCE))//#########################未用到
         {
             if (vBSDFData.iridescenceMask > 0.0)
             {
@@ -533,11 +516,11 @@ void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
         }
 */
         T12 = vec3(0.0);
-//#ifdef VLAYERED_DIFFUSE_ENERGY_HACKED_TERM
+#ifdef VLAYERED_DIFFUSE_ENERGY_HACKED_TERM
         // Still should use FGD!
         // (note that although statistics T12 == T21 for the interface, the stack has terms e_T0i != e_Ti0)
         T12 = 1.0 - R12;
-//#endif
+#endif
         R21 = R12;
         T21 = T12;
 
@@ -569,7 +552,7 @@ void ComputeStatistics(in float cti, in int i, in SBSDFData vBSDFData,
 } //...ComputeStatistics()
 
 //***********************************************************************************************
-//Function:
+//Function://###################################只摘了中间一部分
 void ComputeAdding(float _cti, SBSDFData vBSDFData, out vec3 voTopLayerEnergyCoeff, out vec3 voBottomLayerEnergyCoeff, out vec3 voDiffuseEnergy, out float voLayeredCoatRoughness, out float voLayeredRoughnessT)
 {
 	float  cti  = _cti;
@@ -674,13 +657,13 @@ void ComputeAdding(float _cti, SBSDFData vBSDFData, out vec3 voTopLayerEnergyCoe
 //Function: Main
 void main()
 {
-	vec3 AlbedoColor = vec3(1,0,0);//ConvertSRGBtoLinear(texture(u_DiffuseTexture, v2f_TextureCoord).rgb);
-	float AO = 1;//texture(u_AOTexture, v2f_TextureCoord).r;
+	vec3 AlbedoColor = ConvertSRGBtoLinear(texture(u_DiffuseTexture, v2f_TextureCoord).rgb);
+	float AO = texture(u_AOTexture, v2f_TextureCoord).r;
 	float AmbientWeight = 0.03f;
 	vec3 AmbientColor = AO * AmbientWeight * AlbedoColor;
 
-	vec3 Normal = normalize(v2f_Normal);//CalculateNormalFromNormalMap();
-	float ModelMetallic = u_ModelMetallic;// * texture(u_MetallicTexture, v2f_TextureCoord).r;
+	vec3 Normal = CalculateNormalFromNormalMap();
+	float ModelMetallic = u_ModelMetallic * texture(u_MetallicTexture, v2f_TextureCoord).r;
 	
 	vec3 ResultColor = vec3(0.0f);
 
@@ -702,28 +685,11 @@ void main()
 	BSDFData.CoatMask = 0.0f;
 	BSDFData.CoatIOR = u_ClearCoatIOR;
 	BSDFData.CoatExtinctionColor = u_ClearCoatTint;
-	BSDFData.CoatNormal = Normal;//normalize(v2f_Normal);
+	BSDFData.CoatNormal = normalize(v2f_Normal);
 
 	//if(u_ClearCoatThickness > 0.0f)
 		BSDFData.F0 = ConvertF0ForAirInterfaceToF0ForNewTopIor(BSDFData.F0, BSDFData.CoatIOR);
 	
-//	vec3 F0 = mix(BSDFData.F0, BSDFData.BaseColor, BSDFData.Metallic);
-//	vec3 F = FresnelSchlick(max(dot(BSDFData.HalfVec, BSDFData.TopViewDir), 0.0f), F0);
-//	vec3 Ks = F;
-//	vec3 Kd = vec3(1.0f) - Ks;
-//	Kd *= 1.0f - BSDFData.Metallic;
-
-//	float BRDFSpecularTerm_GD = max(CalculateBRDFSpecularTerm_GD(BSDFData.Normal, BSDFData.ViewDir, BSDFData.LightDir, BSDFData.Roughness), 0.0f);
-//	vec3 BRDFSpecularColor = F * BRDFSpecularTerm_GD * max(dot(BSDFData.Normal, BSDFData.LightDir), 0.0f) * BaseLayerEnergyCompensationFactor;
-//
-//	vec3 BRDFDiffuseColor = CalculateBRDFDiffuseTerm(BSDFData.BaseColor, BSDFData.AO, 0.0f) * max(dot(BSDFData.Normal, BSDFData.LightDir), 0.0f);
-//
-//	float CoatBRDFSpecularTerm_GD = max(CalculateBRDFSpecularTerm_GD(BSDFData.CoatNormal, BSDFData.ViewDir, BSDFData.LightDir, BSDFData.CoatRoughness),0.0f);
-//	float CoatBRDFSpecularColor = CoatBRDFSpecularTerm_GD * max(dot(BSDFData.CoatNormal, BSDFData.LightDir), 0.0f) * CoatLayerEnergyCoeff;
-//	BRDFSpecularColor += CoatBRDFSpecularColor;
-//	
-//	
-//	ResultColor = /*AmbientColor +*/ u_LightInfo.Intensity * (BRDFDiffuseColor + BRDFSpecularColor) * u_LightInfo.Color;
 	
 	float BaseSpecularReflectivity = 1.0f;//和IBL有关,為1時沒有能量補償
 	float CoatSpecularReflectivity = 1.0f;
@@ -758,12 +724,12 @@ void main()
 	float BaseLayerDV = DV_SmithJointGGX(BaseNDotH, BaseNDotL, BaseNDotV, LayeredRoughnessT, BaseLambdaV);
 	float CoatLayerDV = DV_SmithJointGGX(CoatNDotH, CoatNDotL, CoatNDotV, LayeredCoatRoughness, CoatPartLambdaV);
 
-	vec3 SpecularLighting = max(vec3(0.0f), BaseNDotL * BottomLayerEnergyCoeff * BaseLayerDV * BaseLobeEnergyCompensationFactor);
-	vec3 CoatSpecularLighting = max(vec3(0.0f), CoatNDotL * TopLayerEnergyCoeff * CoatLayerDV * CoatLobeEnergyCompensationFactor);
+	vec3 SpecularLighting = max(vec3(0.0f), BaseNDotL) * BottomLayerEnergyCoeff * BaseLayerDV * BaseLobeEnergyCompensationFactor;
+	vec3 CoatSpecularLighting = max(vec3(0.0f), CoatNDotL) * TopLayerEnergyCoeff * CoatLayerDV * CoatLobeEnergyCompensationFactor;
 	SpecularLighting += CoatSpecularLighting;
 
 	vec3 DiffuseColor = DiffuseEnergy * ComputeDiffuseColor(BSDFData.BaseColor, BSDFData.Metallic);
-	vec3 DiffuseLighting = DiffuseColor * max(0.0f, BaseNDotL) * INV_PI;
+	vec3 DiffuseLighting = AO * DiffuseColor * max(0.0f, BaseNDotL) * INV_PI;
 
 	ResultColor = (DiffuseLighting + SpecularLighting) * u_LightInfo.Intensity * u_LightInfo.Color;
 
