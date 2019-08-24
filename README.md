@@ -100,6 +100,12 @@ Personal Learning of OpenGL; Reference: https://learnopengl-cn.github.io/
     PS> .\vcpkg install gl3w
     ```
 
+  + GLI
+
+    ```
+    PS> .\vcpkg install gli
+    ```
+
     
 
 + **配置imgui**
