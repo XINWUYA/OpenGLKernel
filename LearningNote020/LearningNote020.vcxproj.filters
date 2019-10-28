@@ -58,10 +58,34 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ShaderSources\LN019\QuadFragShader.glsl">
+    <None Include="..\ShaderSources\LN020\QuadFragShader.glsl">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="..\ShaderSources\LN019\QuadVertShader.glsl">
+    <None Include="..\ShaderSources\LN020\QuadVertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\CubeFragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\CubeVertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\DrawShadowMapFragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\DrawShadowMapVertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\ComputeShadowMapFragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\ComputeShadowMapVertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\LightFragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\ShaderSources\LN020\LightVertShader.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

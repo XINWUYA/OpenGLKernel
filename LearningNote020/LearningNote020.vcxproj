@@ -142,8 +142,16 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ShaderSources\LN019\QuadFragShader.glsl" />
-    <None Include="..\ShaderSources\LN019\QuadVertShader.glsl" />
+    <None Include="..\ShaderSources\LN020\ComputeShadowMapFragShader.glsl" />
+    <None Include="..\ShaderSources\LN020\ComputeShadowMapVertShader.glsl" />
+    <None Include="..\ShaderSources\LN020\CubeFragShader.glsl" />
+    <None Include="..\ShaderSources\LN020\CubeVertShader.glsl" />
+    <None Include="..\ShaderSources\LN020\DrawShadowMapFragShader.glsl" />
+    <None Include="..\ShaderSources\LN020\DrawShadowMapVertShader.glsl" />
+    <None Include="..\ShaderSources\LN020\LightFragShader.glsl" />
+    <None Include="..\ShaderSources\LN020\LightVertShader.glsl" />
+    <None Include="..\ShaderSources\LN020\QuadFragShader.glsl" />
+    <None Include="..\ShaderSources\LN020\QuadVertShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
