@@ -12,7 +12,7 @@ Personal Learning of OpenGL; Reference: https://learnopengl-cn.github.io/
   + Windows系统
   + Visual Studio
   + Git
-+ CMake
+  + CMake
   
 + **配置vcpkg**
 
@@ -94,12 +94,6 @@ Personal Learning of OpenGL; Reference: https://learnopengl-cn.github.io/
     PS> .\vcpkg install glew
     ```
 
-  + GL3W
-
-    ```
-    PS> .\vcpkg install gl3w
-    ```
-
   + GLI
 
     ```
@@ -141,3 +135,10 @@ git clone https://github.com/ocornut/imgui.git
 + TestCase011_A(AreaLight_UnirformColor)
 
   ![area_light_uniform_color](Results/area_light_uniform_color.png)
+
++ TestCase012_B(Shadow)
+
+  ![shadow](Results/shadow.png)
+
+  
+
