@@ -223,11 +223,13 @@ void CGLTexture::__generateTexture()
 	default:
 		break;
 	}
-	//glTexParameterfv(TextureType, GL_TEXTURE_BORDER_COLOR, m_Texture.m_BorderColor.data());
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_S, m_Texture.m_Type4WrapS);
 	glTexParameteri(TextureType, GL_TEXTURE_WRAP_T, m_Texture.m_Type4WrapT);
 	if(m_Texture.m_Channels >= 3)
 		glTexParameteri(TextureType, GL_TEXTURE_WRAP_R, m_Texture.m_Type4WrapR);
+
+	if(m_Texture.m_Type4WrapS == GL_CLAMP_TO_BORDER && m_Texture.m_Type4WrapT == GL_CLAMP_TO_BORDER)
+		glTexParameterfv(TextureType, GL_TEXTURE_BORDER_COLOR, &m_Texture.m_BorderColor.r);
 
 	if (m_Texture.m_IsUseMipMap && m_Texture.m_Type4MagFilter == GL_LINEAR)
 		m_Texture.m_Type4MinFilter = GL_LINEAR_MIPMAP_LINEAR;
