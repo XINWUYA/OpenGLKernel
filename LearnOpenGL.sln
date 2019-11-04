@@ -124,6 +124,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase012_A(ShadowMap)", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase012_B(Shadow)", "TestCase012_B\TestCase012_B.vcxproj", "{A3184D24-92E7-4D93-889A-22CFE3B1D005}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote021(AdvancedLighting_PointShadows)", "LearningNote021\LearningNote021.vcxproj", "{E0CBDE78-ED33-4999-8599-A47251F66160}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -500,6 +502,14 @@ Global
 		{A3184D24-92E7-4D93-889A-22CFE3B1D005}.Release|x64.Build.0 = Release|x64
 		{A3184D24-92E7-4D93-889A-22CFE3B1D005}.Release|x86.ActiveCfg = Release|Win32
 		{A3184D24-92E7-4D93-889A-22CFE3B1D005}.Release|x86.Build.0 = Release|Win32
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Debug|x64.ActiveCfg = Debug|x64
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Debug|x64.Build.0 = Debug|x64
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Debug|x86.ActiveCfg = Debug|Win32
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Debug|x86.Build.0 = Debug|Win32
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Release|x64.ActiveCfg = Release|x64
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Release|x64.Build.0 = Release|x64
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Release|x86.ActiveCfg = Release|Win32
+		{E0CBDE78-ED33-4999-8599-A47251F66160}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -550,6 +560,7 @@ Global
 		{A9D27108-5030-4585-9311-10CA48D40B64} = {774BAEAF-14F2-4D11-A824-AAF6A62DEF94}
 		{C2FCD0E5-3B67-4288-8A50-7B8FF33F2479} = {774BAEAF-14F2-4D11-A824-AAF6A62DEF94}
 		{A3184D24-92E7-4D93-889A-22CFE3B1D005} = {774BAEAF-14F2-4D11-A824-AAF6A62DEF94}
+		{E0CBDE78-ED33-4999-8599-A47251F66160} = {D5A7C5E0-5E43-4D89-9EE9-F58233C67784}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63E4C666-BF03-46F4-A99C-C298853EC8CD}
