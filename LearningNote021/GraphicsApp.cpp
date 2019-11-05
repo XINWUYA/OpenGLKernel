@@ -72,7 +72,7 @@ void CGraphicsApp::run()
 		
 		float NearPlaneLS = 1.0f;
 		float FarPlaneLS = 25.0f;
-		glm::mat4 LightProjectionMat = glm::perspective(glm::radians(90.0f), (float)m_WindowWidth / (float)m_WindowHeight, NearPlaneLS, FarPlaneLS);//glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.5f, 10.0f);
+		glm::mat4 LightProjectionMat = glm::perspective(glm::radians(90.0f), 1.0f, NearPlaneLS, FarPlaneLS);//glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.5f, 10.0f);
 		
 		glViewport(0, 0, 1024, 1024);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_GenerateShadowMapFBO);
@@ -431,11 +431,11 @@ void CGraphicsApp::__initFBO()
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_CubeShadowMapTex);
 	for(int i = 0; i < 6; ++i)
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, m_GenerateShadowMapFBO);
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_CubeShadowMapTex, 0);
