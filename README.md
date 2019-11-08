@@ -128,9 +128,9 @@ git clone https://github.com/ocornut/imgui.git
 
   ![area_light_uniform_color](Results/area_light_uniform_color.png)
 
-+ TestCase012_B(Shadow)
++ TestCase012_B(DirectionalLight_Shadow)
 
-  ![shadow](Results/shadow.png)
+  ![directional_light_shadow](Results/directional_light_shadow.png)
 
   
 
