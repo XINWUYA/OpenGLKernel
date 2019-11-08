@@ -27,7 +27,7 @@ int main()
 		gl_kernel::init();
 
 		{
-			CViewer Viewer;
+			CViewer Viewer("Shadow Map", 800, 800);
 			Viewer.setVisible(true);
 
 			gl_kernel::mainloop();

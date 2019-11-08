@@ -16,25 +16,10 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	m_pCamera = std::make_shared<CCamera>(glm::vec3(0.0f, 0.25f, 1.0f));
 	m_pGLShader = std::make_shared<CGLShader>();
 	m_pGLShader->initFromFiles("scene", "shaders/scene.vert", "shaders/scene.frag");
-	//m_pLightShader = std::make_shared<CGLShader>();
-	//m_pLightShader->initFromFiles("light", "shaders/light.vert", "shaders/light.frag");
 	m_pDrawShadowMapShader = std::make_shared<CGLShader>();
 	m_pDrawShadowMapShader->initFromFiles("draw_shadow_map", "shaders/shadow_map.vert", "shaders/shadow_map.frag");
 
-	m_pModel = std::make_shared<CGLModel>("../ModelSources/CornellBox/CornellBox-Empty-RG.obj");
-
-	//Create a Sphere
-	/*std::vector<glm::vec3> SpherePosSet;
-	std::vector<glm::vec3> SphereNormalSet;
-	std::vector<glm::vec2> SphereTextureCoordsSet;
-	std::vector<unsigned int> SphereIndicesSet;
-	gl_kernel::createASphere(SpherePosSet, SphereNormalSet, SphereTextureCoordsSet, SphereIndicesSet);
-	m_LightDrawElementsCnt = SphereIndicesSet.size();
-	m_pLightShader->bind();
-	m_pLightShader->uploadAttrib("Pos", SpherePosSet, 3);
-	m_pLightShader->uploadAttrib("Normal", SphereNormalSet, 3);
-	m_pLightShader->uploadAttrib("TextureCoord", SphereTextureCoordsSet, 2);
-	m_pLightShader->uploadAttrib("Indices", SphereIndicesSet, 1);*/
+	m_pModel = std::make_shared<CGLModel>("../ModelSources/SponzaPBR_dds2tga/SponzaPBR.obj");
 
 	gl_kernel::STexture TextureConfig;
 	TextureConfig.m_Width = 1024;
@@ -72,19 +57,16 @@ CViewer::~CViewer()
 //Function:
 void CViewer::drawContentsV()
 {
-	double CurrentTime = glfwGetTime();
-	m_DeltaTime = CurrentTime - m_LastGLFWTime;
-	m_LastGLFWTime = CurrentTime;
-
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
+	__calculateTime();
 	__processInput();
 	__setGUIComponents();
 
 	glEnable(GL_DEPTH_TEST);
 
 	glm::mat4 LightProjectionMat = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
-	glm::mat4 LightViewMat = glm::lookAt(glm::vec3(-2.5f, 5.0f, 5.0f), glm::vec3(0.0f, 0.25f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 LightViewMat = glm::lookAt(glm::vec3(m_LightPosX, m_LightPosY, m_LightPosZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	m_pDrawShadowMapShader->bind();
 	m_pDrawShadowMapShader->setMat4Uniform("u_ProjectionMat", &LightProjectionMat[0][0]);
 	m_pDrawShadowMapShader->setMat4Uniform("u_ViewMat", &LightViewMat[0][0]);
@@ -102,29 +84,10 @@ void CViewer::drawContentsV()
 	//glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::mat4 ProjectionMat = m_pCamera->computeProjectionMatrix(static_cast<float>(m_WindowWidth) / static_cast<float>(m_WindowHeight));
-	glm::mat4 ViewMat = m_pCamera->getViewMatrix();
-	ModelMat = glm::mat4(1.0f);
-	ModelMat = glm::scale(ModelMat, glm::vec3(0.2f));
 	m_pGLShader->bind();
-	m_pGLShader->setMat4Uniform("projection", &ProjectionMat[0][0]);
-	m_pGLShader->setMat4Uniform("view", &ViewMat[0][0]);
-	m_pGLShader->setMat4Uniform("model", &ModelMat[0][0]);
 	m_pTexture->bind(m_pTexture->getTextureID());
 	m_pGLShader->setIntUniform("u_Texture", m_pTexture->getTextureID());
 	m_pGLShader->drawArray(GL_TRIANGLES, 0, 6);
-	//m_pModel->draw();
-
-	//Light
-	/*m_pLightShader->bind();
-	ModelMat = glm::mat4(1.0f);
-	ModelMat = glm::translate(ModelMat, glm::vec3(m_LightPosX, m_LightPosY, m_LightPosZ));
-	ModelMat = glm::scale(ModelMat, glm::vec3(0.01f));
-	m_pLightShader->setMat4Uniform("u_ProjectionMat", &ProjectionMat[0][0]);
-	m_pLightShader->setMat4Uniform("u_ViewMat", &ViewMat[0][0]);
-	m_pLightShader->setMat4Uniform("u_ModelMat", &ModelMat[0][0]);
-	m_pLightShader->drawIndexed(GL_TRIANGLE_STRIP, 0, m_LightDrawElementsCnt);*/
-	//glDisable(GL_DEPTH_TEST);
 
 	m_pAssistGUI->drawGUI();
 }
@@ -214,20 +177,31 @@ void CViewer::__processInput()
 void CViewer::__setGUIComponents()
 {
 	m_pAssistGUI->updateGUI();
-	/*m_pAssistGUI->text("Application average %.3f ms/frame (%.1f FPS)", __calculateFrameRateInMilliSecond(), __calcullateFPS());
+	m_pAssistGUI->text("Application average %.3f ms/frame (%.1f FPS)", __calculateFrameRateInMilliSecond(), __calcullateFPS());
 	m_pAssistGUI->sliderFloat("LightPosX", m_LightPosX, -10.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosY", m_LightPosY, -10.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosZ", m_LightPosZ, -10.0f, 10.0f);
-	m_pAssistGUI->sliderFloat("LightIntensity", m_LightIntensity, 0.0f, 100.0f);
-	m_pAssistGUI->colorEdit3("LightColor", &m_LightColor[0]);
+}
 
-	if (m_FrameDeque.size() >= 60)
-		m_FrameDeque.pop_front();
-	m_FrameDeque.push_back(__calcullateFPS());
-	m_FrameRateSet.clear();
-	for (auto Iter = m_FrameDeque.begin(); Iter != m_FrameDeque.end(); ++Iter)
-		m_FrameRateSet.push_back(*Iter);
+//***********************************************************************************************
+//Function:
+void CViewer::__calculateTime()
+{
+	double CurrentTime = glfwGetTime();
+	m_DeltaTime = CurrentTime - m_LastGLFWTime;
+	m_LastGLFWTime = CurrentTime;
+}
 
-	m_pAssistGUI->plotLines("FrameRates", m_FrameRateSet);
-	m_pAssistGUI->combo("LightModel", m_LabelSet, m_Selectedlabel);*/
+//***********************************************************************************************
+//Function:
+double CViewer::__calculateFrameRateInMilliSecond()
+{
+	return m_DeltaTime * 1000;
+}
+
+//***********************************************************************************************
+//Function:
+double CViewer::__calcullateFPS()
+{
+	return 1.0 / m_DeltaTime;
 }

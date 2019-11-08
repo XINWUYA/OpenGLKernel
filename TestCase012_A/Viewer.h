@@ -40,7 +40,6 @@ private:
 	void __updateLightPos();
 
 	std::shared_ptr<CGLShader> m_pGLShader = nullptr;
-	std::shared_ptr<CGLShader> m_pLightShader = nullptr;
 	std::shared_ptr<CGLShader> m_pDrawShadowMapShader = nullptr;
 	std::shared_ptr<CCamera> m_pCamera = nullptr;
 	std::shared_ptr<CGLTexture> m_pTexture = nullptr;
@@ -49,14 +48,9 @@ private:
 	std::shared_ptr<CGLFrameBuffer> m_pShadowMapFBO = nullptr;
 	bool m_IsFirstMouse = true;
 	int m_WindowWidth = 0, m_WindowHeight = 0;
-	unsigned int m_LightDrawElementsCnt = 0;
 	float m_LastMouseX = 0.0f, m_LastMouseY = 0.0f;
 	double m_LastGLFWTime = 0.0f, m_DeltaTime = 0.0f;
-	float m_LightPosX = 0.0f, m_LightPosY = 0.25f, m_LightPosZ = 0.25f;
-	float m_LightMovingStepLength = 0.01f;
-	float m_LightIntensity = 1.0f;
-	glm::vec3 m_LightColor = glm::vec3(1.0f);
-	glm::vec3 m_LightMovingDir = glm::vec3(0.0f);
+	float m_LightPosX = 1.2f, m_LightPosY = 5.0f, m_LightPosZ = 0.0f;
 	std::deque<float> m_FrameDeque;
 	std::vector<float> m_FrameRateSet;
 };
