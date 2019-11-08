@@ -12,7 +12,7 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	m_pCamera = std::make_shared<CCamera>(glm::vec3(0.0f, 2.0f, 3.0f));
 	m_pGLShader = std::make_shared<CGLShader>();
 	m_pGLShader->initFromFiles("model", "shaders/model.vert", "shaders/model.frag");
-	m_pModel = std::make_shared<CGLModel>("../ModelSources/nanosuit/nanosuit.obj");
+	m_pModel = std::make_shared<CGLModel>("../ModelSources/SponzaPBR_dds2tga/SponzaPBR.obj");
 	m_pModel->init(*m_pGLShader);
 }
 

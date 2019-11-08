@@ -89,7 +89,7 @@ void CAssistGUI::sameLine()
 //Function:
 void CAssistGUI::plotLines(const std::string& vLabelName, const std::vector<float>& vDataSet)
 {
-	ImGui::PlotLines(vLabelName.c_str(), vDataSet.data(), vDataSet.size(), 0, "", FLT_MAX, FLT_MAX, ImVec2(0, 40));
+	ImGui::PlotLines(vLabelName.c_str(), vDataSet.data(), static_cast<int>(vDataSet.size()), 0, "", FLT_MAX, FLT_MAX, ImVec2(0, 40));
 }
 
 //***********************************************************************************************
