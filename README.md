@@ -112,14 +112,6 @@ vcpkg安装的imgui会有问题，因此这里建议自己下载imgui。
 git clone https://github.com/ocornut/imgui.git
 ```
 
-【注】
-
-本工程因为使用的OpenGL+GLEW，而imgui默认使用GL3W，因此在运行之前，需要修改imgui/examples/imgui_impl_opengl3.h：
-
-将第35行的`#define IMGUI_IMPL_OPENGL_LOADER_GL3W`
-
-修改为：`#define IMGUI_IMPL_OPENGL_LOADER_GLEW`，保存即可。
-
 
 
 ### 部分结果
