@@ -84,6 +84,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase006(Light_Phong+Sim
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase007(Light_PBR+DynamicLight)", "TestCase007\TestCase007.vcxproj", "{258C3DA3-A47E-4FCC-B593-AA34060DD58E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestCasesForOpenGLKernel", "TestCasesForOpenGLKernel", "{774BAEAF-14F2-4D11-A824-AAF6A62DEF94}"
 EndProject
@@ -101,12 +104,24 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase008(CubeMap)", "Tes
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase009_A(IBL_PreConvoluteIrradianceMap)", "TestCase009_A\TestCase009_A.vcxproj", "{58FFFBD4-2951-41B2-9D64-080154A487AD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase009_B(IBL_PreFilterEnvironmentMap)", "TestCase009_B\TestCase009_B.vcxproj", "{7821343C-BC39-484B-8830-70193EC26B01}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase009_C(IBL_PreComputeBRDF)", "TestCase009_C\TestCase009_C.vcxproj", "{4C333396-B60A-4829-9168-F3F468827E8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase009_D(IBL)", "TestCase009_D\TestCase009_D.vcxproj", "{DFD4E2C6-FB58-4A06-B24C-4558DBC325B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase004(IBL+DoubleLayerBRDF)", "LayeredMaterial_TestCase004\LayeredMaterial_TestCase004.vcxproj", "{3DF5A878-4282-4FF1-8978-083680BEDF72}"
 EndProject
@@ -117,12 +132,24 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LayeredMaterial_TestCase007(Unity_DirectionalLight)", "LayeredMaterial_TestCase007\LayeredMaterial_TestCase007.vcxproj", "{DB9B06C6-B68E-49FD-800A-99755347F357}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase010(PBR_Frostbite)", "TestCase010\TestCase010.vcxproj", "{36E28474-B62C-414F-BC0B-664A25D189F6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase011_A(AreaLight_UniformColor)", "TestCase011_A\TestCase011_A.vcxproj", "{A9D27108-5030-4585-9311-10CA48D40B64}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase012_A(ShadowMap)", "TestCase012_A\TestCase012_A.vcxproj", "{C2FCD0E5-3B67-4288-8A50-7B8FF33F2479}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCase012_B(Shadow)", "TestCase012_B\TestCase012_B.vcxproj", "{A3184D24-92E7-4D93-889A-22CFE3B1D005}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6887B1A0-C912-4B80-81D0-630EB9366FF7} = {6887B1A0-C912-4B80-81D0-630EB9366FF7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote021(AdvancedLighting_PointShadows)", "LearningNote021\LearningNote021.vcxproj", "{E0CBDE78-ED33-4999-8599-A47251F66160}"
 EndProject
