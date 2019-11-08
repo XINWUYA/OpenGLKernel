@@ -76,7 +76,9 @@ void CGLTexture::__loadCommonTexture(const std::string& vTextureFileName)
 	GLvoid* pImageData = stbi_load(vTextureFileName.c_str(), &TextureWidth, &TextureHeight, &TextureChannels, 0);
 	if (!pImageData)
 	{
+#ifdef _DEBUG
 		std::cerr << "Error: Common Texture Load Failed." << std::endl;
+#endif // _DEBUG
 		return;
 	}
 	else
@@ -123,7 +125,9 @@ void CGLTexture::__loadHDRTexture(const std::string& vTextureFileName)
 	GLvoid* pImageData = stbi_loadf(vTextureFileName.c_str(), &TextureWidth, &TextureHeight, &TextureChannels, 0);
 	if (!pImageData)
 	{
+#ifdef _DEBUG
 		std::cerr << "Error: HDR Texture Load Failed." << std::endl;
+#endif // _DEBUG
 		return;
 	}
 	else
@@ -170,7 +174,9 @@ void CGLTexture::__loadDDSTexture(const std::string& vTextureFileName)
 	gli::texture GLITexture = gli::load(vTextureFileName);
 	if (GLITexture.empty())
 	{
+#ifdef _DEBUG
 		std::cerr << "Error: DDS Texture Load Failed." << std::endl;
+#endif // _DEBUG
 		return;
 	}
 	else
@@ -318,8 +324,10 @@ void CGLFrameBuffer::init(const std::initializer_list<CGLTexture*>& vTextureAtta
 	genRenderBuffer(m_ColorBuffer, GL_RGBA8, GL_COLOR_ATTACHMENT0, m_Samples, m_FrameSize);
 	genRenderBuffer(m_DepthBuffer, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, m_Samples, m_FrameSize);
 
+#ifdef _DEBUG
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cerr << "Error: CGLFrameBuffer: Framebuffer is not completed." << std::endl;
+#endif // _DEBUG
 
 	release();
 }

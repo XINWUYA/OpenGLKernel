@@ -16,8 +16,10 @@ void init()
 		[](int error, const char* descr) {
 		if (error == GLFW_NOT_INITIALIZED)
 			return; /* Ignore */
+#ifdef _DEBUG
 		std::cerr << "GLFW error " << error << ": " << descr << std::endl;
-	}
+#endif // _DEBUG
+		}
 	);
 
 	if (!glfwInit())
@@ -61,7 +63,9 @@ void mainloop()
 	}
 	catch (const std::exception& vExc)
 	{
+#ifdef _DEBUG
 		std::cerr << "Caught exception in main loop: " << vExc.what() << std::endl;
+#endif // _DEBUG
 		abort();
 	}
 }

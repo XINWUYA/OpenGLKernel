@@ -41,7 +41,9 @@ void CGLModel::__loadModel(const std::string& vModelName)
 	const aiScene* pAiScene = Importer.ReadFile(vModelName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if (!pAiScene || pAiScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !pAiScene->mRootNode)
 	{
+#ifdef _DEBUG
 		std::cout << "Error: Assimp: " << Importer.GetErrorString() << std::endl;
+#endif // _DEBUG
 		return;
 	}
 	m_Directory = vModelName.substr(0, vModelName.find_last_of('/'));

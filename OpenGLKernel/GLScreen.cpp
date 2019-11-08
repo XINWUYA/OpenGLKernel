@@ -126,7 +126,9 @@ bool CGLScreen::__initGLFWWindow()
 
 	if (!m_pGLFWWindow)
 	{
+#ifdef _DEBUG
 		std::cerr << "Could not create an OpenGL context!" << std::endl;
+#endif // _DEBUG
 		glfwTerminate();
 		return false;
 	}
@@ -136,7 +138,9 @@ bool CGLScreen::__initGLFWWindow()
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
+#ifdef _DEBUG
 		std::cerr << "Error::Window:: GLEW Init Failure" << std::endl;
+#endif // _DEBUG
 		return false;
 	}
 	int FramebufferWidth = 0, FramebufferHeight = 0;

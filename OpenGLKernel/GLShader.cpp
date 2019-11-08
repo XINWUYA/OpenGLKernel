@@ -241,6 +241,7 @@ bool CGLShader::__compileShader(GLint vShaderId, GLuint vType)
 	glGetShaderiv(vShaderId, GL_COMPILE_STATUS, &Status);
 
 	if (Status != GL_TRUE) {
+#ifdef _DEBUG
 		char Buffer[MaxInfoLogLength];
 		std::cerr << "Error while compiling ";
 		switch (vType)
@@ -256,6 +257,7 @@ bool CGLShader::__compileShader(GLint vShaderId, GLuint vType)
 		//std::cerr << vShaderStr << std::endl << std::endl;
 		glGetShaderInfoLog(vShaderId, MaxInfoLogLength, nullptr, Buffer);
 		std::cerr << "Error: " << std::endl << Buffer << std::endl;
+#endif // _DEBUG
 		throw std::runtime_error("Shader compilation failed!");
 		return false;
 	}
@@ -273,9 +275,11 @@ bool CGLShader::__linkProgram()
 	glGetProgramiv(m_ShaderProgram, GL_LINK_STATUS, &Status);
 
 	if (Status != GL_TRUE) {
+#ifdef _DEBUG
 		char Buffer[MaxInfoLogLength];
 		glGetProgramInfoLog(m_ShaderProgram, MaxInfoLogLength, nullptr, Buffer);
 		std::cerr << "Linker error (" << m_ShaderSig << "): " << std::endl << Buffer << std::endl;
+#endif // _DEBUG
 		m_ShaderProgram = 0;
 		throw std::runtime_error("Shader linking failed!");
 		return false;
@@ -344,8 +348,11 @@ void CGLShader::__uploadAttrib(const std::string& vAttribName, size_t vSize, int
 GLint CGLShader::__getAttribLocation(const std::string& vAttribName) const
 {
 	GLint Location = glGetAttribLocation(m_ShaderProgram, vAttribName.c_str());
-	if(-1 == Location)
+
+#ifdef _DEBUG
+	if (-1 == Location)
 		std::cerr << m_ShaderSig << ": warning: did not find attrib " << vAttribName << std::endl;
+#endif // _DEBUG
 
 	return Location;
 }
@@ -355,8 +362,11 @@ GLint CGLShader::__getAttribLocation(const std::string& vAttribName) const
 GLint CGLShader::__getUniformLocation(const std::string& vUniformName) const
 {
 	GLint Location = glGetUniformLocation(m_ShaderProgram, vUniformName.c_str());
+
+#ifdef _DEBUG
 	if (-1 == Location)
 		std::cerr << m_ShaderSig << ": warning: did not find uniform " << vUniformName << std::endl;
+#endif // _DEBUG
 
 	return Location;
 }
