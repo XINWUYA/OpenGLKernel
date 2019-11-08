@@ -47,7 +47,8 @@ bool CGLShader::initFromStr(const std::string& vShaderSig, const std::string& vV
 	if (!vTessellationControlShaderStr.empty() && !TessellationControlShader) return false;
 	if (!vTessellationEvaluationShaderStr.empty() && !TessellationEvaluationShader) return false;
 
-	_ASSERT(__linkProgram());
+	bool IsLinkSuccess = __linkProgram();
+	_ASSERT(IsLinkSuccess);
 
 	__deleteShader(VertexShader);
 	__deleteShader(FragmentShader);
@@ -213,7 +214,8 @@ GLuint CGLShader::__createShader(GLuint vType, const std::string& vDefinitionsSt
 	const char* pShaderStr = vShaderStr.c_str();
 	glShaderSource(ShaderId, 1, &pShaderStr, nullptr);
 
-	_ASSERT(__compileShader(ShaderId, vType));
+	bool IsCompileSuccess = __compileShader(ShaderId, vType);
+	_ASSERT(IsCompileSuccess);
 
 	_ASSERT(m_ShaderProgram);
 	glAttachShader(m_ShaderProgram, ShaderId);
