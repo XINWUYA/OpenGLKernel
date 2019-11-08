@@ -42,11 +42,9 @@ private:
 	std::shared_ptr<CGLShader> m_pGLShader = nullptr;
 	std::shared_ptr<CGLShader> m_pLightShader = nullptr;
 	std::shared_ptr<CGLShader> m_pGenerateShadowMapShader = nullptr;
-	std::shared_ptr<CGLShader> m_pCubeShader = nullptr;
-	std::shared_ptr<CGLShader> m_pPlaneShader = nullptr;
 	std::shared_ptr<CCamera> m_pCamera = nullptr;
 	std::shared_ptr<CGLTexture> m_pTexture = nullptr;
-	//std::shared_ptr<CGLModel> m_pModel = nullptr;
+	std::shared_ptr<CGLModel> m_pModel = nullptr;
 	std::shared_ptr<CAssistGUI> m_pAssistGUI = nullptr;
 	std::shared_ptr<CGLFrameBuffer> m_pShadowMapFBO = nullptr;
 	bool m_IsFirstMouse = true;
@@ -55,7 +53,7 @@ private:
 	unsigned int m_CubeVAO, m_QuadVAO;
 	float m_LastMouseX = 0.0f, m_LastMouseY = 0.0f;
 	double m_LastGLFWTime = 0.0f, m_DeltaTime = 0.0f;
-	float m_LightPosX = -2.5f, m_LightPosY = 5.0f, m_LightPosZ = 5.0f;
+	float m_LightPosX = -1.2f, m_LightPosY = 5.0f, m_LightPosZ = 0.0f;
 	float m_LightMovingStepLength = 0.01f;
 	float m_LightIntensity = 1.0f;
 	glm::vec3 m_LightColor = glm::vec3(1.0f);
