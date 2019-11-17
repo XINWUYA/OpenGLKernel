@@ -7,7 +7,7 @@ struct ImGuiIO;
 
 NAMESPACE_BEGIN(gl_kernel)
 
-class CAssistGUI
+class OPENGL_KERNEL_EXPORT CAssistGUI
 {
 public:
 	CAssistGUI(const std::string& vTitle);

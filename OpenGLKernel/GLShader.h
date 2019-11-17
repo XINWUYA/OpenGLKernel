@@ -6,7 +6,6 @@
 #include <GLFW/glfw3.h>
 #include <GLM/glm.hpp>
 #include "Common.h"
-#include "OPENGL_KERNEL_EXPORT.h"
 
 NAMESPACE_BEGIN(gl_kernel)
 
@@ -27,7 +26,7 @@ template <> struct STypeTraits<glm::ivec4>	{ enum { type = GL_INT, integral = 1 
 template <> struct STypeTraits<glm::ivec3>	{ enum { type = GL_INT, integral = 1 }; };
 template <> struct STypeTraits<glm::ivec2>	{ enum { type = GL_INT, integral = 1 }; };
 
-class /*OPENGL_KERNEL_EXPORT */CGLShader
+class OPENGL_KERNEL_EXPORT CGLShader
 {
 public:
 	CGLShader();

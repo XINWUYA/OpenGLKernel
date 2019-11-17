@@ -5,7 +5,7 @@
 
 NAMESPACE_BEGIN(gl_kernel)
 
-enum class ECameraMovement
+enum class OPENGL_KERNEL_EXPORT ECameraMovement
 {
 	CAMERA_MOVE_FORWARD = 0,
 	CAMERA_MOVE_BACKWARD,
@@ -15,7 +15,7 @@ enum class ECameraMovement
 	CAMERA_MOVE_DOWN
 };
 
-class CCamera
+class OPENGL_KERNEL_EXPORT CCamera
 {
 public:
 	CCamera(glm::vec3 vCameraPos = glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3 vCameraFront = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 vCameraUp = glm::vec3(0.0f, 1.0f, 0.0f));

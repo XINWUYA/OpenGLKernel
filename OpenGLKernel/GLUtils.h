@@ -6,7 +6,7 @@
 
 NAMESPACE_BEGIN(gl_kernel)
 
-struct STexture
+struct OPENGL_KERNEL_EXPORT STexture
 {
 	enum class ETextureType
 	{
@@ -52,7 +52,7 @@ struct STexture
 	{ }
 };
 
-class CGLTexture
+class OPENGL_KERNEL_EXPORT CGLTexture
 {
 public:
 	CGLTexture(const STexture& vTexture);
@@ -81,7 +81,7 @@ private:
 	STexture m_Texture = {};
 };
 
-class CGLFrameBuffer
+class OPENGL_KERNEL_EXPORT CGLFrameBuffer
 {
 public:
 	CGLFrameBuffer();

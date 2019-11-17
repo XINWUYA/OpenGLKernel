@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28701.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearnOpenGL", "LearnOpenGL\LearnOpenGL.vcxproj", "{EE848294-F1A4-4F3D-9D15-679C85CE1DBB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25} = {F8C424FB-6D6E-49C4-964D-06F2FA43AB25}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote001(Create A Window)", "LearningNote001\LearningNote001.vcxproj", "{3C4D430F-19D6-4C7A-B249-F312DA1A4B91}"
 EndProject
@@ -49,6 +46,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote020(AdvancedLighting_ShadowMapping)", "LearningNote020\LearningNote020.vcxproj", "{73D70DA1-26B0-4484-940C-F7119AE7B9D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLKernel", "OpenGLKernel\OpenGLKernel.vcxproj", "{6887B1A0-C912-4B80-81D0-630EB9366FF7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25} = {F8C424FB-6D6E-49C4-964D-06F2FA43AB25}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LearningNotes", "LearningNotes", "{D5A7C5E0-5E43-4D89-9EE9-F58233C67784}"
 EndProject

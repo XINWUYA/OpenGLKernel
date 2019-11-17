@@ -10,7 +10,7 @@ NAMESPACE_BEGIN(gl_kernel)
 class CGLShader;
 class CGLMesh;
 
-class CGLModel
+class OPENGL_KERNEL_EXPORT CGLModel
 {
 public:
 	CGLModel() = default;

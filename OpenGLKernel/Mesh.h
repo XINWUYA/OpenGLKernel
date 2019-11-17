@@ -1,12 +1,11 @@
 #pragma once
 #include <GLM/glm.hpp>
 #include <GL/glew.h>
-
 #include "Common.h"
 
 NAMESPACE_BEGIN(gl_kernel)
 
-struct SMeshVertex
+struct OPENGL_KERNEL_EXPORT SMeshVertex
 {
 	glm::vec3 m_Position;
 	glm::vec3 m_Normal;
@@ -17,7 +16,7 @@ struct SMeshVertex
 	SMeshVertex() {}
 };
 
-struct SMeshTexture
+struct OPENGL_KERNEL_EXPORT SMeshTexture
 {
 	GLuint m_TextureID = (unsigned int)-1;
 	std::string m_TextureTypeName;
@@ -26,7 +25,7 @@ struct SMeshTexture
 	SMeshTexture() {}
 };
 
-class CGLMesh
+class OPENGL_KERNEL_EXPORT CGLMesh
 {
 public:
 	CGLMesh() = default;

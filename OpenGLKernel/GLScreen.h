@@ -6,7 +6,7 @@
 
 NAMESPACE_BEGIN(gl_kernel)
 
-class CGLScreen
+class OPENGL_KERNEL_EXPORT CGLScreen
 {
 public:
 	CGLScreen(const std::string& vWindowTitle, int vWindowWidth, int vWindowHeight, bool vIsFullScreen = false, int vSamples = 0, unsigned int vGLMajor = 4, unsigned int vGLMinor = 3);
