@@ -5,12 +5,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Libs">
-      <UniqueIdentifier>{37107cfd-c7da-42e5-9c10-3fd3fe708c96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Libs\imgui">
-      <UniqueIdentifier>{558312ce-90c4-40af-9543-b6ec9930107f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{35e6b079-6b8f-4077-a1eb-b11e7e0fe34c}</UniqueIdentifier>
     </Filter>
@@ -30,21 +24,6 @@
   <ItemGroup>
     <ClInclude Include="AssistGUI.h">
       <Filter>AssistGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\include\imgui\imconfig.h">
-      <Filter>Libs\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\include\imgui\imgui.h">
-      <Filter>Libs\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\include\imgui\examples\imgui_impl_glfw.h">
-      <Filter>Libs\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\include\imgui\examples\imgui_impl_opengl3.h">
-      <Filter>Libs\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\include\imgui\imgui_internal.h">
-      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Camera</Filter>
@@ -78,21 +57,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Common\include\imgui\imgui.cpp">
-      <Filter>Libs\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\include\imgui\imgui_draw.cpp">
-      <Filter>Libs\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_glfw.cpp">
-      <Filter>Libs\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\include\imgui\examples\imgui_impl_opengl3.cpp">
-      <Filter>Libs\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\include\imgui\imgui_widgets.cpp">
-      <Filter>Libs\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>

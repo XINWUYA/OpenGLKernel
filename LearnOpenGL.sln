@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28701.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearnOpenGL", "LearnOpenGL\LearnOpenGL.vcxproj", "{EE848294-F1A4-4F3D-9D15-679C85CE1DBB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25} = {F8C424FB-6D6E-49C4-964D-06F2FA43AB25}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote001(Create A Window)", "LearningNote001\LearningNote001.vcxproj", "{3C4D430F-19D6-4C7A-B249-F312DA1A4B91}"
 EndProject
@@ -154,6 +157,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote021(AdvancedLighting_PointShadows)", "LearningNote021\LearningNote021.vcxproj", "{E0CBDE78-ED33-4999-8599-A47251F66160}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearningNote022(AdvancedLighting_NormalMap)", "LearningNote022\LearningNote022.vcxproj", "{B2FADFA3-E8C2-417E-ADF3-AF1EBCF5FC92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{D9126611-83D6-4181-B4FA-AD1B15845E51}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "Libs\imgui\imgui.vcxproj", "{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -547,6 +554,14 @@ Global
 		{B2FADFA3-E8C2-417E-ADF3-AF1EBCF5FC92}.Release|x64.Build.0 = Release|x64
 		{B2FADFA3-E8C2-417E-ADF3-AF1EBCF5FC92}.Release|x86.ActiveCfg = Release|Win32
 		{B2FADFA3-E8C2-417E-ADF3-AF1EBCF5FC92}.Release|x86.Build.0 = Release|Win32
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Debug|x64.ActiveCfg = Debug|x64
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Debug|x64.Build.0 = Debug|x64
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Debug|x86.Build.0 = Debug|Win32
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Release|x64.ActiveCfg = Release|x64
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Release|x64.Build.0 = Release|x64
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Release|x86.ActiveCfg = Release|Win32
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -599,6 +614,7 @@ Global
 		{A3184D24-92E7-4D93-889A-22CFE3B1D005} = {774BAEAF-14F2-4D11-A824-AAF6A62DEF94}
 		{E0CBDE78-ED33-4999-8599-A47251F66160} = {D5A7C5E0-5E43-4D89-9EE9-F58233C67784}
 		{B2FADFA3-E8C2-417E-ADF3-AF1EBCF5FC92} = {D5A7C5E0-5E43-4D89-9EE9-F58233C67784}
+		{F8C424FB-6D6E-49C4-964D-06F2FA43AB25} = {D9126611-83D6-4181-B4FA-AD1B15845E51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63E4C666-BF03-46F4-A99C-C298853EC8CD}
