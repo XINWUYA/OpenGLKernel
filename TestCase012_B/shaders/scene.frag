@@ -4,6 +4,7 @@ out vec4 gl_FragColor;
 
 in vec2 v2f_TextureCoord;
 in vec3 v2f_Normal;
+in vec3 v2f_Tangent;
 in vec3 v2f_FragPosInWorldSpace;
 in vec4 v2f_FragPosInLightSpace;
 
@@ -35,11 +36,26 @@ float ShadowCalculation(vec4 vFragPosInLightSpace)
 	return Shadow;
 }
 
+vec3 CorrectNormal(vec3 vNormal, vec3 vViewDir)
+{
+	if(dot(vNormal, vViewDir) < 0.0f)
+		vNormal = normalize(vNormal - 1.01 * vViewDir * dot(vNormal, vViewDir));
+	return vNormal;
+}
+
 void main()
 {
 	vec3 AlbedoColor = texture(u_ModelMaterial.Diffuse, v2f_TextureCoord).rgb;
 	vec3 AmbientColor = 0.1 * AlbedoColor;
-	vec3 Normal = normalize(v2f_Normal);
+
+	//vec3 Normal = normalize(v2f_Normal);
+	vec3 BiTangent = normalize(cross(v2f_Normal, v2f_Tangent));
+	mat3 TBNMat = mat3(v2f_Tangent, BiTangent, v2f_Normal);
+	vec3 Normal = 2.0f * texture(u_ModelMaterial.Normal, v2f_TextureCoord).wyz - 1.0f;
+	Normal.z = sqrt(max(1.0 - Normal.x*Normal.x - Normal.y*Normal.y, 0.0f));
+	Normal = normalize(TBNMat * Normal);
+	//Normal = CorrectNormal(Normal, ViewDir);
+
 	vec3 LightDir = normalize(u_LightPos - v2f_FragPosInWorldSpace);
 	vec3 DiffuseColor = u_LightColor * max(dot(LightDir, Normal), 0.0f);
 

@@ -12,14 +12,14 @@ CGLMesh::CGLMesh(const std::vector<SMeshVertex>& vMeshVerticesSet, const std::ve
 //Function:
 void CGLMesh::draw(unsigned int vTextureUnit) const
 {
-	for (size_t i = 0; i < m_MeshTextureSet.size(); ++i)
+	for (auto i = 0; i < m_MeshTextureSet.size(); ++i)
 	{
 		glActiveTexture(GL_TEXTURE0 + vTextureUnit + i);
 		glBindTexture(GL_TEXTURE_2D, m_MeshTextureSet[i].m_TextureID);
 	}
 
 	glBindVertexArray(m_VertexArrayObject);
-	glDrawElements(GL_TRIANGLES, m_MeshIndicesSet.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_MeshIndicesSet.size()), GL_UNSIGNED_INT, 0);
 	
 	glBindVertexArray(0);
 	for (unsigned int i = 0; i < m_MeshTextureSet.size(); ++i)

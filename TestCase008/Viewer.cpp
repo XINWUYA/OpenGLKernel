@@ -8,8 +8,8 @@
 
 CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHeight) : CGLScreen(WindowTitle, vWindowWidth, vWindowHeight, false, 8), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight)
 {
-	m_LastMouseX = static_cast<float>(vWindowWidth) / 2.0;
-	m_LastMouseY = static_cast<float>(vWindowHeight) / 2.0;
+	m_LastMouseX = static_cast<float>(vWindowWidth) / 2.0f;
+	m_LastMouseY = static_cast<float>(vWindowHeight) / 2.0f;
 
 	m_pCamera = std::make_shared<CCamera>(glm::vec3(0.0f, 0.0f, 0.0f));
 	

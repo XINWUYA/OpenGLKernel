@@ -78,7 +78,7 @@ private:
 	void __loadDDSTexture(const std::string& vTextureFileName);
 	void __generateTexture();
 
-	STexture m_Texture = {};
+	STexture m_Texture{};
 };
 
 class OPENGL_KERNEL_EXPORT CGLFrameBuffer

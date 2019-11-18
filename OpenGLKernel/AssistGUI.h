@@ -30,7 +30,7 @@ public:
 
 private:
 	ImGuiIO* m_pImGuiIO = nullptr;
-	std::string m_Title;
+	std::string m_Title{};
 	bool m_IsShowDefaultGUI = false;
 };
 

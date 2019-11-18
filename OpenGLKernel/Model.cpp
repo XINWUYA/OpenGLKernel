@@ -8,6 +8,17 @@ NAMESPACE_BEGIN(gl_kernel)
 
 CGLModel::CGLModel(const std::string& vModelName, bool vIsUseGammaCorrection) : m_IsUseGammaCorrection(vIsUseGammaCorrection)
 {
+	m_TextureTypeMapTextureTypeNameSet = {
+		std::make_pair(aiTextureType_DIFFUSE, "u_ModelMaterial.Diffuse"),
+		std::make_pair(aiTextureType_SPECULAR, "u_ModelMaterial.Specular"),
+		std::make_pair(aiTextureType_HEIGHT, "u_ModelMaterial.Normal"),
+		std::make_pair(aiTextureType_AMBIENT, "u_ModelMaterial.Metallic"),
+		std::make_pair(aiTextureType_SHININESS, "u_ModelMaterial.Roughness"),
+	};
+
+	for (auto& Item : m_TextureTypeMapTextureTypeNameSet)
+		m_IsTextureTypeValidMap.emplace(Item.first, false);
+
 	_ASSERT(!vModelName.empty());
 	__loadModel(vModelName);
 }
@@ -18,11 +29,13 @@ void CGLModel::init(CGLShader& vShader, unsigned int vStartTextureUnit)
 {
 	m_StartTextureUnit = vStartTextureUnit;
 	vShader.bind();
-	vShader.setIntUniform("u_ModelMaterial.Diffuse", vStartTextureUnit);
-	vShader.setIntUniform("u_ModelMaterial.Specular", vStartTextureUnit + 1);
-	vShader.setIntUniform("u_ModelMaterial.Normal", vStartTextureUnit + 2);
-	vShader.setIntUniform("u_ModelMaterial.Metallic", vStartTextureUnit + 3);
-	vShader.setIntUniform("u_ModelMaterial.Roughness", vStartTextureUnit + 4);
+
+	int TextureIndex = 0;
+	for (auto& Item : m_TextureTypeMapTextureTypeNameSet)
+	{
+		if (m_IsTextureTypeValidMap[Item.first])
+			vShader.setIntUniform(Item.second, vStartTextureUnit + TextureIndex++);
+	}
 }
 
 //***********************************************************************************************
@@ -131,12 +144,8 @@ void CGLModel::__processTextures(const aiMesh* vMesh, const aiScene* vScene, std
 	aiMaterial* pMaterial = vScene->mMaterials[vMesh->mMaterialIndex];
 	_ASSERT(pMaterial);
 
-	__loadMaterialTextures(pMaterial, aiTextureType_DIFFUSE, "u_ModelMaterial.Diffuse", voMeshTexturesSet);
-	__loadMaterialTextures(pMaterial, aiTextureType_SPECULAR, "u_ModelMaterial.Specular", voMeshTexturesSet);
-	//__loadMaterialTextures(pMaterial, aiTextureType_NORMALS, "u_ModelMaterial.Normal", voMeshTexturesSet);
-	__loadMaterialTextures(pMaterial, aiTextureType_HEIGHT, "u_ModelMaterial.Normal", voMeshTexturesSet);//Normal	
-	__loadMaterialTextures(pMaterial, aiTextureType_AMBIENT, "u_ModelMaterial.Metallic", voMeshTexturesSet);//Metallic
-	__loadMaterialTextures(pMaterial, aiTextureType_SHININESS, "u_ModelMaterial.Roughness", voMeshTexturesSet);
+	for (auto& Item : m_TextureTypeMapTextureTypeNameSet)
+		__loadMaterialTextures(pMaterial, Item.first, Item.second, voMeshTexturesSet);
 }
 
 //***********************************************************************************************
@@ -148,8 +157,8 @@ void CGLModel::__loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType
 	unsigned int TextureCnt = vMaterial->GetTextureCount(vTextureType);
 	if (TextureCnt <= 0)
 	{
-		SMeshTexture MeshTexture;//Note: 防止由于缺失某个纹理导致纹理对应错误
-		voMeshTexturesSet.push_back(MeshTexture);
+		//SMeshTexture MeshTexture;//Note: 防止由于缺失某个纹理导致纹理对应错误 ------2019-11-18: 修改为根据是否具有该类型的纹理创建相应纹理，则不需要这里额外创建多余的纹理
+		//voMeshTexturesSet.push_back(MeshTexture);
 		return;
 	}
 
@@ -187,6 +196,7 @@ void CGLModel::__loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType
 			m_LoadedMeshTextureSet.push_back(MeshTexture);
 		}
 	}
+	m_IsTextureTypeValidMap[vTextureType] = true;
 }
 
 NAMESPACE_END(gl_kernel)

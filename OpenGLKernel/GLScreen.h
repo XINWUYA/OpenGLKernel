@@ -33,7 +33,7 @@ private:
 	void __initCallbackFunc();
 
 	GLFWwindow* m_pGLFWWindow = nullptr;
-	std::string m_WindowTitle = {};
+	std::string m_WindowTitle{};
 	int m_WindowWidth = 0;
 	int m_WindowHeight = 0;
 	int m_Samples = 0;

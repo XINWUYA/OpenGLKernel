@@ -89,7 +89,7 @@ void CViewer::drawContentsV()
 	m_pShadowMapFBO->bind();
 	glCullFace(GL_FRONT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	m_pModel->init(*m_pGenerateShadowMapShader);
+	//m_pModel->init(*m_pGenerateShadowMapShader);
 	m_pModel->draw();
 	glCullFace(GL_BACK);
 	m_pShadowMapFBO->release();

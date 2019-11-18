@@ -212,7 +212,7 @@ void CGLTexture::__generateTexture()
 		TextureType = GL_TEXTURE_2D_ARRAY;
 		glBindTexture(TextureType, m_Texture.m_ID);
 		glTexImage3D(TextureType, 0, m_Texture.m_InternelFormat, m_Texture.m_Width, m_Texture.m_Height, m_Texture.m_Depth, 0, m_Texture.m_ExternalFormat, m_Texture.m_DataType, nullptr);
-		for (size_t i = 0; i < m_Texture.m_pDataSet.size(); ++i)
+		for (auto i = 0; i < m_Texture.m_pDataSet.size(); ++i)
 			glTexSubImage3D(TextureType, 0, 0, 0, i, m_Texture.m_Width, m_Texture.m_Height, 1, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet[i]);
 		break;
 	case STexture::ETextureType::TEXTURE_3D://未完成
@@ -223,7 +223,7 @@ void CGLTexture::__generateTexture()
 	case STexture::ETextureType::TEXTURE_CUBE_MAP:
 		TextureType = GL_TEXTURE_CUBE_MAP;
 		glBindTexture(TextureType, m_Texture.m_ID);
-		for (size_t i = 0; i < 6; ++i)
+		for (auto i = 0; i < 6; ++i)
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, m_Texture.m_InternelFormat, m_Texture.m_Width, m_Texture.m_Height, 0, m_Texture.m_ExternalFormat, m_Texture.m_DataType, m_Texture.m_pDataSet.size() > i ? m_Texture.m_pDataSet[i] : nullptr);
 		break;
 	default:
@@ -307,7 +307,7 @@ void CGLFrameBuffer::init(const std::initializer_list<CGLTexture*>& vTextureAtta
 		}
 	}
 	if (TextureAttachmentSet.size())
-		glDrawBuffers(TextureAttachmentSet.size(), &TextureAttachmentSet[0]);
+		glDrawBuffers(static_cast<GLsizei>(TextureAttachmentSet.size()), &TextureAttachmentSet[0]);
 
 	auto genRenderBuffer = [](GLuint vBufferID, GLenum vInternelFormat, GLenum vAttachmentType, int vSamples, glm::ivec2& vSize)
 	{

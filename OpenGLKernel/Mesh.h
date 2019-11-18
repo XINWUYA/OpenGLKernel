@@ -7,20 +7,20 @@ NAMESPACE_BEGIN(gl_kernel)
 
 struct OPENGL_KERNEL_EXPORT SMeshVertex
 {
-	glm::vec3 m_Position;
-	glm::vec3 m_Normal;
-	glm::vec2 m_TexCoords;
-	glm::vec3 m_Tangent; 
-	glm::vec3 m_Bitangent;
+	glm::vec3 m_Position{};
+	glm::vec3 m_Normal{};
+	glm::vec2 m_TexCoords{};
+	glm::vec3 m_Tangent{};
+	glm::vec3 m_Bitangent{};
 
 	SMeshVertex() {}
 };
 
 struct OPENGL_KERNEL_EXPORT SMeshTexture
 {
-	GLuint m_TextureID = (unsigned int)-1;
-	std::string m_TextureTypeName;
-	std::string m_TexturePath;
+	GLuint m_TextureID = (unsigned int) - 1;
+	std::string m_TextureTypeName{};
+	std::string m_TexturePath{};
 
 	SMeshTexture() {}
 };
@@ -37,10 +37,10 @@ public:
 private:
 	void __init();
 
-	std::vector<SMeshVertex> m_MeshVerticesSet;
-	std::vector<SMeshTexture> m_MeshTextureSet;
-	std::vector<GLuint> m_MeshIndicesSet;
-	GLuint m_VertexArrayObject;
+	std::vector<SMeshVertex> m_MeshVerticesSet{};
+	std::vector<SMeshTexture> m_MeshTextureSet{};
+	std::vector<GLuint> m_MeshIndicesSet{};
+	GLuint m_VertexArrayObject = 0;
 };
 
 NAMESPACE_END(gl_kernel)

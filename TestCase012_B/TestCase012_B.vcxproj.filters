@@ -32,8 +32,6 @@
     <None Include="shaders\scene.vert" />
     <None Include="shaders\shadow_map.frag" />
     <None Include="shaders\shadow_map.vert" />
-    <None Include="shaders\model.frag" />
-    <None Include="shaders\model.vert" />
     <None Include="shaders\light.frag" />
     <None Include="shaders\light.vert" />
   </ItemGroup>

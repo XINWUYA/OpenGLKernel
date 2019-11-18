@@ -2,6 +2,7 @@
 #include <Assimp/Importer.hpp>
 #include <Assimp/scene.h>
 #include <Assimp/postprocess.h>
+#include <map>
 #include "Common.h"
 #include "Mesh.h"
 
@@ -13,7 +14,6 @@ class CGLMesh;
 class OPENGL_KERNEL_EXPORT CGLModel
 {
 public:
-	CGLModel() = default;
 	CGLModel(const std::string& vModelName, bool vIsUseGammaCorrection = false);
 	~CGLModel() = default;
 
@@ -29,11 +29,13 @@ private:
 	void __processTextures(const aiMesh* vMesh, const aiScene* vScene, std::vector<SMeshTexture>& voMeshTexturesSet);
 	void __loadMaterialTextures(const aiMaterial* vMaterial, aiTextureType vTextureType, const std::string& vTextureTypeName, std::vector<SMeshTexture>& voMeshTexturesSet);
 
-	std::vector<CGLMesh> m_MeshSet;
-	std::vector<SMeshTexture> m_LoadedMeshTextureSet;
-	std::string m_Directory;
+	std::vector<CGLMesh> m_MeshSet{};
+	std::vector<SMeshTexture> m_LoadedMeshTextureSet{};
+	std::string m_Directory{};
 	unsigned int m_StartTextureUnit = 0;
 	bool m_IsUseGammaCorrection = false;
+	std::vector<std::pair<aiTextureType, std::string>> m_TextureTypeMapTextureTypeNameSet{};
+	std::map<aiTextureType, bool> m_IsTextureTypeValidMap{};
 };
 
 NAMESPACE_END(gl_kernel)

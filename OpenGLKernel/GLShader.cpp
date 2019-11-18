@@ -305,7 +305,7 @@ void CGLShader::__uploadAttrib(const std::string& vAttribName, size_t vSize, int
 		SBuffer& Buffer = it->second;
 		BufferId = it->second.m_ID;
 		Buffer.m_Version = vVersion;
-		Buffer.m_Size = vSize;
+		Buffer.m_Size =  vSize;
 		Buffer.m_CompSize = vCompSize;
 	}
 	else

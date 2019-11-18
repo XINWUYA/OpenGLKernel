@@ -79,18 +79,15 @@ private:
 		GLuint m_ID;
 		GLuint m_Type;
 		GLuint m_Dim;
-		GLuint m_Size;
-		GLuint m_CompSize;
+		size_t m_Size;
+		uint32_t m_CompSize;
 		int	   m_Version;
 	};
-	std::string m_ShaderSig;
-	GLuint m_VertexArrayObject;
-	GLuint m_ShaderProgram;
-	GLuint m_VertexShader;
-	GLuint m_FragmentShader;
-	GLuint m_GeometryShader;
-	std::map<std::string, SBuffer> m_BufferObjectsMap;
-	std::map<std::string, std::string> m_PreDefinitionsMap;
+	std::string m_ShaderSig{};
+	GLuint m_VertexArrayObject = 0;
+	GLuint m_ShaderProgram = 0;
+	std::map<std::string, SBuffer> m_BufferObjectsMap{};
+	std::map<std::string, std::string> m_PreDefinitionsMap{};
 };
 
 NAMESPACE_END(gl_kernel)
