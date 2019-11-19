@@ -29,7 +29,7 @@ int main()
 		{
 			CViewer Viewer;
 			Viewer.setVisible(true);
-
+			Viewer.setWindowIcon("../TextureSources/touxiang.jpg");
 			gl_kernel::mainloop();
 		}
 

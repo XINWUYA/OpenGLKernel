@@ -3,6 +3,7 @@
 #include <functional>
 #include <unordered_map>
 #include <fstream>
+#include <glm/gtc/type_ptr.hpp>
 #include "../OpenGLKernel/Shapes.h"
 
 CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHeight) : CGLScreen(WindowTitle, vWindowWidth, vWindowHeight), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight)
@@ -81,9 +82,9 @@ void CViewer::drawContentsV()
 	glm::mat4 LightViewMat = glm::lookAt(glm::vec3(m_LightPosX, m_LightPosY, m_LightPosZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 LightModelMat = glm::mat4(1.0f); 
 	m_pGenerateShadowMapShader->bind();
-	m_pGenerateShadowMapShader->setMat4Uniform("u_ProjectionMat", &LightProjectionMat[0][0]);
-	m_pGenerateShadowMapShader->setMat4Uniform("u_ViewMat", &LightViewMat[0][0]);
-	m_pGenerateShadowMapShader->setMat4Uniform("u_ModelMat", &LightModelMat[0][0]);
+	m_pGenerateShadowMapShader->setMat4Uniform("u_ProjectionMat", glm::value_ptr(LightProjectionMat));
+	m_pGenerateShadowMapShader->setMat4Uniform("u_ViewMat", glm::value_ptr(LightViewMat));
+	m_pGenerateShadowMapShader->setMat4Uniform("u_ModelMat", glm::value_ptr(LightModelMat));
 
 	glViewport(0, 0, 1024, 1024);
 	m_pShadowMapFBO->bind();
@@ -102,11 +103,11 @@ void CViewer::drawContentsV()
 	glm::mat4 ViewMat = m_pCamera->getViewMatrix();
 	glm::mat4 ModelMat = glm::mat4(1.0f);
 	m_pGLShader->bind();
-	m_pGLShader->setMat4Uniform("model", &ModelMat[0][0]);
-	m_pGLShader->setMat4Uniform("projection", &ProjectionMat[0][0]);
-	m_pGLShader->setMat4Uniform("view", &ViewMat[0][0]);
-	m_pGLShader->setMat4Uniform("u_LightProjectionMat", &LightProjectionMat[0][0]);
-	m_pGLShader->setMat4Uniform("u_LightViewMat", &LightViewMat[0][0]);
+	m_pGLShader->setMat4Uniform("model", glm::value_ptr(ModelMat));
+	m_pGLShader->setMat4Uniform("projection", glm::value_ptr(ProjectionMat));
+	m_pGLShader->setMat4Uniform("view", glm::value_ptr(ViewMat));
+	m_pGLShader->setMat4Uniform("u_LightProjectionMat", glm::value_ptr(LightProjectionMat));
+	m_pGLShader->setMat4Uniform("u_LightViewMat", glm::value_ptr(LightViewMat));
 	m_pGLShader->setFloatUniform("u_LightPos", m_LightPosX, m_LightPosY, m_LightPosZ);
 	m_pGLShader->setFloatUniform("u_CameraPos", m_pCamera->getCameraPos().x, m_pCamera->getCameraPos().y, m_pCamera->getCameraPos().z);
 	m_pGLShader->setFloatUniform("u_LightColor", m_LightColor.r, m_LightColor.g, m_LightColor.b);
@@ -121,9 +122,9 @@ void CViewer::drawContentsV()
 	ModelMat = glm::mat4(1.0f);
 	ModelMat = glm::translate(ModelMat, glm::vec3(m_LightPosX, m_LightPosY, m_LightPosZ));
 	ModelMat = glm::scale(ModelMat, glm::vec3(0.03f));
-	m_pLightShader->setMat4Uniform("u_ProjectionMat", &ProjectionMat[0][0]);
-	m_pLightShader->setMat4Uniform("u_ViewMat", &ViewMat[0][0]);
-	m_pLightShader->setMat4Uniform("u_ModelMat", &ModelMat[0][0]);
+	m_pLightShader->setMat4Uniform("u_ProjectionMat", glm::value_ptr(ProjectionMat));
+	m_pLightShader->setMat4Uniform("u_ViewMat", glm::value_ptr(ViewMat));
+	m_pLightShader->setMat4Uniform("u_ModelMat", glm::value_ptr(ModelMat));
 	m_pLightShader->setFloatUniform("u_LightColor", m_LightColor.r, m_LightColor.g, m_LightColor.b);
 	m_pLightShader->setFloatUniform("u_LightIntensity", m_LightIntensity);
 	m_pLightShader->drawIndexed(GL_TRIANGLE_STRIP, 0, m_LightDrawElementsCnt);
