@@ -128,7 +128,7 @@ void main()
 	Result += calculateSpotLight(SpotLight, Normal, oFragPos, ViewDir);
 
 	//gl_FragColor = vec4(Result, 1.0f);
-	gl_FragColor = vec4(texture(uAlbedoTex, oTexCoord).rgb, 1.0f);
+	gl_FragColor = vec4(texture(uNormalTex, oTexCoord).rgb, 1.0f);
 	//Test gl_FragCoord
 	/*if(gl_FragCoord.x < 640)
 		gl_FragColor = vec4(Result * vec3(1.0f, 0.0f, 0.0f), 1.0f);

@@ -1,10 +1,10 @@
 #include "AssistGUI.h"
-#include "imgui.h"
-#include "examples/imgui_impl_glfw.h"
-#include "examples/imgui_impl_opengl3.h"
-#include "GLScreen.h"
+#include <imgui.h>
+#include <examples/imgui_impl_glfw.h>
+#include <examples/imgui_impl_opengl3.h>
 #include <iostream>
 #include <cstdarg>
+#include "GLScreen.h"
 
 NAMESPACE_BEGIN(gl_kernel)
 
@@ -37,7 +37,7 @@ void CAssistGUI::initGUI(GLFWwindow* vGLFWWindow)
 
 	//Load Fonts
 	//m_pImGuiIO->Fonts->AddFontDefault();
-	m_pImGuiIO->Fonts->AddFontFromFileTTF("../Common/include/imgui/misc/fonts/Karla-Regular.ttf", 16.0f, nullptr, m_pImGuiIO->Fonts->GetGlyphRangesChineseSimplifiedCommon());
+	m_pImGuiIO->Fonts->AddFontFromFileTTF("../Libs/imgui/misc/fonts/Karla-Regular.ttf", 16.0f, nullptr, m_pImGuiIO->Fonts->GetGlyphRangesChineseSimplifiedCommon());
 }
 
 //***********************************************************************************************

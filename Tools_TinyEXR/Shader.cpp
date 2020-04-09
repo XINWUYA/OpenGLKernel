@@ -2,7 +2,7 @@
 
 CShader::~CShader()
 {
-	for (int i = 0; i < m_ShaderVector.size(); ++i)
+	for (size_t i = 0; i < m_ShaderVector.size(); ++i)
 		glDeleteShader(m_ShaderVector[i]);
 }
 
@@ -20,7 +20,7 @@ void CShader::addShader(const std::string & vShaderPath, const EShaderType vShad
 void CShader::createShaderProgram()
 {
 	m_ShaderProgram = glCreateProgram();
-	for (int i = 0; i < m_ShaderVector.size(); ++i)
+	for (size_t i = 0; i < m_ShaderVector.size(); ++i)
 		glAttachShader(m_ShaderProgram, m_ShaderVector[i]);
 	glLinkProgram(m_ShaderProgram);
 
