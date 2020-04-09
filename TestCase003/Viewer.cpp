@@ -2,15 +2,15 @@
 
 CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHeight) : CGLScreen(WindowTitle, vWindowWidth, vWindowHeight), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight)
 {
-	m_pTexture = std::make_shared<CGLTexture>("textures/container2.png");
+	m_pTexture = std::make_shared<CGLTexture>("textures/demo.jpg");
 	m_pGLShader = std::make_shared<CGLShader>();
 	m_pGLShader->initFromFiles("triangle", "shaders/triangle.vert", "shaders/triangle.frag");
 	
 	std::vector<glm::vec3> Vertices = {
-		glm::vec3(-0.5f, -0.5f, 0.0f),
-		glm::vec3( 0.5f, -0.5f, 0.0f),
-		glm::vec3(-0.5f,  0.5f, 0.0f),
-		glm::vec3( 0.5f,  0.5f, 0.0f)
+		glm::vec3(-1.0f, -1.0f, 0.0f),
+		glm::vec3( 1.0f, -1.0f, 0.0f),
+		glm::vec3(-1.0f,  1.0f, 0.0f),
+		glm::vec3( 1.0f,  1.0f, 0.0f)
 	};
 	std::vector<glm::ivec3> Indices =
 	{

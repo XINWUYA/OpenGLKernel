@@ -13,7 +13,7 @@ using gl_kernel::CGLTexture;
 class CViewer : public CGLScreen
 {
 public:
-	CViewer(const std::string& WindowTitle = "", int vWindowWidth = 800, int vWindowHeight = 600);
+	CViewer(const std::string& WindowTitle = "", int vWindowWidth = 1280, int vWindowHeight = 720);
 	~CViewer();
 
 	virtual void drawContentsV() override;
