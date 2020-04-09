@@ -204,7 +204,6 @@ void CViewer::drawContentsV()
 	glm::mat4 Projection = m_pCamera->computeProjectionMatrix(static_cast<float>(m_WindowWidth) / static_cast<float>(m_WindowHeight));
 	glm::mat4 View = m_pCamera->getViewMatrix();
 	glm::mat4 Model = glm::mat4(1.0f);
-	Model = glm::rotate(Model, m_RotateSpeed * (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
 	m_pDrawCubeMapShader->bind();
 	m_pDrawCubeMapShader->setMat4Uniform("u_ProjectionMat", &Projection[0][0]);
 	m_pDrawCubeMapShader->setMat4Uniform("u_ViewMat", &View[0][0]);
@@ -257,13 +256,13 @@ void CViewer::processCursorPosCallbackEventV(double vX, double vY)
 //Function:
 void CViewer::processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers)
 {
-	/*if (vAction == GLFW_PRESS)
+	if (vAction == GLFW_PRESS)
 	{
-		if (vButton == GLFW_MOUSE_BUTTON_LEFT)
+		if (vButton == GLFW_MOUSE_BUTTON_RIGHT)
 			m_pCamera->setMoveState(true);
 	}
 	else
-		m_pCamera->setMoveState(false);*/
+		m_pCamera->setMoveState(false);
 }
 
 //***********************************************************************************************
@@ -308,7 +307,6 @@ void CViewer::__setGUIComponents()
 		m_FrameRateSet.push_back(*Iter);
 	m_pAssistGUI->plotLines("FrameRates", m_FrameRateSet);
 
-	m_pAssistGUI->sliderFloat("RotateSpeed", m_RotateSpeed, 0.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosX", m_LightPosX, -10.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosY", m_LightPosY, -10.0f, 10.0f);
 	m_pAssistGUI->sliderFloat("LightPosZ", m_LightPosZ, -10.0f, 10.0f);

@@ -56,7 +56,6 @@ private:
 	int m_FBO = -1;
 	float m_LastMouseX = 0.0f, m_LastMouseY = 0.0f;
 	double m_LastGLFWTime = 0.0f, m_DeltaTime = 0.0f;
-	float m_RotateSpeed = 1.0f;
 	float m_LightPosX = 4.0f, m_LightPosY = 1.0f, m_LightPosZ = 2.0f;
 	float m_LightIntensity = 1.0f;
 	float m_ModelRoughness = 0.0f;

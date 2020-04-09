@@ -6,7 +6,7 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	m_LastMouseX = static_cast<float>(vWindowWidth) / 2.0;
 	m_LastMouseY = static_cast<float>(vWindowHeight) / 2.0;
 
-	m_pCamera = std::make_shared<CCamera>(glm::vec3(0.0f, 3.0f, 20.0f), glm::vec3(0.0f, -0.1f, -1.0f));
+	m_pCamera = std::make_shared<CCamera>(glm::vec3(0.0f, 3.0f, 20.0f), glm::vec3(0.0f, 0.0f, -1.0f));
 	
 	m_pLightShader = std::make_shared<CGLShader>();
 	m_pLightShader->initFromFiles("area_light", "shaders/area_light.vert", "shaders/area_light.frag");
@@ -29,8 +29,8 @@ CViewer::CViewer(const std::string& WindowTitle, int vWindowWidth, int vWindowHe
 	Texture.m_Type4WrapS = GL_CLAMP_TO_EDGE;
 	Texture.m_Type4WrapT = GL_CLAMP_TO_EDGE;
 	Texture.m_IsUseMipMap = GL_FALSE;
-	std::shared_ptr<CGLTexture> pLTCMatrixTexture = std::make_shared<CGLTexture>("../TextureSources/LTC/ltc_mat.dds", Texture);
-	std::shared_ptr<CGLTexture> pLTCAmplifierTexture = std::make_shared<CGLTexture>("../TextureSources/LTC/ltc_amp.dds", Texture);
+	std::shared_ptr<CGLTexture> pLTCMatrixTexture = std::make_shared<CGLTexture>("textures/LTC/ltc_mat.dds", Texture);
+	std::shared_ptr<CGLTexture> pLTCAmplifierTexture = std::make_shared<CGLTexture>("textures/LTC/ltc_amp.dds", Texture);
 
 	m_pGroundShader->bind();
 	pLTCMatrixTexture->bind(pLTCMatrixTexture->getTextureID());
@@ -124,13 +124,13 @@ void CViewer::processCursorPosCallbackEventV(double vX, double vY)
 //Function:
 void CViewer::processMouseButtonCallbackEventV(int vButton, int vAction, int vModifiers)
 {
-	/*if (vAction == GLFW_PRESS)
+	if (vAction == GLFW_PRESS)
 	{
-		if (vButton == GLFW_MOUSE_BUTTON_LEFT)
+		if (vButton == GLFW_MOUSE_BUTTON_RIGHT)
 			m_pCamera->setMoveState(true);
 	}
 	else
-		m_pCamera->setMoveState(false);*/
+		m_pCamera->setMoveState(false);
 }
 
 //***********************************************************************************************

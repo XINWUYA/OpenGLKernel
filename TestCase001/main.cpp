@@ -11,15 +11,17 @@ using gl_kernel::CGLShader;
 class CViewer : public CGLScreen
 {
 public:
-	CViewer() : CGLScreen("Triangle", 800, 600)
+	CViewer() : CGLScreen("Triangle", 1280, 720)
 	{
 		m_pGLShader = std::make_shared<CGLShader>();
 		m_pGLShader->initFromFiles("triangle", "shaders/triangle.vert", "shaders/triangle.frag");
+
 		std::vector<glm::vec3> Vertices = {
 			glm::vec3(-0.5f, -0.5f, 0.0f),
 			glm::vec3( 0.5f, -0.5f, 0.0f),
 			glm::vec3(-0.5f,  0.5f, 0.0f)
 		};
+
 		m_pGLShader->bind();
 		m_pGLShader->uploadAttrib("Pos", Vertices, 3);
 	}

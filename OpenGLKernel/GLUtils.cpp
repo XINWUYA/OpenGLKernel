@@ -53,9 +53,9 @@ void CGLTexture::bind(int vIndex)
 //Function:
 void CGLTexture::__loadTeture(const std::string& vTextureFileName)
 {
-	std::string FileExtension;
-	if (vTextureFileName.size() > 4)
-		FileExtension = convertStr2Lower(vTextureFileName.substr(vTextureFileName.size() - 4));
+	assert(vTextureFileName.size() > 4);//后缀至少4位字符
+
+	std::string FileExtension = convertStr2Lower(vTextureFileName.substr(vTextureFileName.find_last_of('.')));
 
 	if (FileExtension == ".hdr")
 		__loadHDRTexture(vTextureFileName);

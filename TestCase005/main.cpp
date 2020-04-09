@@ -8,7 +8,7 @@ int main()
 		gl_kernel::init();
 
 		{
-			CViewer Viewer("Model");
+			CViewer Viewer("Model", 1280, 720);
 			Viewer.setVisible(true);
 
 			gl_kernel::mainloop();

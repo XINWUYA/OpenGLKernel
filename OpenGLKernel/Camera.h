@@ -18,7 +18,7 @@ enum class OPENGL_KERNEL_EXPORT ECameraMovement
 class OPENGL_KERNEL_EXPORT CCamera
 {
 public:
-	CCamera(glm::vec3 vCameraPos = glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3 vCameraFront = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 vCameraUp = glm::vec3(0.0f, 1.0f, 0.0f));
+	CCamera(glm::vec3 vCameraPos = glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3 vCameraFront = glm::vec3(0.0f, 0.0f, -1.0f), float vNear = 0.1f, float vFar = 1000.0f, float vFov = 60.0f);
 	~CCamera();
 
 	const glm::vec3& getCameraPos() const { return m_CameraPos; }
@@ -38,8 +38,10 @@ public:
 	void processCursorMovementEvent(float vXOffset, float vYOffset, bool vConstrainPicth = true);
 	void processMouseScrollEvent(float vYOffset);
 
+	void printCurrentCameraPosition();
+	void printCurrentCameraFront();
+
 private:
-	void __updateCamera();
 
 	glm::vec3 m_CameraPos{};
 	glm::vec3 m_CameraRight{};

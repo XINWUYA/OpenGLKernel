@@ -7,8 +7,8 @@ NAMESPACE_BEGIN(gl_kernel)
 
 std::map<GLFWwindow*, CGLScreen*> GL_SCREENS;
 
-CGLScreen::CGLScreen(const std::string& vWindowTitle, int vWindowWidth, int vWindowHeight, bool vIsFullScreen, int vSamples, unsigned int vGLMajor, unsigned int vGLMinor)
-	: m_WindowTitle(vWindowTitle), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight), m_Samples(vSamples), m_IsFullScreen(vIsFullScreen), m_GLMajor(vGLMajor), m_GLMinor(vGLMinor)
+CGLScreen::CGLScreen(const std::string& vWindowTitle, int vWindowWidth, int vWindowHeight, bool vIsFullScreen, bool vIsDisableCursor, int vSamples, unsigned int vGLMajor, unsigned int vGLMinor)
+	: m_WindowTitle(vWindowTitle), m_WindowWidth(vWindowWidth), m_WindowHeight(vWindowHeight), m_Samples(vSamples), m_IsFullScreen(vIsFullScreen), m_IsDisableCursor(vIsDisableCursor), m_GLMajor(vGLMajor), m_GLMinor(vGLMinor)
 {
 	__initGLFWWindow();
 	__initCallbackFunc();
@@ -134,6 +134,8 @@ bool CGLScreen::__initGLFWWindow()
 	}
 
 	glfwMakeContextCurrent(m_pGLFWWindow);
+	if(m_IsDisableCursor)
+		glfwSetInputMode(m_pGLFWWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)

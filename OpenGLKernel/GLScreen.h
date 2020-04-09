@@ -9,7 +9,7 @@ NAMESPACE_BEGIN(gl_kernel)
 class OPENGL_KERNEL_EXPORT CGLScreen
 {
 public:
-	CGLScreen(const std::string& vWindowTitle, int vWindowWidth, int vWindowHeight, bool vIsFullScreen = false, int vSamples = 0, unsigned int vGLMajor = 4, unsigned int vGLMinor = 3);
+	CGLScreen(const std::string& vWindowTitle, int vWindowWidth, int vWindowHeight, bool vIsFullScreen = false, bool vIsDisableCursor = false, int vSamples = 0, unsigned int vGLMajor = 4, unsigned int vGLMinor = 3);
 	virtual ~CGLScreen();
 
 	virtual void drawAllV();
@@ -38,6 +38,7 @@ private:
 	int m_WindowHeight = 0;
 	int m_Samples = 0;
 	bool m_IsFullScreen = false;
+	bool m_IsDisableCursor = false;
 	bool m_IsVisible = true;
 	unsigned int m_GLMajor = 4, m_GLMinor = 3;
 };

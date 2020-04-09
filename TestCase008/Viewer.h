@@ -51,7 +51,6 @@ private:
 	int m_FBO = -1;
 	double m_LastMouseX = 0.0f, m_LastMouseY = 0.0f;
 	double m_LastGLFWTime = 0.0f, m_DeltaTime = 0.0f;
-	float m_RotateSpeed = 1.0f;
 	std::deque<float> m_FrameDeque;
 	std::vector<float> m_FrameRateSet;
 };

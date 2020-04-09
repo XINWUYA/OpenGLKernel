@@ -158,8 +158,8 @@ void CViewer::processMouseButtonCallbackEventV(int vButton, int vAction, int vMo
 {
 	if (vAction == GLFW_PRESS)
 	{
-		/*if (vButton == GLFW_MOUSE_BUTTON_LEFT)
-			m_pCamera->setMoveState(true);*/
+		if (vButton == GLFW_MOUSE_BUTTON_RIGHT)
+			m_pCamera->setMoveState(true);
 	}
 	else
 		m_pCamera->setMoveState(false);

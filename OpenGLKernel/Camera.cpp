@@ -1,10 +1,15 @@
 #include "Camera.h"
+#include <iostream>
 
 NAMESPACE_BEGIN(gl_kernel)
 
-CCamera::CCamera(glm::vec3 vCameraPos, glm::vec3 vCameraFront, glm::vec3 vCameraUp)
-	: m_CameraPos(vCameraPos), m_CameraFront(vCameraFront), m_CameraUp(vCameraUp)
+CCamera::CCamera(glm::vec3 vCameraPos, glm::vec3 vCameraFront, float vNear, float vFar, float vFov)
+	: m_CameraPos(vCameraPos), m_CameraFront(vCameraFront), m_Near(vNear), m_Far(vFar), m_Fov(vFov)
 {
+	m_Pitch = asin(m_CameraFront.y);
+	m_Yaw = asin(m_CameraFront.z / cos(m_Pitch));
+	m_CameraRight = glm::normalize(glm::cross(m_CameraFront, m_WorldUp));
+	m_CameraUp = glm::normalize(glm::cross(m_CameraRight, m_CameraFront));
 }
 
 CCamera::~CCamera()
@@ -52,8 +57,8 @@ void CCamera::processCursorMovementEvent(float vXOffset, float vYOffset, bool vC
 	{
 		vXOffset *= m_MouseSensitivity;
 		vYOffset *= m_MouseSensitivity;
-		m_Yaw += vXOffset;
-		m_Pitch += vYOffset;
+		m_Yaw += glm::radians(vXOffset);
+		m_Pitch += glm::radians(vYOffset);
 
 		if (vConstrainPicth)
 		{
@@ -61,7 +66,14 @@ void CCamera::processCursorMovementEvent(float vXOffset, float vYOffset, bool vC
 			if (m_Pitch < -89.0f) m_Pitch = -89.0f;
 		}
 
-		__updateCamera();
+		glm::vec3 TempFront;
+		TempFront.x = cos(m_Yaw) * cos(m_Pitch);
+		TempFront.y = sin(m_Pitch);
+		TempFront.z = sin(m_Yaw) * cos(m_Pitch);
+
+		m_CameraFront = glm::normalize(TempFront);
+		m_CameraRight = glm::normalize(glm::cross(m_CameraFront, m_WorldUp));
+		m_CameraUp = glm::normalize(glm::cross(m_CameraRight, m_CameraFront));
 	}
 }
 
@@ -78,16 +90,16 @@ void CCamera::processMouseScrollEvent(float vYOffset)
 
 //***********************************************************************************************
 //Function:
-void CCamera::__updateCamera()
+void CCamera::printCurrentCameraPosition()
 {
-	glm::vec3 TempFront;
-	TempFront.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
-	TempFront.y = sin(glm::radians(m_Pitch));
-	TempFront.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+	std::cout << "[Current Camera Position]: " << m_CameraPos.x << "," << m_CameraPos.y << "," << m_CameraPos.z << std::endl;
+}
 
-	m_CameraFront = glm::normalize(TempFront);
-	m_CameraRight = glm::normalize(glm::cross(m_CameraFront, m_WorldUp));
-	m_CameraUp = glm::normalize(glm::cross(m_CameraRight, m_CameraFront));
+//***********************************************************************************************
+//Function:
+void CCamera::printCurrentCameraFront()
+{
+	std::cout << "[Current Camera Front]: " << m_CameraFront.x << "," << m_CameraFront.y << "," << m_CameraFront.z << std::endl;
 }
 
 NAMESPACE_END(gl_kernel)
