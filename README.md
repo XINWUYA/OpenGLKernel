@@ -1,4 +1,4 @@
-# LearnOpenGL
+# OpenGLKernel
 Personal implementation of OpenGL; Reference: https://learnopengl-cn.github.io/
 
 
@@ -106,7 +106,7 @@ Personal implementation of OpenGL; Reference: https://learnopengl-cn.github.io/
 
 vcpkg安装的imgui会有问题，因此这里建议自己下载imgui。
 
-在本工程的$Libs/$目录中，使用git下载（或者先下载到其他位置，然后复制到$Libs/$中）
+在本工程的Libs/目录中，使用git下载（或者先下载到其他位置，然后复制到Libs/中）
 
 ```
 git clone https://github.com/ocornut/imgui.git
